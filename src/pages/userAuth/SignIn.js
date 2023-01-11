@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// import AuthUtils from "./utils/authenticate";
+
 const SignIn = (props) => {
 	//Props for changing to homepage view
 	// const {} = props;
@@ -33,14 +35,16 @@ const SignIn = (props) => {
 						// await AuthUtils.logIn(email, password).then((res) => {
 						// 	AuthUtils.getUserData(res.accessToken).then((res) => {
 						// 		localStorage.setItem("userData", JSON.stringify(res));
+
+						// 		//Error Handling
 						// 		if (err === "") {
 						// 			//If there is no error send user to "homepage"
 						// 			// setCurrentView("home")
 						// 		}
 						// 	});
 						// });
-						// console.log(email, password);
-						// e.preventDefault();
+						console.log(email, password);
+						e.preventDefault();
 					}}
 				>
 					Submit

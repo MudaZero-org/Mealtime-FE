@@ -2,12 +2,17 @@ import axios from "axios";
 
 //Sending info to backend for sign-up
 
-const signUp = async( username, email, password) => {
+const signUp = async( storename, companyname, postalcode, address, phonenumber, email, storemanager, password) => {
   return await axios
     .post(/* path to backend i.e. /user/signUP */ , {
-      userName: username,
-      userEmail: email,
-      userPassword: password
+      storeName: storename,
+      companyName: companyname,
+      postalCode: postalcode,
+      address: address,
+      phoneNumber: phonenumber,
+      email: email,
+      storeManager: storemanager,
+      password: password
     })
     .then((res) => {
       if(res.data.accessToken) {
