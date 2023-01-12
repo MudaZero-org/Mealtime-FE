@@ -1,7 +1,9 @@
 import axios from "axios";
 import ActiveView from "./components/ActiveView";
 import PastView from "./components/PastView";
+import MealPack from "./MealPack";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 // DUMMY DATA FOR TESTING #############################
 const dummyData = [
@@ -76,6 +78,8 @@ const dummyData = [
 
 const Homepage = (props) => {
 	const {
+		selectedActivePack,
+		setSelectedActivePack,
 		activeMealPacks,
 		setActiveMealPacks,
 		pastMealPacks,
@@ -130,6 +134,11 @@ const Homepage = (props) => {
 		}
 	}
 
+	const navigate = useNavigate();
+	const reroute = () => {
+		navigate("/meal-pack")
+	}
+
 	return (
 		<div>
 			<h1>This is the homepage</h1>
@@ -165,7 +174,7 @@ const Homepage = (props) => {
 				<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
 				<button onClick={displayPacks}>Dummy Data Test</button>
 			</div>
-			{mealPacks && mealPacks.map(e => <p key={e.title}>{JSON.stringify(e)}</p>)}
+			{mealPacks && mealPacks.map(e => <p onClick={reroute} key={e.title}>{JSON.stringify(e)}</p>)}
 			<ActiveView
 				activeMealPacks={activeMealPacks}
 				setActiveMealPacks={setActiveMealPacks}
