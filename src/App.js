@@ -11,23 +11,27 @@ function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
 
-	return (
+  return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<SignIn />} />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/user" element={<User />} />
-        <Route exact path="/home" element={
-          <Homepage 
-            activeMealPacks={activeMealPacks} 
-            setActiveMealPacks={setActiveMealPacks} 
-            pastMealPacks={pastMealPacks} 
-            setPastMealPacks={setPastMealPacks} 
-          />
-        } />
+        <Route
+          exact
+          path="/home"
+          element={
+            <Homepage
+              activeMealPacks={activeMealPacks}
+              setActiveMealPacks={setActiveMealPacks}
+              pastMealPacks={pastMealPacks}
+              setPastMealPacks={setPastMealPacks}
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
-	);
+  );
 }
 
 export default App;

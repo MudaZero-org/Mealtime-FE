@@ -8,6 +8,9 @@ const dummyData = [
 	{
 		title: "spaghetti",
 		servings: 4,
+		vegetarian: true,
+		dairyFree: true,
+		glutenFree: false,
 		ingredients: ["pasta", "sauce", "garlic"],
 		instructions: [
 			{
@@ -27,6 +30,9 @@ const dummyData = [
 	{
 		title: "chicken and broccoli",
 		servings: 6,
+		vegetarian: false,
+		dairyFree: true,
+		glutenFree: true,
 		ingredients: ["chicken", "broccoli"],
 		instructions: [
 			{
@@ -46,6 +52,9 @@ const dummyData = [
 	{
 		title: "ham sandwich",
 		servings: 2,
+		vegetarian: false,
+		glutenFree: false,
+		dairyFree: false,
 		ingredients: ["bread", "ham", "cheese"],
 		instructions: [
 			{
@@ -76,6 +85,9 @@ const Homepage = (props) => {
 	const [text, setText] = useState(null)
 	const [ingredientArr, setIngredientArr] = useState([])
 	const [mealPacks, setMealPacks] = useState(null)
+	const [vegetarian, setVegetarian] = useState(false)
+	const [glutenFree, setGlutenFree] = useState(false)
+	const [dairyFree, setDairyFree] = useState(false)
 	const isMounted = useRef(false)
 
 	const makeIngredientArr = () => {
@@ -99,7 +111,23 @@ const Homepage = (props) => {
 	}, [ingredientArr])
 
 	const displayPacks = () => {
-		setMealPacks(dummyData)
+		const filterObj = {
+			vegetarian: vegetarian,
+			glutenFree: glutenFree,
+			dairyFree: dairyFree
+		}
+		const filterArr = [];
+		for (let x in filterObj) {
+			if (filterObj[x]) {
+				filterArr.push(x)
+			}
+		}
+		if (filterArr.length > 0) {
+			console.log("filters!")
+			console.log(filterArr)
+		} else {
+			setMealPacks(dummyData)
+		}
 	}
 
 	return (
@@ -108,6 +136,32 @@ const Homepage = (props) => {
 			<div className="input-container">
 				<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
 				<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
+				<form>
+					<input onChange={(e) => {
+						if (vegetarian) {
+							setVegetarian(false)
+						} else {
+							setVegetarian(true)
+						}
+					}} type="checkbox" name="vegetarian"></input>
+					<label htmlFor="vegetarian">Vegetarian</label>
+					<input onChange={(e) => {
+						if (glutenFree) {
+							setGlutenFree(false)
+						} else {
+							setGlutenFree(true)
+						}
+					}} type="checkbox" name="gluten-free"></input>
+					<label htmlFor="gluten-free">Gluten-Free</label>
+					<input onChange={(e) => {
+						if (dairyFree) {
+							setDairyFree(false)
+						} else {
+							setDairyFree(true)
+						}
+					}} type="checkbox" name="dairy-free"></input>
+					<label htmlFor="dairy-free">Dairy-Free</label>
+				</form>
 				<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
 				<button onClick={displayPacks}>Dummy Data Test</button>
 			</div>
