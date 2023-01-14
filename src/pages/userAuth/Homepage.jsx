@@ -153,7 +153,7 @@ const Homepage = (props) => {
 				<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
 				<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
 				<form>
-					<input onChange={(e) => {
+					<input onChange={() => {
 						if (vegetarian) {
 							setVegetarian(false)
 						} else {
@@ -161,7 +161,7 @@ const Homepage = (props) => {
 						}
 					}} type="checkbox" name="vegetarian"></input>
 					<label htmlFor="vegetarian">Vegetarian</label>
-					<input onChange={(e) => {
+					<input onChange={() => {
 						if (glutenFree) {
 							setGlutenFree(false)
 						} else {
@@ -169,7 +169,7 @@ const Homepage = (props) => {
 						}
 					}} type="checkbox" name="gluten-free"></input>
 					<label htmlFor="gluten-free">Gluten-Free</label>
-					<input onChange={(e) => {
+					<input onChange={() => {
 						if (dairyFree) {
 							setDairyFree(false)
 						} else {
@@ -183,10 +183,10 @@ const Homepage = (props) => {
 			</div>
 			{mealPacks && mealPacks.map(e => {
 				return (
-					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
+					<div key={e.id} className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
 						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
 						<button onClick={() => setShow(true)} className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
-						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.id}><strong>{e.title}</strong> meal pack</p>
+						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }}><strong>{e.title}</strong> meal pack</p>
 					</div>
 				)
 			})}
@@ -194,7 +194,6 @@ const Homepage = (props) => {
 				activeMealPacks={activeMealPacks}
 				setActiveMealPacks={setActiveMealPacks}
 			/>
-      <button onClick={displayPacks}>Edit Active Meal Packs</button>
 			<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
 		</div>
 	);
