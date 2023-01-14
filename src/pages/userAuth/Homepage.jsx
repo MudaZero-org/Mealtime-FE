@@ -174,7 +174,14 @@ const Homepage = (props) => {
 				<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
 				<button onClick={displayPacks}>Dummy Data Test</button>
 			</div>
-			{mealPacks && mealPacks.map(e => <p onClick={reroute} key={e.title}>{JSON.stringify(e)}</p>)}
+			{mealPacks && mealPacks.map(e => {
+				return (
+					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
+						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
+						<p onClick={reroute} key={e.title}>{JSON.stringify(e)}</p>
+					</div>
+				)
+			})}
 			<ActiveView
 				activeMealPacks={activeMealPacks}
 				setActiveMealPacks={setActiveMealPacks}
