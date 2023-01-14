@@ -134,9 +134,10 @@ const Homepage = (props) => {
 		}
 	}
 
+	// USE THIS TO NAVIGATE TO MEAL PACK PAGE
 	const navigate = useNavigate();
-	const reroute = () => {
-		navigate("/meal-pack")
+	const rerouteToMealpack = () => {
+		navigate("/mealpack")
 	}
 
 	return (
@@ -178,7 +179,8 @@ const Homepage = (props) => {
 				return (
 					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
 						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
-						<p onClick={reroute} key={e.title}>{JSON.stringify(e)}</p>
+						<button className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
+						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.title}><strong>{e.title}</strong> meal pack</p>
 					</div>
 				)
 			})}

@@ -37,7 +37,7 @@ function App() {
           selectedActivePack={selectedActivePack}
           setSelectedActivePack={setSelectedActivePack}
           exact
-          path="/meal-pack"
+          path="/mealpack"
           element={<MealPack />}
         />
       </Routes>
