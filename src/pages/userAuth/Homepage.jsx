@@ -5,12 +5,13 @@ import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal"
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import "../../styles/pages/_homepage.scss";
 
 // DUMMY DATA FOR TESTING #############################
 const dummyData = [
 	{
 		id: 1,
-		title: "spaghetti",
+		title: "Spaghetti",
 		servings: 4,
 		vegetarian: true,
 		dairyFree: true,
@@ -33,7 +34,7 @@ const dummyData = [
 	},
 	{
 		id: 2,
-		title: "chicken and broccoli",
+		title: "Chicken and Broccoli",
 		servings: 6,
 		vegetarian: false,
 		dairyFree: true,
@@ -56,7 +57,7 @@ const dummyData = [
 	},
 	{
 		id: 3,
-		title: "ham sandwich",
+		title: "Ham Sandwich",
 		servings: 2,
 		vegetarian: false,
 		glutenFree: false,
@@ -140,62 +141,69 @@ const Homepage = (props) => {
 		}
 	}
 
-	// USE THIS TO NAVIGATE TO MEAL PACK PAGE
-	const navigate = useNavigate();
-	const rerouteToMealpack = () => {
-		navigate("/mealpack")
-	}
-
 	return (
-		<div>
+		<div className="app">
 			<h1>This is the homepage</h1>
 			<div className="input-container">
 				<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
 				<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
 				<form>
-					<input onChange={(e) => {
+					<input onChange={() => {
 						if (vegetarian) {
 							setVegetarian(false)
 						} else {
 							setVegetarian(true)
 						}
 					}} type="checkbox" name="vegetarian"></input>
-					<label htmlFor="vegetarian">Vegetarian</label>
-					<input onChange={(e) => {
+					<label style={{ marginRight: "10px" }} htmlFor="vegetarian">Vegetarian</label>
+					<input onChange={() => {
 						if (glutenFree) {
 							setGlutenFree(false)
 						} else {
 							setGlutenFree(true)
 						}
 					}} type="checkbox" name="gluten-free"></input>
-					<label htmlFor="gluten-free">Gluten-Free</label>
-					<input onChange={(e) => {
+					<label style={{ marginRight: "10px" }} htmlFor="gluten-free">Gluten-Free</label>
+					<input onChange={() => {
 						if (dairyFree) {
 							setDairyFree(false)
 						} else {
 							setDairyFree(true)
 						}
 					}} type="checkbox" name="dairy-free"></input>
-					<label htmlFor="dairy-free">Dairy-Free</label>
+					<label style={{ marginRight: "10px" }} htmlFor="dairy-free">Dairy-Free</label>
 				</form>
 				<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
 				<button onClick={displayPacks}>Dummy Data Test</button>
 			</div>
 			{mealPacks && mealPacks.map(e => {
 				return (
-					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
-						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
-						<button onClick={() => setShow(true)} className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
-						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.id}><strong>{e.title}</strong> meal pack</p>
+					<div key={e.id} className="mealpack-container">
+						<button className="mealpack-add-button button">Add To "My Meal Packs"</button>
+						<button className="mealpack-info-button button" onClick={() => {
+							setSelectedMealPack(e)
+							setShow(true)
+						}}>See Meal Pack Info</button>
+						<p className="mealpack-title"><strong>{e.title}</strong> meal pack</p>
 					</div>
 				)
 			})}
+			{mealPacks && (
+				<div className="selected-mealpacks">
+					<h3>Selected Meal Packs:</h3>
+				</div>
+			)}
+			{mealPacks && <button style={{ margin: "0px 10px 30px 10px" }} onClick={() => setMealPacks(null)}>Publish Meal Packs</button>}
 			<ActiveView
 				activeMealPacks={activeMealPacks}
 				setActiveMealPacks={setActiveMealPacks}
 			/>
-      <button onClick={displayPacks}>Edit Active Meal Packs</button>
 			<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
+			<div className="one" style={{ display: "flex", height: "100px", width: "100px"}}></div>
+			<div className="two" style={{ display: "flex", height: "100px", width: "100px"}}></div>
+			<div className="three" style={{ display: "flex", height: "100px", width: "100px"}}></div>
+			<div className="four" style={{ display: "flex", height: "100px", width: "100px"}}></div>
+			<div className="five" style={{ display: "flex", height: "100px", width: "100px"}}></div>
 		</div>
 	);
 };
