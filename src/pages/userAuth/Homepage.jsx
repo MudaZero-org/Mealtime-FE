@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 // DUMMY DATA FOR TESTING #############################
 const dummyData = [
 	{
+		id: 1,
 		title: "spaghetti",
 		servings: 4,
 		vegetarian: true,
@@ -31,6 +32,7 @@ const dummyData = [
 		]
 	},
 	{
+		id: 2,
 		title: "chicken and broccoli",
 		servings: 6,
 		vegetarian: false,
@@ -53,6 +55,7 @@ const dummyData = [
 		]
 	},
 	{
+		id: 3,
 		title: "ham sandwich",
 		servings: 2,
 		vegetarian: false,
@@ -95,6 +98,7 @@ const Homepage = (props) => {
 	const [dairyFree, setDairyFree] = useState(false)
 	const isMounted = useRef(false)
 	const [show, setShow] = useState(false);
+	const [selectedMealPack, setSelectedMealPack] = useState(null);
 
 	const makeIngredientArr = () => {
 		text && setIngredientArr(text.split(/\r?\n/))
@@ -182,7 +186,7 @@ const Homepage = (props) => {
 					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
 						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
 						<button onClick={() => setShow(true)} className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
-						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.title}><strong>{e.title}</strong> meal pack</p>
+						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.id}><strong>{e.title}</strong> meal pack</p>
 					</div>
 				)
 			})}
@@ -191,7 +195,7 @@ const Homepage = (props) => {
 				setActiveMealPacks={setActiveMealPacks}
 			/>
       <button onClick={displayPacks}>Edit Active Meal Packs</button>
-			<MealPackModal show={show} setShow={setShow}/>
+			<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
 		</div>
 	);
 };

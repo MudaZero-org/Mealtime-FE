@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 
 const MealPackModal = (props) => {
-  const { show, setShow } = props;
+  const { show, setShow, selectedMealPack, setSelectedMealPack } = props;
 
   const handleClose = () => setShow(false);
 
