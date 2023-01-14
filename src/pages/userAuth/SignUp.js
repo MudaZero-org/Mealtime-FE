@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 // import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
-	const { setCurrentView } = props;
 
 	const [storeName, setStoreName] = useState("");
 	const [companyName, setCompanyName] = useState("");
