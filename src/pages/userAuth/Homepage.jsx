@@ -2,12 +2,14 @@ import axios from "axios";
 import ActiveView from "./components/ActiveView";
 import PastView from "./components/PastView";
 import MealPack from "./MealPack";
+import MealPackModal from "./components/MealPackModal"
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 // DUMMY DATA FOR TESTING #############################
 const dummyData = [
 	{
+		id: 1,
 		title: "spaghetti",
 		servings: 4,
 		vegetarian: true,
@@ -30,6 +32,7 @@ const dummyData = [
 		]
 	},
 	{
+		id: 2,
 		title: "chicken and broccoli",
 		servings: 6,
 		vegetarian: false,
@@ -52,6 +55,7 @@ const dummyData = [
 		]
 	},
 	{
+		id: 3,
 		title: "ham sandwich",
 		servings: 2,
 		vegetarian: false,
@@ -93,6 +97,8 @@ const Homepage = (props) => {
 	const [glutenFree, setGlutenFree] = useState(false)
 	const [dairyFree, setDairyFree] = useState(false)
 	const isMounted = useRef(false)
+	const [show, setShow] = useState(false);
+	const [selectedMealPack, setSelectedMealPack] = useState(null);
 
 	const makeIngredientArr = () => {
 		text && setIngredientArr(text.split(/\r?\n/))
@@ -134,9 +140,10 @@ const Homepage = (props) => {
 		}
 	}
 
+	// USE THIS TO NAVIGATE TO MEAL PACK PAGE
 	const navigate = useNavigate();
-	const reroute = () => {
-		navigate("/meal-pack")
+	const rerouteToMealpack = () => {
+		navigate("/mealpack")
 	}
 
 	return (
@@ -174,13 +181,21 @@ const Homepage = (props) => {
 				<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
 				<button onClick={displayPacks}>Dummy Data Test</button>
 			</div>
-			{mealPacks && mealPacks.map(e => <p onClick={reroute} key={e.title}>{JSON.stringify(e)}</p>)}
+			{mealPacks && mealPacks.map(e => {
+				return (
+					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
+						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
+						<button onClick={() => setShow(true)} className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
+						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.id}><strong>{e.title}</strong> meal pack</p>
+					</div>
+				)
+			})}
 			<ActiveView
 				activeMealPacks={activeMealPacks}
 				setActiveMealPacks={setActiveMealPacks}
 			/>
       <button onClick={displayPacks}>Edit Active Meal Packs</button>
-			<PastView pastMealPacks={pastMealPacks} setPastMealPacks={setPastMealPacks} />
+			<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
 		</div>
 	);
 };
