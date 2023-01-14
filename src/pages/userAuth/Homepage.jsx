@@ -11,7 +11,7 @@ import "../../styles/pages/_homepage.scss";
 const dummyData = [
 	{
 		id: 1,
-		title: "spaghetti",
+		title: "Spaghetti",
 		servings: 4,
 		vegetarian: true,
 		dairyFree: true,
@@ -34,7 +34,7 @@ const dummyData = [
 	},
 	{
 		id: 2,
-		title: "chicken and broccoli",
+		title: "Chicken and Broccoli",
 		servings: 6,
 		vegetarian: false,
 		dairyFree: true,
@@ -57,7 +57,7 @@ const dummyData = [
 	},
 	{
 		id: 3,
-		title: "ham sandwich",
+		title: "Ham Sandwich",
 		servings: 2,
 		vegetarian: false,
 		glutenFree: false,
@@ -188,7 +188,12 @@ const Homepage = (props) => {
 					</div>
 				)
 			})}
-			{mealPacks && <button style={{ margin: "0px 10px 30px 10px" }} onClick={() => setMealPacks(null)}>Save Changes</button>}
+			{mealPacks && (
+				<div className="selected-mealpacks">
+					<h3>Selected Meal Packs:</h3>
+				</div>
+			)}
+			{mealPacks && <button style={{ margin: "0px 10px 30px 10px" }} onClick={() => setMealPacks(null)}>Publish Meal Packs</button>}
 			<ActiveView
 				activeMealPacks={activeMealPacks}
 				setActiveMealPacks={setActiveMealPacks}

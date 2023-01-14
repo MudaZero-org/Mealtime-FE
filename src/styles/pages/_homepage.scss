@@ -1,7 +1,7 @@
 @use "../main" as *;
 
 .app {
-  background-color: white;
+  background-color: $white;
   color: black;
   padding: 1%;
 }
@@ -27,11 +27,14 @@
 }
 
 .mealpack-container {
-  background: $background;
   display: flex;
+  background: $background;
   margin: 10px;
-  padding: 10px;
+  padding: 10px 30px 10px 10px;
   align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: fit-content;
 }
 
 .mealpack-title {
@@ -42,4 +45,15 @@
 .button {
   height: fit-content;
   margin: 5px;
+}
+
+.selected-mealpacks {
+  margin: 2rem 0 .5rem 0;
+  padding: 1rem;
+  border-radius: 5px;
+  height: 20rem;
+  text-align: center;
+  text-decoration: underline;
+  width: 20%;
+  border: solid 1px black;
 }
