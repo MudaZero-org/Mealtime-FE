@@ -2,6 +2,7 @@ import axios from "axios";
 import ActiveView from "./components/ActiveView";
 import PastView from "./components/PastView";
 import MealPack from "./MealPack";
+import MealPackModal from "./components/MealPackModal"
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -93,6 +94,7 @@ const Homepage = (props) => {
 	const [glutenFree, setGlutenFree] = useState(false)
 	const [dairyFree, setDairyFree] = useState(false)
 	const isMounted = useRef(false)
+	const [show, setShow] = useState(false);
 
 	const makeIngredientArr = () => {
 		text && setIngredientArr(text.split(/\r?\n/))
@@ -179,7 +181,7 @@ const Homepage = (props) => {
 				return (
 					<div className="mealpack-container" style={{ display: "flex", border: "solid 1px black", borderRadius: "5px", margin: "10px", padding: "10px", alignItems: "center" }}>
 						<button className="mealpack-add-button" style={{ height: "fit-content", margin: "5px" }}>Add To "My Meal Packs"</button>
-						<button className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
+						<button onClick={() => setShow(true)} className="mealpack-info-button" style={{ height: "fit-content", margin: "5px" }}>See Meal Pack Info</button>
 						<p className="meal-pack-title" style={{ fontSize: "35px", marginLeft: "15px" }} key={e.title}><strong>{e.title}</strong> meal pack</p>
 					</div>
 				)
@@ -189,7 +191,7 @@ const Homepage = (props) => {
 				setActiveMealPacks={setActiveMealPacks}
 			/>
       <button onClick={displayPacks}>Edit Active Meal Packs</button>
-			<PastView pastMealPacks={pastMealPacks} setPastMealPacks={setPastMealPacks} />
+			<MealPackModal show={show} setShow={setShow}/>
 		</div>
 	);
 };
