@@ -6,12 +6,13 @@ import SignUp from "./SignUp";
 const User = (props) => {
 	// const { setCurrentView } = props;
 
-	const [currentView, setCurrentView] = useState("");
+	const [currentView, setCurrentView] = useState("signin");
 
 	useEffect(() => {
 		if (!localStorage.getItem("userAuth")) {
 			setCurrentView(<SignIn setCurrentView={setCurrentView} />);
 		}
+
 		// else {
 		//   setUserView("profile")
 		// }

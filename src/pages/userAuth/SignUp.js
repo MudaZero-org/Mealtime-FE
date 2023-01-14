@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
+
 	const [storeName, setStoreName] = useState("");
 	const [companyName, setCompanyName] = useState("");
 	const [postalCode, setPostalCode] = useState("");
@@ -13,6 +15,11 @@ const SignUp = (props) => {
 	const [password, setPassword] = useState("");
 	const [err, setErr] = useState("");
 	const [errPwd, setErrPwd] = useState("");
+
+	const navigate = useNavigate();
+	const reroute = () => {
+		navigate("/");
+	};
 
 	return (
 		<div>
@@ -97,7 +104,6 @@ const SignUp = (props) => {
 						// 	password
 						// );
 						// e.preventDefault();
-						
 						//Authentication
 						// AuthUtils.signUp(
 						// 	storeName,
@@ -118,6 +124,17 @@ const SignUp = (props) => {
 					Submit
 				</button>
 			</form>
+			<div>
+				Do you have an account?{" "}
+				<button
+					onClick={() => {
+						// setCurrentView("signin");
+						reroute();
+					}}
+				>
+					Click here!
+				</button>
+			</div>
 		</div>
 	);
 };

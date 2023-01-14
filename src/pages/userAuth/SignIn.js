@@ -1,14 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // import AuthUtils from "./utils/authenticate";
 
 const SignIn = (props) => {
 	//Props for changing to homepage view
-	// const {} = props;
+	const { setCurrentView } = props;
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [err, setErr] = useState("");
+
+	const navigate = useNavigate();
+	const reroute = () => {
+		navigate("/signup");
+	};
 
 	return (
 		<div>
@@ -49,6 +55,16 @@ const SignIn = (props) => {
 				>
 					Submit
 				</button>
+				<div>
+					Don't have an account?
+					<button
+						onClick={() => {
+							reroute();
+						}}
+					>
+						Click here!
+					</button>
+				</div>
 			</form>
 		</div>
 	);
