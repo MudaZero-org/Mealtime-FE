@@ -20,6 +20,10 @@ const SignUp = (props) => {
 		navigate("/");
 	};
 
+	const toTheHomepage = () => {
+		navigate("/home");
+	};
+
 	return (
 		<div>
 			This is from the sign up
@@ -92,6 +96,7 @@ const SignUp = (props) => {
 				></input>
 				<button
 					onClick={async (e) => {
+						e.preventDefault();
 						try {
 							AuthUtils.signUp(
 								storeName,
@@ -102,27 +107,16 @@ const SignUp = (props) => {
 								email,
 								storeManager,
 								password
-							);
+							).then((res) => {
+								toTheHomepage();
+							});
 						} catch (error) {
 							console.log(error);
+							//Error handling
+							// if (err === "") {
+							// 	setLoginView("login");
+							// }
 						}
-						// console.log(
-						// 	storeName,
-						// 	companyName,
-						// 	postalCode,
-						// 	address,
-						// 	phoneNumber,
-						// 	email,
-						// 	storeManager,
-						// 	password
-						// );
-						// e.preventDefault();
-						//Authentication
-
-						//Error handling
-						// if (err === "") {
-						// 	setLoginView("login");
-						// }
 					}}
 				>
 					Submit
@@ -132,7 +126,6 @@ const SignUp = (props) => {
 				Do you have an account?{" "}
 				<button
 					onClick={() => {
-						// setCurrentView("signin");
 						reroute();
 					}}
 				>
