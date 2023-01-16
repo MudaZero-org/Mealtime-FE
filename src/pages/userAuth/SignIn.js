@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import AuthUtils from "./utils/authenticate";
+import AuthUtils from "./utils/authenticate";
 
 const SignIn = (props) => {
 	//Props for changing to homepage view
-	const { setCurrentView } = props;
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -14,6 +13,10 @@ const SignIn = (props) => {
 	const navigate = useNavigate();
 	const reroute = () => {
 		navigate("/signup");
+	};
+
+	const toTheHomepage = () => {
+		navigate("/home");
 	};
 
 	return (
@@ -38,19 +41,19 @@ const SignIn = (props) => {
 				></input>
 				<button
 					onClick={async (e) => {
-						// await AuthUtils.logIn(email, password).then((res) => {
-						// 	AuthUtils.getUserData(res.accessToken).then((res) => {
-						// 		localStorage.setItem("userData", JSON.stringify(res));
-
-						// 		//Error Handling
-						// 		if (err === "") {
-						// 			//If there is no error send user to "homepage"
-						// 			// setCurrentView("home")
-						// 		}
-						// 	});
-						// });
-						console.log(email, password);
 						e.preventDefault();
+						try {
+							await AuthUtils.logIn(email, password).then((res) => {
+								toTheHomepage();
+							});
+						} catch (error) {
+							// 	//Error Handling
+							// 	if (err === "") {
+							// 		//If there is no error send user to "homepage"
+							// 		// setCurrentView("home")
+							// 	}
+							// });
+						}
 					}}
 				>
 					Submit
@@ -60,6 +63,16 @@ const SignIn = (props) => {
 					<button
 						onClick={() => {
 							reroute();
+						}}
+					>
+						Click here!
+					</button>
+				</div>
+				<div>
+					Delete Auth!
+					<button
+						onClick={() => {
+							AuthUtils.logOut();
 						}}
 					>
 						Click here!
