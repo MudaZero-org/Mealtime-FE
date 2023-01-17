@@ -1,8 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ActiveView = (props) => {
-  const { activeMealPacks, setActiveMealPacks } = props;
+  const { activeMealPacks, setActiveMealPacks, setPastMealPacks } = props;
+
+  useEffect(() => {
+    async function fetchData() {
+      // let data = await axios.get(`store/:store_id/mealpack/all/current`);
+      // setActiveMealPacks(data)
+    }
+    fetchData();
+  }, [activeMealPacks])
 
   const navigate = useNavigate();
 	const rerouteToMealpack = () => {
@@ -12,7 +22,6 @@ const ActiveView = (props) => {
   const downloadPDF = () => {
     const doc = new jsPDF();
     doc.text("This is the title", 10, 10);
-    // doc.save("meal-pack-instructions.pdf");
     doc.autoPrint({variant: 'non-conform'});
     doc.save('print-mealpacks.pdf');
   }
@@ -21,9 +30,28 @@ const ActiveView = (props) => {
     console.log("not yet dummy")
   }
 
+  const deactivateMealPack = async () => {
+    // axios.put(`/store/:store_id/mealpack/:mealpack_id`, {
+    //   is_publishing: false,
+    // })
+    // let data = await axios.get(`store/:store_id/mealpack/all/past`);
+    // setPastMealPacks(data)
+  }
+
   return (
     <div className="active-container">
       <h2>This is the active view component</h2>
+
+      {activeMealPacks && activeMealPacks.map((e) => {
+        return (
+          <div>
+            <p onClick={rerouteToMealpack}>{e.name}</p>
+            <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
+            <button onClick={deactivateMealPack}>Deactivate Meal Pack</button>
+          </div>
+        );
+      })}
+
       <div style={{ display: "flex" }}>
         <p style={{ marginBottom: "0px" }} onClick={rerouteToMealpack}>spaghetti</p>
         <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
