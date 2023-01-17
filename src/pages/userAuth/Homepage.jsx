@@ -194,8 +194,8 @@ const Homepage = (props) => {
 								)
 							})}
 						</div>
-						<div className="selected-mealpacks-container">
-							<div className="selected-mealpacks">
+						<div className="selected-mealpacks">
+							<div className="selected-mealpacks-container">
 								<h3>My Meal Packs:</h3>
 							</div>
 							<button className="publish-button" onClick={() => setMealPacks(null)}>Publish Meal Packs</button>

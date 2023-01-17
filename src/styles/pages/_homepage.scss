@@ -40,7 +40,7 @@
 
 .mealpack-container {
   display: flex;
-  margin-left: 10px;
+  margin: 5px 10px;
   background: $background;
   padding: 10px 30px 10px 10px;
   align-items: center;
@@ -63,14 +63,15 @@
   margin: 10px 0 20px;
 }
 
-.selected-mealpacks {
+.selected-mealpacks-container {
   margin-top: 10px;
-  border-radius: 5px;
   height: 20rem;
   text-align: center;
   text-decoration: underline;
   width: 100%;
   border: solid 1px black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px black;
 }
 
 .generated-mealpacks-container {
@@ -80,4 +81,5 @@
   overflow: scroll;
   border: solid black 1px;
   border-radius: 5px;
+  box-shadow: 2px 2px 5px black;
 }
