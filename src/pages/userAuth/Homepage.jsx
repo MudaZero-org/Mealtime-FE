@@ -4,7 +4,6 @@ import PastView from "./components/PastView";
 import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal"
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/pages/_homepage.scss";
 
 // DUMMY DATA FOR TESTING #############################
@@ -111,9 +110,16 @@ const Homepage = (props) => {
 			if (isMounted.current) {
 				console.log(ingredientArr)
 				// const data = await axios.post('/sample/recipe', {
-				// 	data: ingredientArr
+				// 	ingredients: ingredientArr
 				// })
-				// setMealPacks(data)
+				// const array = [];
+				// data.forEach((e) => array.push(e.id))
+				// const finalArray = [];
+				// array.forEach(async (e) => {
+				// 	const data = await axios.get(`store/:store_id/mealpack/detail/${e}`)
+				// 	finalArray.push(data)
+				// })
+				// setMealPacks(finalArray)
 			} else {
 				isMounted.current = true;
 			}
@@ -135,7 +141,6 @@ const Homepage = (props) => {
 		}
 		if (filterArr.length > 0) {
 			console.log("filters!")
-			console.log(filterArr)
 		} else {
 			setMealPacks(dummyData)
 		}
@@ -204,6 +209,10 @@ const Homepage = (props) => {
 				)}
 				<ActiveView
 					activeMealPacks={activeMealPacks}
+					setActiveMealPacks={setActiveMealPacks}
+					setPastMealPacks={setPastMealPacks}
+				/>
+				<PastView 
 					setActiveMealPacks={setActiveMealPacks}
 				/>
 				<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
