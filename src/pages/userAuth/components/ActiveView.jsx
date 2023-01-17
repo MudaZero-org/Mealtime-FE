@@ -12,7 +12,9 @@ const ActiveView = (props) => {
   const downloadPDF = () => {
     const doc = new jsPDF();
     doc.text("This is the title", 10, 10);
-    doc.save("meal-pack-instructions.pdf");
+    // doc.save("meal-pack-instructions.pdf");
+    doc.autoPrint({variant: 'non-conform'});
+    doc.save('print-mealpacks.pdf');
   }
 
   const downloadAllPDF = () => {
