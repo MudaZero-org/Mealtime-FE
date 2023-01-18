@@ -99,6 +99,7 @@ const Homepage = (props) => {
 	const isMounted = useRef(false)
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
+	const [myMealPacks, setMyMealPacks] = useState([])
 
 	const makeIngredientArr = () => {
 		text && setIngredientArr(text.split(/\r?\n/))
@@ -108,12 +109,14 @@ const Homepage = (props) => {
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				console.log(ingredientArr)
-				// const data = await axios.post('/sample/recipe', {
-				// 	ingredients: ingredientArr
-				// })
-				// const array = [];
-				// data.forEach((e) => array.push(e.id))
+				const data = await axios.post('/sample/recipe', {
+					ingredients: ingredientArr
+				})
+				console.log(data.data)
+				setMealPacks(data.data)
+				const idArray = [];
+				data.data.forEach((e) => idArray.push(e.id))
+				console.log(idArray)
 				// const finalArray = [];
 				// array.forEach(async (e) => {
 				// 	const data = await axios.get(`store/:store_id/mealpack/detail/${e}`)
@@ -144,6 +147,24 @@ const Homepage = (props) => {
 		} else {
 			setMealPacks(dummyData)
 		}
+	}
+
+	const addToMyMealPacks = (meal) => {
+		let array = [...myMealPacks]
+		array.push(meal)
+		setMyMealPacks(array)
+	};
+
+	const removeFromMyMealPacks = (meal) => {
+		let array = [...myMealPacks]
+		array.splice(array.indexOf(meal), 1)
+		setMyMealPacks(array)
+	}
+
+	const publishMealPacks = () => {
+		// axios.post(`/store/:store_id/mealpack`, {
+		// 	data: myMealPacks
+		// })
 	}
 
 	return (
@@ -185,11 +206,11 @@ const Homepage = (props) => {
 				{mealPacks && (
 					<div className="user-selection-container">
 						<div className="generated-mealpacks-container">
-							<h3 style={{ textAlign: "center", textDecoration: "underline" }}>Generated Meal Packs:</h3>
+							<h3>Generated Meal Packs:</h3>
 							{mealPacks && mealPacks.map(e => {
 								return (
 									<div key={e.id} className="mealpack-container">
-										<button className="mealpack-add-button button">Add To "My Meal Packs"</button>
+										<button onClick={() => addToMyMealPacks(e)} className="mealpack-add-button button">Add To "My Meal Packs"</button>
 										<button className="mealpack-info-button button" onClick={() => {
 											setSelectedMealPack(e)
 											setShow(true)
@@ -202,9 +223,25 @@ const Homepage = (props) => {
 						<div className="selected-mealpacks">
 							<div className="selected-mealpacks-container">
 								<h3>My Meal Packs:</h3>
+								{myMealPacks && myMealPacks.map((e, index) => {
+									return (
+										<div className="mealpack-container">
+											<button onClick={() => removeFromMyMealPacks(e)} className="button">Remove from "My Meal Packs"</button>
+											<button className="mealpack-info-button button" onClick={() => {
+												setSelectedMealPack(e)
+												setShow(true)
+											}}>See Meal Pack Info</button>
+											<p className="mealpack-title" key={index}><strong>{e.title}</strong> meal pack</p>
+										</div>
+									)
+								})}
 							</div>
-							<button className="publish-button" onClick={() => setMealPacks(null)}>Publish Meal Packs</button>
 						</div>
+						<button className="publish-button" onClick={() => {
+								// setMealPacks(null)
+								publishMealPacks();
+								setMyMealPacks([])
+							}}>Publish My Meal Packs</button>
 					</div>
 				)}
 				<ActiveView
