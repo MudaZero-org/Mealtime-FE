@@ -8,7 +8,9 @@ const PastView = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      // let data = await axios.get(`store/:store_id/mealpack/all/status/false`);
+      const user = JSON.parse(localStorage.getItem("user"))
+		  const storeId = user.userData[0].userId
+      // let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
       // setPastMealPacks(data)
     }
     fetchData();
@@ -20,10 +22,12 @@ const PastView = (props) => {
 	}
 
   const activateMealPack = async () => {
-    // axios.put(`/store/:store_id/mealpack/:mealpack_id`, {
+    const user = JSON.parse(localStorage.getItem("user"))
+		const storeId = user.userData[0].userId
+    // axios.put(`/store/${storeId}/mealpack/:mealpack_id`, {
     //     is_publishing: true,
     // })
-    // let data = await axios.get(`store/:store_id/mealpack/all/status/true`)
+    // let data = await axios.get(`store/${storeId}/mealpack/all/status/true`)
     // setActiveMealPacks(data)
   }
 

@@ -11,7 +11,7 @@ import MealPack from "./pages/userAuth/MealPack";
 function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
-  const [selectedActivePack, setSelectedActivePack] = useState(null);
+  const [selectedActivePack, setSelectedActivePack] = useState("hello");
 
   return (
     <BrowserRouter>
@@ -34,11 +34,14 @@ function App() {
           }
         />
         <Route
-          selectedActivePack={selectedActivePack}
-          setSelectedActivePack={setSelectedActivePack}
           exact
           path="/mealpack"
-          element={<MealPack />}
+          element={
+            <MealPack
+              selectedActivePack={selectedActivePack}
+              setSelectedActivePack={setSelectedActivePack}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>
