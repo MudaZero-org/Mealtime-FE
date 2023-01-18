@@ -4,6 +4,7 @@ import PastView from "./components/PastView";
 import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal"
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/pages/_homepage.scss";
 
 // DUMMY DATA FOR TESTING #############################
@@ -112,17 +113,9 @@ const Homepage = (props) => {
 				const data = await axios.post('/sample/recipe', {
 					ingredients: ingredientArr
 				})
-				console.log(data.data)
 				setMealPacks(data.data)
 				const idArray = [];
 				data.data.forEach((e) => idArray.push(e.id))
-				console.log(idArray)
-				// const finalArray = [];
-				// array.forEach(async (e) => {
-				// 	const data = await axios.get(`store/:store_id/mealpack/detail/${e}`)
-				// 	finalArray.push(data)
-				// })
-				// setMealPacks(finalArray)
 			} else {
 				isMounted.current = true;
 			}
@@ -161,15 +154,26 @@ const Homepage = (props) => {
 		setMyMealPacks(array)
 	}
 
+	const user = JSON.parse(localStorage.getItem("user"))
+	const storeId = user.userData[0].userId
+
 	const publishMealPacks = () => {
-		// axios.post(`/store/:store_id/mealpack`, {
+		const user = JSON.parse(localStorage.getItem("user"))
+		const storeId = user.userData[0].userId
+		// axios.post(`/store/${storeId}/mealpack`, {
 		// 	data: myMealPacks
 		// })
+	}
+
+	const navigate = useNavigate();
+	const logout = () => {
+		navigate("/");
 	}
 
 	return (
 		<div className="app-container">
 			<div className="app">
+				<button onClick={logout} className="logout-button">Logout</button>
 				<h1>This is the homepage</h1>
 				<div className="input-container">
 					<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
@@ -245,6 +249,8 @@ const Homepage = (props) => {
 					</div>
 				)}
 				<ActiveView
+					selectedActivePack={selectedActivePack}
+					setSelectedActivePack={setSelectedActivePack}
 					activeMealPacks={activeMealPacks}
 					setActiveMealPacks={setActiveMealPacks}
 					setPastMealPacks={setPastMealPacks}

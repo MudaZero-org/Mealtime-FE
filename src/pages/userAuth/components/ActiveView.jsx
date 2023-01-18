@@ -4,18 +4,22 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const ActiveView = (props) => {
-  const { activeMealPacks, setActiveMealPacks, setPastMealPacks } = props;
+  const { activeMealPacks, setActiveMealPacks, setPastMealPacks, selectedActivePack, setSelectedActivePack } = props;
 
   useEffect(() => {
     async function fetchData() {
-      // let data = await axios.get(`store/:store_id/mealpack/all/status/true`);
-      // setActiveMealPacks(data)
+      const user = JSON.parse(localStorage.getItem("user"))
+		  const storeId = user.userData[0].userId
+      let data = await axios.get(`store/1/mealpack/all/status/true`); //1 should be changed to ${userId}
+      setActiveMealPacks(data.data)
     }
     fetchData();
-  }, [activeMealPacks])
+  }, [])
 
   const navigate = useNavigate();
-	const rerouteToMealpack = () => {
+	const rerouteToMealpack = (meal) => {
+    setSelectedActivePack(meal)
+    console.log(meal)
 		navigate("/mealpack")
 	}
 
@@ -31,10 +35,12 @@ const ActiveView = (props) => {
   }
 
   const deactivateMealPack = async () => {
-    // axios.put(`/store/:store_id/mealpack/:mealpack_id`, {
+    const user = JSON.parse(localStorage.getItem("user"))
+		const storeId = user.userData[0].userId
+    // axios.put(`/store/${storeId}/mealpack/:mealpack_id`, {
     //   is_publishing: false,
     // })
-    // let data = await axios.get(`store/:store_id/mealpack/all/status/false`);
+    // let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
     // setPastMealPacks(data)
   }
 
@@ -42,30 +48,15 @@ const ActiveView = (props) => {
     <div className="active-container">
       <h2>This is the active view component</h2>
 
-      {activeMealPacks && activeMealPacks.map((e) => {
+      {activeMealPacks && activeMealPacks.map((e, index) => {
         return (
           <div>
-            <p onClick={rerouteToMealpack}>{e.name}</p>
+            <p key={index} onClick={() => rerouteToMealpack(e)}>{e.mealpackName}</p>
             <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
             <button onClick={deactivateMealPack}>Deactivate Meal Pack</button>
           </div>
         );
       })}
-
-      <div style={{ display: "flex" }}>
-        <p style={{ marginBottom: "0px" }} onClick={rerouteToMealpack}>spaghetti</p>
-        <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
-      </div>
-      <div style={{ display: "flex" }}>
-        <p style={{ marginBottom: "0px" }} onClick={rerouteToMealpack}>chicken and broccoli</p>
-        <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
-      </div>
-      <div style={{ display: "flex" }}>
-        <p style={{ marginBottom: "0px" }} onClick={rerouteToMealpack}>ham sandwich</p>
-        <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
-      </div>
-      <button onClick={downloadAllPDF}>Download ALL PDFs</button>
-
     </div>
   )
 }
