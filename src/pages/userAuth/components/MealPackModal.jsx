@@ -11,13 +11,13 @@ const MealPackModal = (props) => {
         <Modal.Title>{selectedMealPack && <h1>{selectedMealPack.title}</h1>}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src="https://media.istockphoto.com/id/182147903/photo/absurdly-small-diet-meal.jpg?b=1&s=170667a&w=0&k=20&c=CT51JX8x5FvFHF0zLS9z7b7WCpYFBzr-_SY91joRwz0="></img>
+        <img src={selectedMealPack && selectedMealPack.image}></img>
         {selectedMealPack && (
           <div>
-            <p>Ingredients: {selectedMealPack.ingredients.join(", ")}</p>
-            <p>Servings: {selectedMealPack.servings}</p>
-            <h5><strong>Instructions:</strong></h5>
-            {selectedMealPack.instructions.map((e) => <p key={e.number}>Step: {e.number}: {e.step}</p>)}
+            <h4>Included Ingredients: </h4>
+            {selectedMealPack.usedIngredients.map((e, index) => <p key={index}>-{e.original}</p>)}
+            <h4>Missing Ingredients: </h4>
+            {selectedMealPack.missedIngredients.map((e, index) => <p key={index}>-{e.original}</p>)}
           </div>
         )}
       </Modal.Body>
