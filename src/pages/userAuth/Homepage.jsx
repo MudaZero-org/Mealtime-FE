@@ -108,12 +108,14 @@ const Homepage = (props) => {
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				console.log(ingredientArr)
-				// const data = await axios.post('/sample/recipe', {
-				// 	ingredients: ingredientArr
-				// })
-				// const array = [];
-				// data.forEach((e) => array.push(e.id))
+				const data = await axios.post('/sample/recipe', {
+					ingredients: ingredientArr
+				})
+				console.log(data.data)
+				setMealPacks(data.data)
+				const idArray = [];
+				data.data.forEach((e) => idArray.push(e.id))
+				console.log(idArray)
 				// const finalArray = [];
 				// array.forEach(async (e) => {
 				// 	const data = await axios.get(`store/:store_id/mealpack/detail/${e}`)
