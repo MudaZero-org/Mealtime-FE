@@ -96,7 +96,7 @@ const Homepage = (props) => {
 				</div>
 				<div className="input-container">
 					<p className="input-instructions">Type or copy/paste ingredients you DON'T want to include in recipes<br></br><em>(each ingredient must be on a new line)</em></p>
-					<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
+					<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="pork&#10;milk&#10;cheese"></textarea>
 					<button onClick={makeFilteredArr} className="generate-button">Submit filtered words</button>
 				</div>
 				{mealPacks && (
