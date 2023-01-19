@@ -9,7 +9,7 @@ const ActiveView = (props) => {
   useEffect(() => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
-		  const storeId = user.userData[0].userId
+		  const storeId = user.data.userId
       let data = await axios.get(`store/1/mealpack/all/status/true`); //1 should be changed to ${userId}
       setActiveMealPacks(data.data)
     }
@@ -36,7 +36,7 @@ const ActiveView = (props) => {
 
   const deactivateMealPack = async () => {
     const user = JSON.parse(localStorage.getItem("user"))
-		const storeId = user.userData[0].userId
+		const storeId = user.data.userId
     // axios.put(`/store/${storeId}/mealpack/:mealpack_id`, {
     //   is_publishing: false,
     // })
