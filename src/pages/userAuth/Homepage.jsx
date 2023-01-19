@@ -70,10 +70,11 @@ const Homepage = (props) => {
 	}
 
 	const user = JSON.parse(localStorage.getItem("user"))
-	const storeName = user.userData[0].storeName;
+	console.log(user)
+	const storeName = user.data.storeName;
 
 	const publishMealPacks = () => {
-		const storeId = user.userData[0].userId
+		const storeId = user.data.userId
 		// axios.post(`/store/${storeId}/mealpack`, {
 		// 	data: myMealPacks
 		// })

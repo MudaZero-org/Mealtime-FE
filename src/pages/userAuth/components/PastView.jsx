@@ -9,7 +9,7 @@ const PastView = (props) => {
   useEffect(() => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
-		  const storeId = user.userData[0].userId
+		  const storeId = user.data.userId
       // let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
       // setPastMealPacks(data)
     }
@@ -23,7 +23,7 @@ const PastView = (props) => {
 
   const activateMealPack = async () => {
     const user = JSON.parse(localStorage.getItem("user"))
-		const storeId = user.userData[0].userId
+		const storeId = user.data.userId
     // axios.put(`/store/${storeId}/mealpack/:mealpack_id`, {
     //     is_publishing: true,
     // })
