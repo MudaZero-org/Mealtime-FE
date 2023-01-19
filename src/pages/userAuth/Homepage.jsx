@@ -155,7 +155,7 @@ const Homepage = (props) => {
 	}
 
 	const user = JSON.parse(localStorage.getItem("user"))
-	const storeId = user.userData[0].userId
+	const storeName = user.userData[0].storeName;
 
 	const publishMealPacks = () => {
 		const user = JSON.parse(localStorage.getItem("user"))
@@ -174,7 +174,7 @@ const Homepage = (props) => {
 		<div className="app-container">
 			<div className="app">
 				<button onClick={logout} className="logout-button">Logout</button>
-				<h1>This is the homepage</h1>
+				<h1>{storeName}</h1>
 				<div className="input-container">
 					<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
 					<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>

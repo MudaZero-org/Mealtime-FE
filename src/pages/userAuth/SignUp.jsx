@@ -25,112 +25,130 @@ const SignUp = (props) => {
 	};
 
 	return (
-		<div>
-			This is from the sign up
-			<h1>Registration</h1>
-			<form>
-				<label>Store name:</label>
-				<input
-					type="text"
-					placeholder="Enter username"
-					onChange={(e) => {
-						setStoreName(e.target.value);
-					}}
-				></input>
-				<label>Company name:</label>
-				<input
-					type="text"
-					placeholder="Enter username"
-					onChange={(e) => {
-						setCompanyName(e.target.value);
-					}}
-				></input>
-				<label>Postal Code:</label>
-				<input
-					type="text"
-					placeholder="Enter postal code"
-					onChange={(e) => {
-						setPostalCode(e.target.value);
-					}}
-				></input>
-				<label>Store Address:</label>
-				<input
-					type="text"
-					placeholder="Enter store address"
-					onChange={(e) => {
-						setAddress(e.target.value);
-					}}
-				></input>
-				<label>Phone Number:</label>
-				<input
-					type="text"
-					placeholder="Enter phone numebr"
-					onChange={(e) => {
-						setPhoneNumber(e.target.value);
-					}}
-				></input>
-
-				<label>Email Address:</label>
-				<input
-					type="email"
-					placeholder="Enter email address"
-					onChange={(e) => {
-						setEmail(e.target.value);
-					}}
-				></input>
-				<label>Store Manager:</label>
-				<input
-					type="text"
-					placeholder="Enter store manager"
-					onChange={(e) => {
-						setStoreManager(e.target.value);
-					}}
-				></input>
-				<label>Password</label>
-				<input
-					type="password"
-					placeholder="Enter password"
-					onChange={(e) => {
-						setPassword(e.target.value);
-					}}
-				></input>
-				<button
-					onClick={async (e) => {
-						e.preventDefault();
-						try {
-							AuthUtils.signUp(
-								storeName,
-								companyName,
-								postalCode,
-								address,
-								phoneNumber,
-								email,
-								storeManager,
-								password
-							).then((res) => {
-								toTheHomepage();
-							});
-						} catch (error) {
-							console.log(error);
-							//Error handling
-							// if (err === "") {
-							// 	setLoginView("login");
-							// }
-						}
-					}}
-				>
-					Submit
-				</button>
-			</form>
-			<div>
-				Do you have an account?{" "}
-				<button
-					onClick={() => {
-						reroute();
-					}}
-				>
-					Click here!
-				</button>
+		<div className="signup-signin-app">
+			<div className="card">
+				<div className="card-header has-background-primary-dark">
+					<div className="card-header-title is-centered">
+						<h1 className="card-title">MudaZero</h1>
+					</div>
+				</div>
+				<div className="card-content">
+					<form>
+						<div className="input-field">
+							<label>Store name:</label>
+							<input
+								type="text"
+								placeholder="Enter username"
+								onChange={(e) => {
+									setStoreName(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Company name:</label>
+							<input
+								type="text"
+								placeholder="Enter username"
+								onChange={(e) => {
+									setCompanyName(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Postal Code:</label>
+							<input
+								type="text"
+								placeholder="Enter postal code"
+								onChange={(e) => {
+									setPostalCode(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Store Address:</label>
+							<input
+								type="text"
+								placeholder="Enter store address"
+								onChange={(e) => {
+									setAddress(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Phone Number:</label>
+							<input
+								type="text"
+								placeholder="Enter phone numebr"
+								onChange={(e) => {
+									setPhoneNumber(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Email Address:</label>
+							<input
+								type="email"
+								placeholder="Enter email address"
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Store Manager:</label>
+							<input
+								type="text"
+								placeholder="Enter store manager"
+								onChange={(e) => {
+									setStoreManager(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Password</label>
+							<input
+								type="password"
+								placeholder="Enter password"
+								onChange={(e) => {
+									setPassword(e.target.value);
+								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<button className="button is-medium"
+								onClick={async (e) => {
+									e.preventDefault();
+									try {
+										AuthUtils.signUp(
+											storeName,
+											companyName,
+											postalCode,
+											address,
+											phoneNumber,
+											email,
+											storeManager,
+											password
+										).then((res) => {
+											toTheHomepage();
+										});
+									} catch (error) {
+										console.log(error);
+										//Error handling
+										// if (err === "") {
+										// 	setLoginView("login");
+										// }
+									}
+								}}
+							>
+								Signup
+							</button>
+						</div>
+						<div className="spacer"></div>
+					</form>
+					<div className="input-field">
+						<p>Already have an account? <a onClick={reroute} className="register-link">Login here!</a></p>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
