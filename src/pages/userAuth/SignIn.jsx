@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/pages/_signin.scss";
+import "../../styles/pages/_signin-up.scss";
 
 import AuthUtils from "./utils/authenticate";
 
@@ -21,7 +21,7 @@ const SignIn = (props) => {
 	};
 
 	return (
-		<div className="signin-app">
+		<div className="signup-signin-app">
 			<div className="card">
 				<div className="card-header has-background-primary-dark">
 					<div className="card-header-title is-centered">
