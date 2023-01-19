@@ -10,25 +10,25 @@ const PastView = (props) => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
 		  const storeId = user.data.userId
-      // let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
-      // setPastMealPacks(data)
+      let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
+      setPastMealPacks(data.data)
     }
     fetchData();
-  }, [pastMealPacks])
+  }, [])
 
   const navigate = useNavigate();
 	const rerouteToMealpack = () => {
 		navigate("/mealpack")
 	}
 
-  const activateMealPack = async () => {
+  const activateMealPack = async (meal) => {
     const user = JSON.parse(localStorage.getItem("user"))
 		const storeId = user.data.userId
-    // axios.put(`/store/${storeId}/mealpack/:mealpack_id`, {
-    //     is_publishing: true,
-    // })
-    // let data = await axios.get(`store/${storeId}/mealpack/all/status/true`)
-    // setActiveMealPacks(data)
+    await axios.put(`/store/${storeId}/mealpack/${meal.id}`, {
+        is_publishing: true,
+    })
+    let data = await axios.get(`store/${storeId}/mealpack/all/status/true`)
+    setActiveMealPacks(data.data)
   }
 
   return (
@@ -38,8 +38,8 @@ const PastView = (props) => {
       {pastMealPacks && pastMealPacks.map((e) => {
         return (
           <div>
-            <p onClick={rerouteToMealpack}>{e.name}</p>
-            <button onClick={activateMealPack} style={{ marginBottom: "10px" }}>Activate Meal Pack</button>
+            <p onClick={rerouteToMealpack}>{e.mealpackName}</p>
+            <button onClick={() => activateMealPack(e)} style={{ marginBottom: "10px" }}>Activate Meal Pack</button>
           </div>
         );
       })}

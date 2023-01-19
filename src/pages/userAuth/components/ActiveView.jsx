@@ -10,7 +10,7 @@ const ActiveView = (props) => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
 		  const storeId = user.data.userId
-      let data = await axios.get(`store/1/mealpack/all/status/true`); //1 should be changed to ${userId}
+      let data = await axios.get(`store/${storeId}/mealpack/all/status/true`);
       setActiveMealPacks(data.data)
     }
     fetchData();
@@ -34,14 +34,15 @@ const ActiveView = (props) => {
     console.log("not yet dummy")
   }
 
-  const deactivateMealPack = async () => {
+  const deactivateMealPack = async (meal) => {
     const user = JSON.parse(localStorage.getItem("user"))
 		const storeId = user.data.userId
-    // axios.put(`/store/${storeId}/mealpack/:mealpack_id`, {
-    //   is_publishing: false,
-    // })
-    // let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
-    // setPastMealPacks(data)
+    console.log(meal.id)
+    await axios.put(`/store/${storeId}/mealpack/${meal.id}`, {
+      is_publishing: false,
+    })
+    let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
+    setPastMealPacks(data.data)
   }
 
   return (
@@ -53,7 +54,7 @@ const ActiveView = (props) => {
           <div>
             <p key={index} onClick={() => rerouteToMealpack(e)}>{e.mealpackName}</p>
             <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
-            <button onClick={deactivateMealPack}>Deactivate Meal Pack</button>
+            <button onClick={() => deactivateMealPack(e)}>Deactivate Meal Pack</button>
           </div>
         );
       })}

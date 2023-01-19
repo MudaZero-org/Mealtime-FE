@@ -35,6 +35,7 @@ const Homepage = (props) => {
 	}
 
 	const makeFilteredArr = () => {
+		filteredText && setFilteredText(filteredText.toLowerCase())
 		filteredText && setFilteredArr(filteredText.split(/\r?\n/))
 	}
 
@@ -70,14 +71,19 @@ const Homepage = (props) => {
 	}
 
 	const user = JSON.parse(localStorage.getItem("user"))
-	console.log(user)
 	const storeName = user.data.storeName;
 
-	const publishMealPacks = () => {
+	const publishMealPacks = async () => {
 		const storeId = user.data.userId
-		// axios.post(`/store/${storeId}/mealpack`, {
-		// 	data: myMealPacks
-		// })
+		const idArray = [];
+		for (let e of myMealPacks) {
+			idArray.push({"id": e.id})
+		}
+		await axios.post(`/store/${storeId}/mealpack`, {
+			data: idArray
+		})
+    let info = await axios.get(`store/${storeId}/mealpack/all/status/true`);
+    setActiveMealPacks(info.data)
 	}
 
 	const navigate = useNavigate();
@@ -150,6 +156,8 @@ const Homepage = (props) => {
 				/>
 				<PastView 
 					setActiveMealPacks={setActiveMealPacks}
+					setPastMealPacks={setPastMealPacks}
+					pastMealPacks={pastMealPacks}
 				/>
 				<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
 				<div className="one" style={{ display: "flex", height: "100px", width: "100px"}}></div>
