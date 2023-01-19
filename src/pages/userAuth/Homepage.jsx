@@ -7,80 +7,6 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/pages/_homepage.scss";
 
-// DUMMY DATA FOR TESTING #############################
-const dummyData = [
-	{
-		id: 1,
-		title: "Spaghetti",
-		servings: 4,
-		vegetarian: true,
-		dairyFree: true,
-		glutenFree: false,
-		ingredients: ["pasta", "sauce", "garlic"],
-		instructions: [
-			{
-				number: 1,
-				step: "These are first step instructions"
-			},
-			{
-				number: 2,
-				step: "These are second step instructions"
-			},
-			{
-				number: 3,
-				step: "These are third step instructions"
-			}
-		]
-	},
-	{
-		id: 2,
-		title: "Chicken and Broccoli",
-		servings: 6,
-		vegetarian: false,
-		dairyFree: true,
-		glutenFree: true,
-		ingredients: ["chicken", "broccoli"],
-		instructions: [
-			{
-				number: 1,
-				step: "These are first step instructions"
-			},
-			{
-				number: 2,
-				step: "These are second step instructions"
-			},
-			{
-				number: 3,
-				step: "These are third step instructions"
-			}
-		]
-	},
-	{
-		id: 3,
-		title: "Ham Sandwich",
-		servings: 2,
-		vegetarian: false,
-		glutenFree: false,
-		dairyFree: false,
-		ingredients: ["bread", "ham", "cheese"],
-		instructions: [
-			{
-				number: 1,
-				step: "These are first step instructions"
-			},
-			{
-				number: 2,
-				step: "These are second step instructions"
-			},
-			{
-				number: 3,
-				step: "These are third step instructions"
-			}
-		]
-	},
-]
-//######################################################
-
 const Homepage = (props) => {
 	const {
 		selectedActivePack,
@@ -92,7 +18,9 @@ const Homepage = (props) => {
 	} = props;
 
 	const [text, setText] = useState(null)
+	const [filteredText, setFilteredText] = useState(null);
 	const [ingredientArr, setIngredientArr] = useState([])
+	const [filteredArr, setFilteredArr] = useState([])
 	const [mealPacks, setMealPacks] = useState(null)
 	const [vegetarian, setVegetarian] = useState(false)
 	const [glutenFree, setGlutenFree] = useState(false)
@@ -106,12 +34,18 @@ const Homepage = (props) => {
 		text && setIngredientArr(text.split(/\r?\n/))
 	}
 
+	const makeFilteredArr = () => {
+		filteredText && setFilteredArr(filteredText.split(/\r?\n/))
+	}
+
 	// prints ingredient array to console
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
+				console.log(filteredArr)
 				const data = await axios.post('/sample/recipe', {
-					ingredients: ingredientArr
+					ingredients: ingredientArr,
+					filteredWords: filteredArr
 				})
 				setMealPacks(data.data)
 				const idArray = [];
@@ -122,25 +56,6 @@ const Homepage = (props) => {
 		}
 		fetchData()
 	}, [ingredientArr])
-
-	const displayPacks = () => {
-		const filterObj = {
-			vegetarian: vegetarian,
-			glutenFree: glutenFree,
-			dairyFree: dairyFree
-		}
-		const filterArr = [];
-		for (let x in filterObj) {
-			if (filterObj[x]) {
-				filterArr.push(x)
-			}
-		}
-		if (filterArr.length > 0) {
-			console.log("filters!")
-		} else {
-			setMealPacks(dummyData)
-		}
-	}
 
 	const addToMyMealPacks = (meal) => {
 		let array = [...myMealPacks]
@@ -158,7 +73,6 @@ const Homepage = (props) => {
 	const storeName = user.userData[0].storeName;
 
 	const publishMealPacks = () => {
-		const user = JSON.parse(localStorage.getItem("user"))
 		const storeId = user.userData[0].userId
 		// axios.post(`/store/${storeId}/mealpack`, {
 		// 	data: myMealPacks
@@ -178,34 +92,12 @@ const Homepage = (props) => {
 				<div className="input-container">
 					<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
 					<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
-					<form>
-						<input onChange={() => {
-							if (vegetarian) {
-								setVegetarian(false)
-							} else {
-								setVegetarian(true)
-							}
-						}} type="checkbox" name="vegetarian"></input>
-						<label style={{ marginRight: "10px" }} htmlFor="vegetarian">Vegetarian</label>
-						<input onChange={() => {
-							if (glutenFree) {
-								setGlutenFree(false)
-							} else {
-								setGlutenFree(true)
-							}
-						}} type="checkbox" name="gluten-free"></input>
-						<label style={{ marginRight: "10px" }} htmlFor="gluten-free">Gluten-Free</label>
-						<input onChange={() => {
-							if (dairyFree) {
-								setDairyFree(false)
-							} else {
-								setDairyFree(true)
-							}
-						}} type="checkbox" name="dairy-free"></input>
-						<label style={{ marginRight: "10px" }} htmlFor="dairy-free">Dairy-Free</label>
-					</form>
 					<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
-					<button onClick={displayPacks}>Dummy Data Test</button>
+				</div>
+				<div className="input-container">
+					<p className="input-instructions">Type or copy/paste ingredients you DON'T want to include in recipes<br></br><em>(each ingredient must be on a new line)</em></p>
+					<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
+					<button onClick={makeFilteredArr} className="generate-button">Submit filtered words</button>
 				</div>
 				{mealPacks && (
 					<div className="user-selection-container">
