@@ -10,7 +10,7 @@ import "../../styles/pages/_homepage.scss";
 const Homepage = (props) => {
 	const {
 		selectedActivePack,
-		setSelectedActivePack,
+		setSelectedActivePastPack,
 		activeMealPacks,
 		setActiveMealPacks,
 		pastMealPacks,
@@ -22,9 +22,6 @@ const Homepage = (props) => {
 	const [ingredientArr, setIngredientArr] = useState([])
 	const [filteredArr, setFilteredArr] = useState([])
 	const [mealPacks, setMealPacks] = useState(null)
-	const [vegetarian, setVegetarian] = useState(false)
-	const [glutenFree, setGlutenFree] = useState(false)
-	const [dairyFree, setDairyFree] = useState(false)
 	const isMounted = useRef(false)
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
@@ -35,15 +32,12 @@ const Homepage = (props) => {
 	}
 
 	const makeFilteredArr = () => {
-		filteredText && setFilteredText(filteredText.toLowerCase())
 		filteredText && setFilteredArr(filteredText.split(/\r?\n/))
 	}
 
-	// prints ingredient array to console
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				console.log(filteredArr)
 				const data = await axios.post('/sample/recipe', {
 					ingredients: ingredientArr,
 					filteredWords: filteredArr
@@ -93,27 +87,46 @@ const Homepage = (props) => {
 
 	return (
 		<div className="app-container">
-			<div className="app">
-				<button onClick={logout} className="logout-button">Logout</button>
-				<h1>{storeName}</h1>
-				<div className="input-container">
-					<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
-					<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
-					<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
+			<div className="homepage-header">
+				<h1 className="app-title">Mealtime</h1>
+				<div className="user-info">
+					<h1 className="store-title" style={{ marginRight: "1rem" }}>Account: {storeName}</h1>
+					<button onClick={logout} className="logout-button button">Logout</button>
 				</div>
-				<div className="input-container">
-					<p className="input-instructions">Type or copy/paste ingredients you DON'T want to include in recipes<br></br><em>(each ingredient must be on a new line)</em></p>
-					<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="pork&#10;milk&#10;cheese"></textarea>
-					<button onClick={makeFilteredArr} className="generate-button">Submit filtered words</button>
+			</div>
+			<div className="app">
+				<div className="input-section">
+					<div className="input-container">
+						<h3>Ingredients</h3>
+						<p className="input-instructions">Type or copy/paste ingredients to use below<br></br><em>(each ingredient must be on a new line)</em></p>
+						<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
+						<div className="wrapper">
+							<button onClick={makeIngredientArr} className="generate-button button is-medium">Generate Meal Packs</button>
+						</div>
+					</div>
+					<div className="input-container">
+						<h3>Filter Ingredients</h3>
+						<p className="input-instructions">Type or copy/paste ingredients you DON'T want to include in recipes<br></br><em>(each ingredient must be on a new line)</em></p>
+						<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="pork&#10;milk&#10;cheese"></textarea>
+						<div className="wrapper">
+							<button onClick={makeFilteredArr} className="generate-button button is-medium">Save filters</button>
+						</div>
+					</div>
+					<div className="filter-container">
+						<h3>Filters:</h3>
+						<div className="filter-contents">
+							{filteredArr && filteredArr.map((e) => <p className="filter-words">-{e}</p>)}
+						</div>
+					</div>
 				</div>
 				{mealPacks && (
 					<div className="user-selection-container">
 						<div className="generated-mealpacks-container">
-							<h3>Generated Meal Packs:</h3>
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 							{mealPacks && mealPacks.map(e => {
 								return (
 									<div key={e.id} className="mealpack-container">
-										<button onClick={() => addToMyMealPacks(e)} className="mealpack-add-button button">Add To "My Meal Packs"</button>
+										<button className="mealpack-add-button button" onClick={() => addToMyMealPacks(e)}>Add To "My Meal Packs"</button>
 										<button className="mealpack-info-button button" onClick={() => {
 											setSelectedMealPack(e)
 											setShow(true)
@@ -125,7 +138,7 @@ const Homepage = (props) => {
 						</div>
 						<div className="selected-mealpacks">
 							<div className="selected-mealpacks-container">
-								<h3>My Meal Packs:</h3>
+								<h3 className="my-mealpacks-title">My Meal Packs</h3>
 								{myMealPacks && myMealPacks.map((e, index) => {
 									return (
 										<div className="mealpack-container">
@@ -140,32 +153,37 @@ const Homepage = (props) => {
 								})}
 							</div>
 						</div>
-						<button className="publish-button" onClick={() => {
-								// setMealPacks(null)
-								publishMealPacks();
-								setMyMealPacks([])
-							}}>Publish My Meal Packs</button>
+						<div className="buttons-container">
+							<button className="publish-button button is-danger is-outlined" onClick={() => {
+									publishMealPacks();
+									setMyMealPacks([])
+								}}>Save</button>
+							<button className="publish-button button is-primary is-outlined is-dark" onClick={() => setMealPacks(null)}>Close</button>
+						</div>
 					</div>
 				)}
-				<ActiveView
-					selectedActivePack={selectedActivePack}
-					setSelectedActivePack={setSelectedActivePack}
-					activeMealPacks={activeMealPacks}
-					setActiveMealPacks={setActiveMealPacks}
-					setPastMealPacks={setPastMealPacks}
-				/>
-				<PastView 
-					setActiveMealPacks={setActiveMealPacks}
-					setPastMealPacks={setPastMealPacks}
-					pastMealPacks={pastMealPacks}
-				/>
+				<div className="active-view">
+					<ActiveView
+						selectedActivePack={selectedActivePack}
+						setSelectedActivePastPack={setSelectedActivePastPack}
+						activeMealPacks={activeMealPacks}
+						setActiveMealPacks={setActiveMealPacks}
+						pastMealPacks={pastMealPacks}
+						setPastMealPacks={setPastMealPacks}
+					/>
+				</div>
+				<div className="past-view">
+					<PastView 
+						activeMealPacks={activeMealPacks}
+						setActiveMealPacks={setActiveMealPacks}
+						setPastMealPacks={setPastMealPacks}
+						pastMealPacks={pastMealPacks}
+						setSelectedActivePastPack={setSelectedActivePastPack}
+					/>
+				</div>
 				<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
-				<div className="one" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="two" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="three" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="four" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="five" style={{ display: "flex", height: "100px", width: "100px"}}></div>
 			</div>
+			<footer className="footer"></footer>
 		</div>
 	);
 };

@@ -11,7 +11,7 @@ const MealPackModal = (props) => {
         <Modal.Title>{selectedMealPack && <h1>{selectedMealPack.title}</h1>}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img src={selectedMealPack && selectedMealPack.image}></img>
+        <img style={{ display: "block", marginLeft: "auto", marginRight: "auto", marginBottom: "20px" }} src={selectedMealPack && selectedMealPack.image}></img>
         {selectedMealPack && (
           <div>
             <h4>Included Ingredients: </h4>

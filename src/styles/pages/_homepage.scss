@@ -9,27 +9,57 @@
   grid-column: 2/3;
   background-color: $my-white;
   color: black;
-  padding: 1%;
 }
 
-.one {
-  background: $my-red;
+.footer {
+  grid-column: 1 / 4;
+  background-color:hsl(171, 100%, 29%);
 }
 
-.two {
-  background: $my-green;
+.homepage-header {
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+  height: 8rem;
+  background-color: hsl(171, 100%, 29%);
+  color: white;
+  margin-bottom: 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 4px 2px -2px black;;
 }
 
-.three {
-  background: $my-orange;
+.app-title {
+  grid-column: 2;
+  text-align: center;
+  align-self: center;
+  font-size: 80px;
+  font-family: 'Lobster', cursive;
 }
 
-.four {
-  background: $my-blue;
+.user-info {
+  grid-column: 3;
+  display: flex;
+  justify-content: right;
+  padding-right: 2rem;
+  align-self: flex-end;
+  align-items: flex-end;
 }
 
-.five {
-  background: $my-background;
+.store-title {
+  font-size: 16px;
+}
+
+.input-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.input-container {
+  margin: 0 4rem;
 }
 
 .user-selection-container {
@@ -38,20 +68,34 @@
   margin: 20px 0;
 }
 
-.mealpack-container {
+.generate-button {
+  display: block;
+}
+
+.wrapper {
   display: flex;
+  justify-content: center;
+}
+
+.filter-container {
+  margin: 0 3rem;
+}
+
+.filter-words {
+  padding: 0;
+  margin: 0;
+}
+
+.mealpack-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
   margin: 5px 10px;
   background: $my-background;
   padding: 10px 30px 10px 10px;
   align-items: center;
   border: 1px solid black;
   border-radius: 5px;
-  width: fit-content;
-}
-
-.mealpack-title {
-  font-size: 16px;
-  margin-left: 15px;
 }
 
 .button {
@@ -65,41 +109,89 @@
 
 .publish-button {
   margin-top: 20px;
-  padding: 10px 100px;
+  padding: 5px 100px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
   grid-column: 2;
-  font-size: 30px;
-  background-color: green;
+  font-size: 38px;
   color: white;
   border-radius: 5px;
-  &:hover {
-    background-color: rgb(0, 96, 0);
-  }
+  font-weight: bold;
 }
 
 .selected-mealpacks-container {
   margin-top: 10px;
-  height: 20rem;
+  height: 35rem;
   width: 100%;
   border: solid 1px black;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow: scroll;
 }
 
 .generated-mealpacks-container {
   margin-right: 30px;
-  height: 20rem;
+  height: 35rem;
   margin-top: 10px;
   overflow: scroll;
   border: solid black 1px;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px rgb(134, 134, 134);
 }
 
-h3 {
+.generated-mealpacks-title, .my-mealpacks-title, .active-title, .past-title {
   text-align: center;
-  text-decoration: underline;
+  padding: 30px 0;
+  background-color: hsl(171, 100%, 29%);
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+.mealpack-add-button {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.mealpack-info-button {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.mealpack-title {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  grid-column: 2;
+}
+
+.past-view, .active-view {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border: solid 1px black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  margin: 5rem 0;
+}
+
+.active-container, .past-container {
+  width: 100%;
+}
+
+.active-mealpack-container, .past-mealpack-container {
+  border: 1px solid black;
+  margin: 1rem;
+  border-radius: 5px;
+  background-color: $my-background;
 }
