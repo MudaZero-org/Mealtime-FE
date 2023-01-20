@@ -140,7 +140,7 @@
   box-shadow: 2px 2px 5px black;
 }
 
-.generated-mealpacks-title, .my-mealpacks-title {
+.generated-mealpacks-title, .my-mealpacks-title, .active-title, .past-title {
   text-align: center;
   padding: 30px 0;
   background-color: hsl(171, 100%, 29%);
@@ -168,4 +168,29 @@
   grid-row: 1 / 3;
   font-size: 24px;
   margin-left: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  grid-column: 2;
+}
+
+.past-view, .active-view {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border: solid 1px black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px black;
+  margin: 5rem 0;
+}
+
+.active-container, .past-container {
+  width: 100%;
+}
+
+.active-mealpack-container {
+  border: 1px solid black;
+  margin: 1rem;
+  border-radius: 5px;
 }

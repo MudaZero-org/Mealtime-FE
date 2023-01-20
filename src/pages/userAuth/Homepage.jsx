@@ -153,25 +153,33 @@ const Homepage = (props) => {
 								})}
 							</div>
 						</div>
-						<button className="publish-button button is-danger is-outlined" onClick={() => {
-								// setMealPacks(null)
-								publishMealPacks();
-								setMyMealPacks([])
-							}}>Save</button>
+						<div className="buttons-container">
+							<button className="publish-button button is-danger is-outlined" onClick={() => {
+									publishMealPacks();
+									setMyMealPacks([])
+								}}>Save</button>
+							<button className="publish-button button is-primary is-outlined is-dark" onClick={() => setMealPacks(null)}>Close</button>
+						</div>
 					</div>
 				)}
-				<ActiveView
-					selectedActivePack={selectedActivePack}
-					setSelectedActivePack={setSelectedActivePack}
-					activeMealPacks={activeMealPacks}
-					setActiveMealPacks={setActiveMealPacks}
-					setPastMealPacks={setPastMealPacks}
-				/>
-				<PastView 
-					setActiveMealPacks={setActiveMealPacks}
-					setPastMealPacks={setPastMealPacks}
-					pastMealPacks={pastMealPacks}
-				/>
+				<div className="active-view">
+					<ActiveView
+						selectedActivePack={selectedActivePack}
+						setSelectedActivePack={setSelectedActivePack}
+						activeMealPacks={activeMealPacks}
+						setActiveMealPacks={setActiveMealPacks}
+						pastMealPacks={pastMealPacks}
+						setPastMealPacks={setPastMealPacks}
+					/>
+				</div>
+				<div className="past-view">
+					<PastView 
+						activeMealPacks={activeMealPacks}
+						setActiveMealPacks={setActiveMealPacks}
+						setPastMealPacks={setPastMealPacks}
+						pastMealPacks={pastMealPacks}
+					/>
+				</div>
 				<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
 			</div>
 			<footer className="footer"></footer>

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
+import "../../../styles/pages/_homepage.scss";
 
 
 const PastView = (props) => {
-  const { pastMealPacks, setPastMealPacks, setActiveMealPacks } = props;
+  const { pastMealPacks, setPastMealPacks, activeMealPacks, setActiveMealPacks } = props;
 
   useEffect(() => {
     async function fetchData() {
@@ -14,7 +15,7 @@ const PastView = (props) => {
       setPastMealPacks(data.data)
     }
     fetchData();
-  }, [])
+  }, [activeMealPacks])
 
   const navigate = useNavigate();
 	const rerouteToMealpack = () => {
@@ -33,7 +34,7 @@ const PastView = (props) => {
 
   return (
     <div className="past-container">
-      <h2>Past Meal Packs <em>&#40;inactive&#41;</em></h2>
+      <h2 className="past-title">Past Meal Packs <em>&#40;inactive&#41;</em></h2>
 
       {pastMealPacks && pastMealPacks.map((e) => {
         return (

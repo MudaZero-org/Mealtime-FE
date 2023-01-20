@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../../styles/pages/_homepage.scss";
 
 const ActiveView = (props) => {
-  const { activeMealPacks, setActiveMealPacks, setPastMealPacks, selectedActivePack, setSelectedActivePack } = props;
+  const { activeMealPacks, setActiveMealPacks, setPastMealPacks, pastMealPacks, selectedActivePack, setSelectedActivePack } = props;
 
   useEffect(() => {
     async function fetchData() {
@@ -14,7 +15,7 @@ const ActiveView = (props) => {
       setActiveMealPacks(data.data)
     }
     fetchData();
-  }, [])
+  }, [pastMealPacks])
 
   const navigate = useNavigate();
 	const rerouteToMealpack = (meal) => {
@@ -47,14 +48,14 @@ const ActiveView = (props) => {
 
   return (
     <div className="active-container">
-      <h2>Active Meal Packs</h2>
+      <h2 className="active-title">Active Meal Packs</h2>
 
       {activeMealPacks && activeMealPacks.map((e, index) => {
         return (
-          <div>
+          <div className="active-mealpack-container">
             <p key={index} onClick={() => rerouteToMealpack(e)}>{e.mealpackName}</p>
-            <button onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
-            <button onClick={() => deactivateMealPack(e)}>Deactivate Meal Pack</button>
+            <button className="button" onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
+            <button className="button" onClick={() => deactivateMealPack(e)}>Deactivate Meal Pack</button>
           </div>
         );
       })}
