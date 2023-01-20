@@ -22,6 +22,7 @@ const ActiveView = (props) => {
     const user = JSON.parse(localStorage.getItem("user"))
     const storeId = user.data.userId
     let data = await axios.get(`store/${storeId}/mealpack/all/status/true`);
+    console.log("hello")
     setActiveMealPacks(data.data)
   }
 
@@ -63,8 +64,8 @@ const ActiveView = (props) => {
             <p className="mealpack-title" key={index}><strong>{e.mealpackName}</strong> meal pack</p>
             <button className="button" onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
             <button className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
-            <button className="button" onClick={() => {
-              deactivateMealPack(e)
+            <button className="button" onClick={async () => {
+              await deactivateMealPack(e)
               fetchActivePacks()
             }}>Deactivate Meal Pack</button>
           </div>

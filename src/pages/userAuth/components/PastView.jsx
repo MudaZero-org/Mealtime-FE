@@ -50,8 +50,8 @@ const PastView = (props) => {
           <div className="past-mealpack-container">
             <p className="mealpack-title"><strong>{e.mealpackName}</strong> meal pack</p>
             <button className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
-            <button className="button" onClick={() => {
-              activateMealPack(e)
+            <button className="button" onClick={async () => {
+              await activateMealPack(e)
               fetchPastPacks()
             }} style={{ marginBottom: "10px" }}>Activate Meal Pack</button>
           </div>
