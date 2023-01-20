@@ -32,15 +32,35 @@ const ActiveView = (props) => {
 		navigate("/mealpack")
 	}
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    doc.text("This is the title", 10, 10);
+  const downloadPDF = (meal) => {
+    let qrCode = generateQRCode(meal);
+    const doc = new jsPDF("p", "mm", "a4");
+    let width = doc.internal.pageSize.getWidth();
+    const name = meal.mealpackName;
+    const details = meal.recipeDetail;
+    doc.setFontSize(24)
+    doc.text(10, 90, `${name}`)
+    doc.setFontSize(18)
+    doc.text(10, 110, [`${details.instructions}`], {
+      maxWidth: width / 1.15
+    });
+    doc.addImage(qrCode, "PNG", 10, 15, 50, 50)
     doc.autoPrint({variant: 'non-conform'});
     doc.save('print-mealpacks.pdf');
   }
 
   const downloadAllPDF = () => {
     console.log("not yet dummy")
+  }
+
+  const generateQRCode = (meal) => {
+    console.log(meal)
+    const QRCode = require('qrcode')
+    let qrCodeDataUrl;
+    QRCode.toDataURL(meal.recipeDetail.sourceUrl, function (err, url) {
+      qrCodeDataUrl = url;
+    })
+    return qrCodeDataUrl
   }
 
   const deactivateMealPack = async (meal) => {
@@ -62,7 +82,7 @@ const ActiveView = (props) => {
         return (
           <div className="active-mealpack-container">
             <p className="mealpack-title" key={index}><strong>{e.mealpackName}</strong> meal pack</p>
-            <button className="button" onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
+            <button className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
             <button className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
             <button className="button" onClick={async () => {
               await deactivateMealPack(e)
