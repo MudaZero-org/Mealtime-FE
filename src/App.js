@@ -11,7 +11,7 @@ import MealPack from "./pages/userAuth/MealPack";
 function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
-  const [selectedActivePack, setSelectedActivePack] = useState("hello");
+  const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
 
   return (
     <BrowserRouter>
@@ -25,7 +25,7 @@ function App() {
           element={
             <Homepage
               selectedActivePack={selectedActivePack}
-              setSelectedActivePack={setSelectedActivePack}
+              setSelectedActivePastPack={setSelectedActivePastPack}
               activeMealPacks={activeMealPacks}
               setActiveMealPacks={setActiveMealPacks}
               pastMealPacks={pastMealPacks}
@@ -39,7 +39,7 @@ function App() {
           element={
             <MealPack
               selectedActivePack={selectedActivePack}
-              setSelectedActivePack={setSelectedActivePack}
+              setSelectedActivePastPack={setSelectedActivePastPack}
             />
           }
         />

@@ -10,7 +10,7 @@ import "../../styles/pages/_homepage.scss";
 const Homepage = (props) => {
 	const {
 		selectedActivePack,
-		setSelectedActivePack,
+		setSelectedActivePastPack,
 		activeMealPacks,
 		setActiveMealPacks,
 		pastMealPacks,
@@ -165,7 +165,7 @@ const Homepage = (props) => {
 				<div className="active-view">
 					<ActiveView
 						selectedActivePack={selectedActivePack}
-						setSelectedActivePack={setSelectedActivePack}
+						setSelectedActivePastPack={setSelectedActivePastPack}
 						activeMealPacks={activeMealPacks}
 						setActiveMealPacks={setActiveMealPacks}
 						pastMealPacks={pastMealPacks}
@@ -178,6 +178,7 @@ const Homepage = (props) => {
 						setActiveMealPacks={setActiveMealPacks}
 						setPastMealPacks={setPastMealPacks}
 						pastMealPacks={pastMealPacks}
+						setSelectedActivePastPack={setSelectedActivePastPack}
 					/>
 				</div>
 				<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>

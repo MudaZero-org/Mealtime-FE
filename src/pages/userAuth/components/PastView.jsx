@@ -5,7 +5,7 @@ import "../../../styles/pages/_homepage.scss";
 
 
 const PastView = (props) => {
-  const { pastMealPacks, setPastMealPacks, activeMealPacks, setActiveMealPacks } = props;
+  const { pastMealPacks, setPastMealPacks, activeMealPacks, setActiveMealPacks, setSelectedActivePastPack } = props;
 
   useEffect(() => {
     async function fetchData() {
@@ -15,10 +15,19 @@ const PastView = (props) => {
       setPastMealPacks(data.data)
     }
     fetchData();
-  }, [activeMealPacks])
+  }, []) // activeMealPacks (causing infinite calls)
+
+  // fetchPastPacks copies above useEffect, wittout causing infinite loop
+  const fetchPastPacks = async () => {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const storeId = user.data.userId
+    let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
+    setPastMealPacks(data.data)
+}
 
   const navigate = useNavigate();
-	const rerouteToMealpack = () => {
+	const rerouteToMealpack = (meal) => {
+    setSelectedActivePastPack(meal)
 		navigate("/mealpack")
 	}
 
@@ -38,9 +47,13 @@ const PastView = (props) => {
 
       {pastMealPacks && pastMealPacks.map((e) => {
         return (
-          <div>
-            <p onClick={rerouteToMealpack}>{e.mealpackName}</p>
-            <button onClick={() => activateMealPack(e)} style={{ marginBottom: "10px" }}>Activate Meal Pack</button>
+          <div className="past-mealpack-container">
+            <p className="mealpack-title"><strong>{e.mealpackName}</strong> meal pack</p>
+            <button className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
+            <button className="button" onClick={() => {
+              activateMealPack(e)
+              fetchPastPacks()
+            }} style={{ marginBottom: "10px" }}>Activate Meal Pack</button>
           </div>
         );
       })}

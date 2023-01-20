@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react"
 
 const MealPack = (props) => {
-  const { selectedActivePack, setSelectedActivePack} = props;
+  const { selectedActivePack, setSelectedActivePastPack} = props;
 
   const navigate = useNavigate();
 	const rerouteToHome = () => {

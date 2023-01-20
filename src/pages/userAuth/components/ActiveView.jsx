@@ -5,7 +5,7 @@ import axios from "axios";
 import "../../../styles/pages/_homepage.scss";
 
 const ActiveView = (props) => {
-  const { activeMealPacks, setActiveMealPacks, setPastMealPacks, pastMealPacks, selectedActivePack, setSelectedActivePack } = props;
+  const { activeMealPacks, setActiveMealPacks, setPastMealPacks, pastMealPacks, selectedActivePack, setSelectedActivePastPack } = props;
 
   useEffect(() => {
     async function fetchData() {
@@ -15,12 +15,19 @@ const ActiveView = (props) => {
       setActiveMealPacks(data.data)
     }
     fetchData();
-  }, [pastMealPacks])
+  }, []) // pastMealPacks (causing infinite calls)
+
+  // fetchActivePacks copies above useEffect, without causing infinite loop
+  const fetchActivePacks = async () => {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const storeId = user.data.userId
+    let data = await axios.get(`store/${storeId}/mealpack/all/status/true`);
+    setActiveMealPacks(data.data)
+  }
 
   const navigate = useNavigate();
 	const rerouteToMealpack = (meal) => {
-    setSelectedActivePack(meal)
-    console.log(meal)
+    setSelectedActivePastPack(meal)
 		navigate("/mealpack")
 	}
 
@@ -53,9 +60,13 @@ const ActiveView = (props) => {
       {activeMealPacks && activeMealPacks.map((e, index) => {
         return (
           <div className="active-mealpack-container">
-            <p key={index} onClick={() => rerouteToMealpack(e)}>{e.mealpackName}</p>
+            <p className="mealpack-title" key={index}><strong>{e.mealpackName}</strong> meal pack</p>
             <button className="button" onClick={downloadPDF} style={{ marginBottom: "10px" }}>Download PDF</button>
-            <button className="button" onClick={() => deactivateMealPack(e)}>Deactivate Meal Pack</button>
+            <button className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
+            <button className="button" onClick={() => {
+              deactivateMealPack(e)
+              fetchActivePacks()
+            }}>Deactivate Meal Pack</button>
           </div>
         );
       })}
