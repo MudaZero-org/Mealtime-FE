@@ -88,7 +88,7 @@ const Homepage = (props) => {
 	return (
 		<div className="app-container">
 			<div className="homepage-header">
-				<h1 className="app-title">MudaZero</h1>
+				<h1 className="app-title">Mealtime</h1>
 				<div className="user-info">
 					<h1 className="store-title" style={{ marginRight: "1rem" }}>Account: {storeName}</h1>
 					<button onClick={logout} className="logout-button button">Logout</button>
