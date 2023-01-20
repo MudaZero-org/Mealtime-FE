@@ -29,7 +29,7 @@ const SignUp = (props) => {
 			<div className="card">
 				<div className="card-header has-background-primary-dark">
 					<div className="card-header-title is-centered">
-						<h1 className="card-title">MudaZero</h1>
+						<h1 className="card-title">Mealtime</h1>
 					</div>
 				</div>
 				<div className="card-content">

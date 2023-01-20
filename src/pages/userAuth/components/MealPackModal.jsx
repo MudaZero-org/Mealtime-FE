@@ -22,8 +22,8 @@ const MealPackModal = (props) => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <button onClick={handleClose}>Close</button>
-        <button onClick={handleClose}>Add To "My Meal Packs"</button>
+        <button className="button" onClick={handleClose}>Close</button>
+        <button className="button" onClick={handleClose}>Add To "My Meal Packs"</button>
       </Modal.Footer>
     </Modal>
   )
