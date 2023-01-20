@@ -93,9 +93,14 @@ const Homepage = (props) => {
 
 	return (
 		<div className="app-container">
+			<div className="homepage-header">
+				<h1 className="app-title">MudaZero</h1>
+				<div className="user-info">
+					<h1 className="store-title" style={{ marginRight: "1rem" }}>Account: {storeName}</h1>
+					<button onClick={logout} className="logout-button button">Logout</button>
+				</div>
+			</div>
 			<div className="app">
-				<button onClick={logout} className="logout-button">Logout</button>
-				<h1>{storeName}</h1>
 				<div className="input-container">
 					<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
 					<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
@@ -109,11 +114,11 @@ const Homepage = (props) => {
 				{mealPacks && (
 					<div className="user-selection-container">
 						<div className="generated-mealpacks-container">
-							<h3>Generated Meal Packs:</h3>
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 							{mealPacks && mealPacks.map(e => {
 								return (
 									<div key={e.id} className="mealpack-container">
-										<button onClick={() => addToMyMealPacks(e)} className="mealpack-add-button button">Add To "My Meal Packs"</button>
+										<button className="mealpack-add-button button" onClick={() => addToMyMealPacks(e)}>Add To "My Meal Packs"</button>
 										<button className="mealpack-info-button button" onClick={() => {
 											setSelectedMealPack(e)
 											setShow(true)
@@ -125,7 +130,7 @@ const Homepage = (props) => {
 						</div>
 						<div className="selected-mealpacks">
 							<div className="selected-mealpacks-container">
-								<h3>My Meal Packs:</h3>
+								<h3 className="my-mealpacks-title">My Meal Packs</h3>
 								{myMealPacks && myMealPacks.map((e, index) => {
 									return (
 										<div className="mealpack-container">
@@ -140,11 +145,11 @@ const Homepage = (props) => {
 								})}
 							</div>
 						</div>
-						<button className="publish-button" onClick={() => {
+						<button className="publish-button button is-danger is-outlined" onClick={() => {
 								// setMealPacks(null)
 								publishMealPacks();
 								setMyMealPacks([])
-							}}>Publish My Meal Packs</button>
+							}}>Save</button>
 					</div>
 				)}
 				<ActiveView
@@ -160,12 +165,8 @@ const Homepage = (props) => {
 					pastMealPacks={pastMealPacks}
 				/>
 				<MealPackModal selectedMealPack={selectedMealPack} setSelectedMealPack={setSelectedMealPack} show={show} setShow={setShow}/>
-				<div className="one" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="two" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="three" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="four" style={{ display: "flex", height: "100px", width: "100px"}}></div>
-				<div className="five" style={{ display: "flex", height: "100px", width: "100px"}}></div>
 			</div>
+			<footer className="footer"></footer>
 		</div>
 	);
 };

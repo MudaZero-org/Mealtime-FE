@@ -38,7 +38,7 @@ const SignUp = (props) => {
 							<label>Store name:</label>
 							<input
 								type="text"
-								placeholder="Enter username"
+								placeholder="Enter store name"
 								onChange={(e) => {
 									setStoreName(e.target.value);
 								}}
@@ -48,7 +48,7 @@ const SignUp = (props) => {
 							<label>Company name:</label>
 							<input
 								type="text"
-								placeholder="Enter username"
+								placeholder="Enter company name"
 								onChange={(e) => {
 									setCompanyName(e.target.value);
 								}}
@@ -78,7 +78,7 @@ const SignUp = (props) => {
 							<label>Phone Number:</label>
 							<input
 								type="text"
-								placeholder="Enter phone numebr"
+								placeholder="Enter phone number"
 								onChange={(e) => {
 									setPhoneNumber(e.target.value);
 								}}
@@ -105,7 +105,7 @@ const SignUp = (props) => {
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Password</label>
+							<label>Password:</label>
 							<input
 								type="password"
 								placeholder="Enter password"
