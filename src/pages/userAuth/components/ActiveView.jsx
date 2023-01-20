@@ -47,7 +47,7 @@ const ActiveView = (props) => {
 
   return (
     <div className="active-container">
-      <h2>This is the active view component</h2>
+      <h2>Active Meal Packs</h2>
 
       {activeMealPacks && activeMealPacks.map((e, index) => {
         return (

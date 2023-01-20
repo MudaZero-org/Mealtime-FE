@@ -22,9 +22,6 @@ const Homepage = (props) => {
 	const [ingredientArr, setIngredientArr] = useState([])
 	const [filteredArr, setFilteredArr] = useState([])
 	const [mealPacks, setMealPacks] = useState(null)
-	const [vegetarian, setVegetarian] = useState(false)
-	const [glutenFree, setGlutenFree] = useState(false)
-	const [dairyFree, setDairyFree] = useState(false)
 	const isMounted = useRef(false)
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
@@ -35,15 +32,12 @@ const Homepage = (props) => {
 	}
 
 	const makeFilteredArr = () => {
-		filteredText && setFilteredText(filteredText.toLowerCase())
 		filteredText && setFilteredArr(filteredText.split(/\r?\n/))
 	}
 
-	// prints ingredient array to console
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				console.log(filteredArr)
 				const data = await axios.post('/sample/recipe', {
 					ingredients: ingredientArr,
 					filteredWords: filteredArr
@@ -101,15 +95,29 @@ const Homepage = (props) => {
 				</div>
 			</div>
 			<div className="app">
-				<div className="input-container">
-					<p className="input-instructions">Type or copy/paste ingredients below<br></br><em>(each ingredient must be on a new line)</em></p>
-					<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
-					<button onClick={makeIngredientArr} className="generate-button">Generate Meal Packs</button>
-				</div>
-				<div className="input-container">
-					<p className="input-instructions">Type or copy/paste ingredients you DON'T want to include in recipes<br></br><em>(each ingredient must be on a new line)</em></p>
-					<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="pork&#10;milk&#10;cheese"></textarea>
-					<button onClick={makeFilteredArr} className="generate-button">Submit filtered words</button>
+				<div className="input-section">
+					<div className="input-container">
+						<h3>Ingredients</h3>
+						<p className="input-instructions">Type or copy/paste ingredients to use below<br></br><em>(each ingredient must be on a new line)</em></p>
+						<textarea onChange={(e) => setText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"></textarea>
+						<div className="wrapper">
+							<button onClick={makeIngredientArr} className="generate-button button is-medium">Generate Meal Packs</button>
+						</div>
+					</div>
+					<div className="input-container">
+						<h3>Filter Ingredients</h3>
+						<p className="input-instructions">Type or copy/paste ingredients you DON'T want to include in recipes<br></br><em>(each ingredient must be on a new line)</em></p>
+						<textarea onChange={(e) => setFilteredText(e.target.value)} className="input-box" cols="50" rows="10" placeholder="pork&#10;milk&#10;cheese"></textarea>
+						<div className="wrapper">
+							<button onClick={makeFilteredArr} className="generate-button button is-medium">Save filters</button>
+						</div>
+					</div>
+					<div className="filter-container">
+						<h3>Filters:</h3>
+						<div className="filter-contents">
+							{filteredArr && filteredArr.map((e) => <p className="filter-words">-{e}</p>)}
+						</div>
+					</div>
 				</div>
 				{mealPacks && (
 					<div className="user-selection-container">
