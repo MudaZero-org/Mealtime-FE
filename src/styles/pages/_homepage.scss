@@ -208,3 +208,46 @@
   border-radius: 5px;
   background-color: $my-background;
 }
+
+
+// MEAL PACK PAGE
+
+.info-page-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mealpack-info-page {
+  margin: 30px;
+  width: 50%;
+  text-align: center;
+  padding: 1rem 2rem;
+}
+
+.food-image {
+  height: auto;
+  width: 300px;
+  margin: 2rem auto;
+}
+
+.to-home-button {
+  width: fit-content;
+  margin-bottom: 2rem;
+}
+
+.ingredients-block {
+  margin: 1rem;
+}
+
+.ingredient {
+  margin: 0px;
+  padding: 0px;
+}
+
+.instructions-block {
+  text-align: left;
+}
+
+.instruction {
+  margin: 1rem;
+}
