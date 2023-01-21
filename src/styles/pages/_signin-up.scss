@@ -1,0 +1,39 @@
+@use "../main" as *;
+
+.signup-signin-app {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
+
+.card {
+  grid-column: 2;
+  margin-bottom: 10rem;
+}
+
+.card-title {
+  font-size: 70px;
+  font-family: 'Lobster', cursive;
+}
+
+.input-field {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  align-items: center;
+  font-size: 20px;
+}
+
+.spacer {
+  height: 40px;
+}
+
+.input-field input {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.register-link {
+  color: blue;
+}
