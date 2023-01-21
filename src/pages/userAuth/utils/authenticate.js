@@ -13,7 +13,7 @@ const signUp = async (
   password
 ) => {
   return await axios
-    .post("http://localhost:8080/user/signUp", {
+    .post("http://13.231.182.135:8080/user/signUp", {
       storeName: storename,
       companyName: companyname,
       postalCode: postalcode,
@@ -35,7 +35,7 @@ const signUp = async (
 
 const logIn = async (email, password) => {
   return await axios
-    .post("http://localhost:8080/user/logIn", {
+    .post("http://13.231.182.135:8080/user/logIn", {
       userEmail: email,
       userPassword: password,
     })

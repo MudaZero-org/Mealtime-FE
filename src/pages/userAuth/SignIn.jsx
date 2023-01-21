@@ -75,16 +75,6 @@ const SignIn = (props) => {
 						<div className="input-field">
 							<p>Don't have an account? <a className="register-link" onClick={reroute}>Sign up here!</a></p>
 						</div>
-						<div className="input-field">
-							Delete Auth!
-							<button className="button"
-								onClick={() => {
-									AuthUtils.logOut();
-								}}
-							>
-								Click here!
-							</button>
-						</div>
 					</form>
 				</div>
 			</div>
