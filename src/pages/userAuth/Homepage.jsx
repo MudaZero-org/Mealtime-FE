@@ -28,6 +28,9 @@ const Homepage = (props) => {
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [myMealPacks, setMyMealPacks] = useState([]);
 
+	const user = JSON.parse(localStorage.getItem("user"));
+	const storeName = user.data.storeName;
+
 	const makeIngredientArr = () => {
 		text && setIngredientArr(text.split(/\r?\n/));
 	};
@@ -39,9 +42,12 @@ const Homepage = (props) => {
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				const data = await axios.post("/sample/recipe", {
+				const data = await axios.post("http://13.231.182.135:8080/sample/recipe", {
 					ingredients: ingredientArr,
 					filteredWords: filteredArr,
+				},
+				{
+					headers: {authorization: `Bearer ${user.accessToken}`}
 				});
 				setMealPacks(data.data);
 				const idArray = [];
@@ -65,19 +71,21 @@ const Homepage = (props) => {
 		setMyMealPacks(array);
 	};
 
-	const user = JSON.parse(localStorage.getItem("user"));
-	const storeName = user.data.storeName;
-
 	const publishMealPacks = async () => {
 		const storeId = user.data.userId;
 		const idArray = [];
 		for (let e of myMealPacks) {
 			idArray.push({ id: e.id });
 		}
-		await axios.post(`/store/${storeId}/mealpack`, {
+		await axios.post(`http://13.231.182.135:8080/store/${storeId}/mealpack`, {
 			data: idArray,
+		}, 
+		{
+			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
-		let info = await axios.get(`store/${storeId}/mealpack/all/status/true`);
+		let info = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`, {
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		});
 		setActiveMealPacks(info.data);
 	};
 

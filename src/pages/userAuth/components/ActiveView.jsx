@@ -11,7 +11,9 @@ const ActiveView = (props) => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
 		  const storeId = user.data.userId
-      let data = await axios.get(`store/${storeId}/mealpack/all/status/true`);
+      let data = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`, {
+        headers: {authorization: `Bearer ${user.accessToken}`}
+      });
       setActiveMealPacks(data.data)
     }
     fetchData();
@@ -21,7 +23,9 @@ const ActiveView = (props) => {
   const fetchActivePacks = async () => {
     const user = JSON.parse(localStorage.getItem("user"))
     const storeId = user.data.userId
-    let data = await axios.get(`store/${storeId}/mealpack/all/status/true`);
+    let data = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`,{
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		});
     console.log("hello")
     setActiveMealPacks(data.data)
   }
@@ -66,11 +70,18 @@ const ActiveView = (props) => {
   const deactivateMealPack = async (meal) => {
     const user = JSON.parse(localStorage.getItem("user"))
 		const storeId = user.data.userId
-    console.log(meal.id)
-    await axios.put(`/store/${storeId}/mealpack/${meal.id}`, {
-      is_publishing: false,
-    })
-    let data = await axios.get(`store/${storeId}/mealpack/all/status/false`);
+    console.log(meal.mealpackName)
+    await axios.put(`http://13.231.182.135:8080/store/${storeId}/mealpack/${meal.id}`, {
+      isPublishing: false,
+      mealpackName: meal.mealpackName,
+      isDelete: false
+    },
+    {
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		})
+    let data = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/false`, {
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		});
     setPastMealPacks(data.data)
   }
 
