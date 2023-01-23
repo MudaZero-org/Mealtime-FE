@@ -103,6 +103,13 @@ const Homepage = (props) => {
 		input.value = "";
 	}
 
+	const removeIngredient = (ingredient) => {
+		console.log(ingredient)
+		const arr = [...testInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setTestInputArr(arr)
+	}
+
 	return (
 		<div className="app-container">
 			<div className="homepage-header">
@@ -122,13 +129,13 @@ const Homepage = (props) => {
 						<h3>Ingredients</h3>
 						<p className="input-instructions">
 							Type or copy/paste ingredients to use below<br></br>
-							{/* <em>(each ingredient must be on a new line)</em> */}
 						</p>
 						<input
 							id="userInput"
 							className="input" 
 							type="text"
 							onChange={(e) => setTestInput(e.target.value)}
+							placeholder="type ingredient here"
 						></input>
 						<button 
 							className="button"
@@ -139,7 +146,14 @@ const Homepage = (props) => {
 								clearInput();
 							}}
 						>Test populate</button>
-						{testInputArr.length > 0 && testInputArr.map((e) => <p className="ingredient-name">{e}</p>)}
+						{testInputArr.length > 0 && testInputArr.map((e) => {
+							return (
+								<div className="ingredient-name">
+									<button className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
+									<p className="ingredient-title">{e}</p>
+								</div>
+							)
+						})}
 						<div className="wrapper">
 							<button
 								onClick={makeIngredientArr}
