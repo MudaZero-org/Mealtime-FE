@@ -32,7 +32,7 @@ const Homepage = (props) => {
 	const storeName = user.data.storeName;
 
 	const makeIngredientArr = () => {
-		text && setIngredientArr(text.split(/\r?\n/));
+		setIngredientArr(testInputArr)
 	};
 
 	const makeFilteredArr = () => {
@@ -95,6 +95,14 @@ const Homepage = (props) => {
 		navigate("/");
 	};
 
+	const [testInput, setTestInput] = useState(null);
+	const [testInputArr, setTestInputArr] = useState([]);
+
+	const clearInput = () => {
+		let input = document.getElementById("userInput");
+		input.value = "";
+	}
+
 	return (
 		<div className="app-container">
 			<div className="homepage-header">
@@ -114,22 +122,29 @@ const Homepage = (props) => {
 						<h3>Ingredients</h3>
 						<p className="input-instructions">
 							Type or copy/paste ingredients to use below<br></br>
-							<em>(each ingredient must be on a new line)</em>
+							{/* <em>(each ingredient must be on a new line)</em> */}
 						</p>
-						<textarea
-							onChange={(e) => setText(e.target.value)}
-							className="input-box"
-							cols="50"
-							rows="10"
-							placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"
-						></textarea>
+						<input
+							id="userInput"
+							className="input" 
+							type="text"
+							onChange={(e) => setTestInput(e.target.value)}
+						></input>
+						<button 
+							className="button"
+							onClick={() => {
+								let arr = [...testInputArr]
+								arr.unshift(testInput)
+								setTestInputArr(arr)
+								clearInput();
+							}}
+						>Test populate</button>
+						{testInputArr.length > 0 && testInputArr.map((e) => <p className="ingredient-name">{e}</p>)}
 						<div className="wrapper">
 							<button
 								onClick={makeIngredientArr}
 								className="generate-button button is-medium"
-							>
-								Generate Meal Packs
-							</button>
+							>Generate Meal Packs</button>
 						</div>
 					</div>
 					<div className="input-container">
