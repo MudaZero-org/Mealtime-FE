@@ -4,9 +4,7 @@ import PastView from "./components/PastView";
 import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/pages/_homepage.scss";
-import AuthUtils from "./utils/authenticate";
 
 const Homepage = (props) => {
 	const {
@@ -91,12 +89,6 @@ const Homepage = (props) => {
 		setActiveMealPacks(info.data);
 	};
 
-	const navigate = useNavigate();
-	const logout = () => {
-		AuthUtils.logOut();
-		navigate("/");
-	};
-
 	const [testInput, setTestInput] = useState(null);
 	const [testInputArr, setTestInputArr] = useState([]);
 
@@ -114,17 +106,6 @@ const Homepage = (props) => {
 
 	return (
 		<div className="app-container">
-			{/* <div className="homepage-header">
-				<h1 className="app-title">Mealtime</h1>
-				<div className="user-info">
-					<h1 className="store-title" style={{ marginRight: "1rem" }}>
-						Account: {storeName}
-					</h1>
-					<button onClick={logout} className="logout-button button">
-						Logout
-					</button>
-				</div>
-			</div> */}
 			<div className="app">
 				<div className="input-section">
 					<div className="input-container">
@@ -143,7 +124,6 @@ const Homepage = (props) => {
 								let arr = [...testInputArr]
 								arr.unshift(testInput)
 								if (testInput) {
-									console.log("🫀")
 									setTestInputArr(arr)
 									clearInput();
 									setTestInput(null)

@@ -1,6 +1,15 @@
 import whLogo from "./white-Mealtime.svg";
+import AuthUtils from "../utils/authenticate";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
+	const logout = () => {
+		AuthUtils.logOut();
+		navigate("/");
+	};
+
   return (
     <nav class="navbar is-fixed-top pl-6 pr-6 pt-3 pb-3" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
@@ -34,7 +43,7 @@ const Navbar = () => {
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button logout-button">
+              <a class="button logout-button" onClick={logout}>
                 Log Out
               </a>
             </div>
