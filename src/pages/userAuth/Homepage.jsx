@@ -40,7 +40,6 @@ const Homepage = (props) => {
 	};
 
 	useEffect(() => {
-		console.log("🫀")
 		async function fetchData() {
 			if (isMounted.current) {
 				const data = await axios.post("http://13.231.182.135:8080/sample/recipe", {
