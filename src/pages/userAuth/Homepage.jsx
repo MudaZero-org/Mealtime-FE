@@ -92,8 +92,8 @@ const Homepage = (props) => {
 	const [testInput, setTestInput] = useState(null);
 	const [testInputArr, setTestInputArr] = useState([]);
 
-	const clearInput = () => {
-		let input = document.getElementById("userInput");
+	const clearIngredientInput = () => {
+		let input = document.getElementById("userIngredientInput");
 		input.value = "";
 	}
 
@@ -112,7 +112,7 @@ const Homepage = (props) => {
 						<h3>Ingredients</h3>
 						<p className="input-instructions">Type or copy/paste ingredients to use below<br></br></p>
 						<input
-							id="userInput"
+							id="userIngredientInput"
 							className="input" 
 							type="text"
 							onChange={(e) => setTestInput(e.target.value)}
@@ -125,7 +125,7 @@ const Homepage = (props) => {
 								arr.unshift(testInput)
 								if (testInput) {
 									setTestInputArr(arr)
-									clearInput();
+									clearIngredientInput();
 									setTestInput(null)
 								}
 							}}
@@ -164,7 +164,7 @@ const Homepage = (props) => {
 								onClick={makeFilteredArr}
 								className="generate-button button is-medium"
 							>Save filters</button>
-							<button className="button is-medium">Clear filters</button>
+							<button className="button is-medium" onClick={() => setFilteredArr([])}>Clear filters</button>
 						</div>
 					</div>
 					<div className="filter-container">
