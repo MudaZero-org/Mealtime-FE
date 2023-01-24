@@ -5,6 +5,7 @@ import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal";
 import { useState, useEffect, useRef } from "react";
 import "../../styles/pages/_homepage.scss";
+import { v4 as uuidv4 } from 'uuid';
 
 const Homepage = (props) => {
 	const {
@@ -132,9 +133,9 @@ const Homepage = (props) => {
 						>Add</button>
 						{testInputArr.length > 0 && testInputArr.map((e) => {
 							return (
-								<div className="ingredient-name">
-									<button className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
-									<p className="ingredient-title">{e}</p>
+								<div key={uuidv4()} className="ingredient-name">
+									<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
+									<p key={uuidv4()} className="ingredient-title">{e}</p>
 								</div>
 							)
 						})}
@@ -171,7 +172,7 @@ const Homepage = (props) => {
 						<h3>Filters:</h3>
 						<div className="filter-contents">
 							{filteredArr &&
-								filteredArr.map((e) => <p className="filter-words">-{e}</p>)}
+								filteredArr.map((e) => <p key={uuidv4()} className="filter-words">-{e}</p>)}
 						</div>
 					</div>
 				</div>
@@ -182,19 +183,21 @@ const Homepage = (props) => {
 							{mealPacks &&
 								mealPacks.map((e) => {
 									return (
-										<div key={e.id} className="mealpack-container">
+										<div key={uuidv4()} className="mealpack-container">
 											<button
+											  key={uuidv4()}
 												className="mealpack-add-button button"
 												onClick={() => addToMyMealPacks(e)}
 											>Add To "My Meal Packs"</button>
 											<button
+											  key={uuidv4()}
 												className="mealpack-info-button button"
 												onClick={() => {
 													setSelectedMealPack(e);
 													setShow(true);
 												}}
 											>See Meal Pack Info</button>
-											<p className="mealpack-title">
+											<p key={uuidv4()} className="mealpack-title">
 												<strong>{e.title}</strong> meal pack
 											</p>
 										</div>
@@ -207,19 +210,21 @@ const Homepage = (props) => {
 								{myMealPacks &&
 									myMealPacks.map((e, index) => {
 										return (
-											<div className="mealpack-container">
+											<div key={uuidv4()} className="mealpack-container">
 												<button
+												  key={uuidv4()}
 													onClick={() => removeFromMyMealPacks(e)}
 													className="button"
 												>Remove from "My Meal Packs"</button>
 												<button
+												  key={uuidv4()}
 													className="mealpack-info-button button"
 													onClick={() => {
 														setSelectedMealPack(e);
 														setShow(true);
 													}}
 												>See Meal Pack Info</button>
-												<p className="mealpack-title" key={index}>
+												<p key={uuidv4()} className="mealpack-title">
 													<strong>{e.title}</strong> meal pack
 												</p>
 											</div>
