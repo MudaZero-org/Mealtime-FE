@@ -147,7 +147,7 @@ const Homepage = (props) => {
 								setTestInputArr(arr)
 								clearInput();
 							}}
-						>Test populate</button>
+						>Add</button>
 						{testInputArr.length > 0 && testInputArr.map((e) => {
 							return (
 								<div className="ingredient-name">
@@ -181,9 +181,8 @@ const Homepage = (props) => {
 							<button
 								onClick={makeFilteredArr}
 								className="generate-button button is-medium"
-							>
-								Save filters
-							</button>
+							>Save filters</button>
+							<button className="button is-medium">Clear filters</button>
 						</div>
 					</div>
 					<div className="filter-container">
