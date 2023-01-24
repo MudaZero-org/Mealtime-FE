@@ -32,7 +32,8 @@ const Homepage = (props) => {
 	const storeName = user.data.storeName;
 
 	const makeIngredientArr = () => {
-		text && setIngredientArr(text.split(/\r?\n/));
+		let arr = [...testInputArr]
+		setIngredientArr(arr)
 	};
 
 	const makeFilteredArr = () => {
@@ -40,6 +41,7 @@ const Homepage = (props) => {
 	};
 
 	useEffect(() => {
+		console.log("🫀")
 		async function fetchData() {
 			if (isMounted.current) {
 				const data = await axios.post("http://13.231.182.135:8080/sample/recipe", {
@@ -95,6 +97,21 @@ const Homepage = (props) => {
 		navigate("/");
 	};
 
+	const [testInput, setTestInput] = useState(null);
+	const [testInputArr, setTestInputArr] = useState([]);
+
+	const clearInput = () => {
+		let input = document.getElementById("userInput");
+		input.value = "";
+	}
+
+	const removeIngredient = (ingredient) => {
+		console.log(ingredient)
+		const arr = [...testInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setTestInputArr(arr)
+	}
+
 	return (
 		<div className="app-container">
 			<div className="homepage-header">
@@ -114,22 +131,36 @@ const Homepage = (props) => {
 						<h3>Ingredients</h3>
 						<p className="input-instructions">
 							Type or copy/paste ingredients to use below<br></br>
-							<em>(each ingredient must be on a new line)</em>
 						</p>
-						<textarea
-							onChange={(e) => setText(e.target.value)}
-							className="input-box"
-							cols="50"
-							rows="10"
-							placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"
-						></textarea>
+						<input
+							id="userInput"
+							className="input" 
+							type="text"
+							onChange={(e) => setTestInput(e.target.value)}
+							placeholder="type ingredient here"
+						></input>
+						<button 
+							className="button"
+							onClick={() => {
+								let arr = [...testInputArr]
+								arr.unshift(testInput)
+								setTestInputArr(arr)
+								clearInput();
+							}}
+						>Test populate</button>
+						{testInputArr.length > 0 && testInputArr.map((e) => {
+							return (
+								<div className="ingredient-name">
+									<button className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
+									<p className="ingredient-title">{e}</p>
+								</div>
+							)
+						})}
 						<div className="wrapper">
 							<button
 								onClick={makeIngredientArr}
 								className="generate-button button is-medium"
-							>
-								Generate Meal Packs
-							</button>
+							>Generate Meal Packs</button>
 						</div>
 					</div>
 					<div className="input-container">
