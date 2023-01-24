@@ -266,3 +266,26 @@
 .ingredient-button {
   padding: 0px 5px;
 }
+
+
+// NAVBAR STYLES
+
+.navbar {
+  background-color: hsl(171, 100%, 29%);
+  border-bottom: 1px solid black;
+}
+
+.navbar-item {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  height: 35px;
+}
+
+.logout-button {
+  text-decoration: none;
+}
+
+.past-mealpacks-page, .profile-page, .app-container, .info-page-container {
+  margin-top: 100px;
+}

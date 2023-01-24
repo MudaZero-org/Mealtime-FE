@@ -7,6 +7,9 @@ import SignIn from "./pages/userAuth/SignIn";
 import SignUp from "./pages/userAuth/SignUp";
 import Homepage from "./pages/userAuth/Homepage";
 import MealPack from "./pages/userAuth/MealPack";
+import Profile from "./pages/userAuth/Profile";
+import PastMealpacks from "./pages/userAuth/PastMealpacks";
+import Navbar from "./pages/userAuth/components/Navbar";
 
 function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
@@ -23,26 +26,52 @@ function App() {
           exact
           path="/home"
           element={
-            <Homepage
-              selectedActivePack={selectedActivePack}
-              setSelectedActivePastPack={setSelectedActivePastPack}
-              activeMealPacks={activeMealPacks}
-              setActiveMealPacks={setActiveMealPacks}
-              pastMealPacks={pastMealPacks}
-              setPastMealPacks={setPastMealPacks}
-            />
+            <>
+              <Navbar />
+              <Homepage
+                selectedActivePack={selectedActivePack}
+                setSelectedActivePastPack={setSelectedActivePastPack}
+                activeMealPacks={activeMealPacks}
+                setActiveMealPacks={setActiveMealPacks}
+                pastMealPacks={pastMealPacks}
+                setPastMealPacks={setPastMealPacks}
+              />
+            </>
           }
         />
         <Route
           exact
           path="/mealpack"
           element={
-            <MealPack
-              selectedActivePack={selectedActivePack}
-              setSelectedActivePastPack={setSelectedActivePastPack}
-            />
+            <>
+              <Navbar />
+              <MealPack
+                selectedActivePack={selectedActivePack}
+                setSelectedActivePastPack={setSelectedActivePastPack}
+              />
+            </>
           }
         />
+        <Route
+          exact
+          path="/profile"
+          element={
+            <>
+              <Navbar />
+              <Profile />
+            </>
+          }
+        ></Route>
+        <Route
+          exact
+          path="/past-mealpacks"
+          element={
+            <>
+              <Navbar />
+              <PastMealpacks />
+            </>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -4,9 +4,7 @@ import PastView from "./components/PastView";
 import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/pages/_homepage.scss";
-import AuthUtils from "./utils/authenticate";
 
 const Homepage = (props) => {
 	const {
@@ -91,17 +89,11 @@ const Homepage = (props) => {
 		setActiveMealPacks(info.data);
 	};
 
-	const navigate = useNavigate();
-	const logout = () => {
-		AuthUtils.logOut();
-		navigate("/");
-	};
-
 	const [testInput, setTestInput] = useState(null);
 	const [testInputArr, setTestInputArr] = useState([]);
 
-	const clearInput = () => {
-		let input = document.getElementById("userInput");
+	const clearIngredientInput = () => {
+		let input = document.getElementById("userIngredientInput");
 		input.value = "";
 	}
 
@@ -114,26 +106,13 @@ const Homepage = (props) => {
 
 	return (
 		<div className="app-container">
-			<div className="homepage-header">
-				<h1 className="app-title">Mealtime</h1>
-				<div className="user-info">
-					<h1 className="store-title" style={{ marginRight: "1rem" }}>
-						Account: {storeName}
-					</h1>
-					<button onClick={logout} className="logout-button button">
-						Logout
-					</button>
-				</div>
-			</div>
 			<div className="app">
 				<div className="input-section">
 					<div className="input-container">
 						<h3>Ingredients</h3>
-						<p className="input-instructions">
-							Type or copy/paste ingredients to use below<br></br>
-						</p>
+						<p className="input-instructions">Type or copy/paste ingredients to use below<br></br></p>
 						<input
-							id="userInput"
+							id="userIngredientInput"
 							className="input" 
 							type="text"
 							onChange={(e) => setTestInput(e.target.value)}
@@ -144,10 +123,13 @@ const Homepage = (props) => {
 							onClick={() => {
 								let arr = [...testInputArr]
 								arr.unshift(testInput)
-								setTestInputArr(arr)
-								clearInput();
+								if (testInput) {
+									setTestInputArr(arr)
+									clearIngredientInput();
+									setTestInput(null)
+								}
 							}}
-						>Test populate</button>
+						>Add</button>
 						{testInputArr.length > 0 && testInputArr.map((e) => {
 							return (
 								<div className="ingredient-name">
@@ -181,9 +163,8 @@ const Homepage = (props) => {
 							<button
 								onClick={makeFilteredArr}
 								className="generate-button button is-medium"
-							>
-								Save filters
-							</button>
+							>Save filters</button>
+							<button className="button is-medium" onClick={() => setFilteredArr([])}>Clear filters</button>
 						</div>
 					</div>
 					<div className="filter-container">
@@ -197,9 +178,7 @@ const Homepage = (props) => {
 				{mealPacks && (
 					<div className="user-selection-container">
 						<div className="generated-mealpacks-container">
-							<h3 className="generated-mealpacks-title">
-								Generated Meal Packs
-							</h3>
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 							{mealPacks &&
 								mealPacks.map((e) => {
 									return (
@@ -207,18 +186,14 @@ const Homepage = (props) => {
 											<button
 												className="mealpack-add-button button"
 												onClick={() => addToMyMealPacks(e)}
-											>
-												Add To "My Meal Packs"
-											</button>
+											>Add To "My Meal Packs"</button>
 											<button
 												className="mealpack-info-button button"
 												onClick={() => {
 													setSelectedMealPack(e);
 													setShow(true);
 												}}
-											>
-												See Meal Pack Info
-											</button>
+											>See Meal Pack Info</button>
 											<p className="mealpack-title">
 												<strong>{e.title}</strong> meal pack
 											</p>
@@ -236,18 +211,14 @@ const Homepage = (props) => {
 												<button
 													onClick={() => removeFromMyMealPacks(e)}
 													className="button"
-												>
-													Remove from "My Meal Packs"
-												</button>
+												>Remove from "My Meal Packs"</button>
 												<button
 													className="mealpack-info-button button"
 													onClick={() => {
 														setSelectedMealPack(e);
 														setShow(true);
 													}}
-												>
-													See Meal Pack Info
-												</button>
+												>See Meal Pack Info</button>
 												<p className="mealpack-title" key={index}>
 													<strong>{e.title}</strong> meal pack
 												</p>
@@ -263,15 +234,11 @@ const Homepage = (props) => {
 									publishMealPacks();
 									setMyMealPacks([]);
 								}}
-							>
-								Save
-							</button>
+							>Save</button>
 							<button
 								className="publish-button button is-primary is-outlined is-dark"
 								onClick={() => setMealPacks(null)}
-							>
-								Close
-							</button>
+							>Close</button>
 						</div>
 					</div>
 				)}
