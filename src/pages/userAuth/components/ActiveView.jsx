@@ -3,6 +3,7 @@ import { jsPDF } from "jspdf";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../styles/pages/_homepage.scss";
+import { v4 as uuidv4 } from 'uuid';
 
 const ActiveView = (props) => {
   const { activeMealPacks, setActiveMealPacks, setPastMealPacks, pastMealPacks, selectedActivePack, setSelectedActivePastPack } = props;
@@ -91,11 +92,11 @@ const ActiveView = (props) => {
 
       {activeMealPacks && activeMealPacks.map((e, index) => {
         return (
-          <div className="active-mealpack-container">
-            <p className="mealpack-title" key={index}><strong>{e.mealpackName}</strong> meal pack</p>
-            <button className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
-            <button className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
-            <button className="button" onClick={async () => {
+          <div key={uuidv4()} className="active-mealpack-container">
+            <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong> meal pack</p>
+            <button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
+            <button key={uuidv4()} className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
+            <button key={uuidv4()} className="button" onClick={async () => {
               await deactivateMealPack(e)
               fetchActivePacks()
             }}>Deactivate Meal Pack</button>

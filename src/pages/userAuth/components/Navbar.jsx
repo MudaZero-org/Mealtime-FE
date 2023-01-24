@@ -11,39 +11,39 @@ const Navbar = () => {
 	};
 
   return (
-    <nav class="navbar is-fixed-top pl-6 pr-6 pt-3 pb-3" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/home">
+    <nav className="navbar is-fixed-top pl-6 pr-6 pt-3 pb-3" role="navigation" aria-label="main navigation">
+      <div className="navbar-brand">
+        <a className="navbar-item" href="/home">
           <img src={whLogo}></img>
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a href="/home" class="navbar-item">
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-start">
+          <a href="/home" className="navbar-item">
             Home
           </a>
 
-          <a href="/past-mealpacks" class="navbar-item">
+          <a href="/past-mealpacks" className="navbar-item">
             Past Meal Packs
           </a>
 
-          <a href="/profile" class="navbar-item">
+          <a href="/profile" className="navbar-item">
             Profile
           </a>
         </div>
 
 
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button logout-button" onClick={logout}>
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <a className="button logout-button" onClick={logout}>
                 Log Out
               </a>
             </div>
