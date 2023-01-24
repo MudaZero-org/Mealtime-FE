@@ -114,7 +114,7 @@ const Homepage = (props) => {
 
 	return (
 		<div className="app-container">
-			<div className="homepage-header">
+			{/* <div className="homepage-header">
 				<h1 className="app-title">Mealtime</h1>
 				<div className="user-info">
 					<h1 className="store-title" style={{ marginRight: "1rem" }}>
@@ -124,7 +124,7 @@ const Homepage = (props) => {
 						Logout
 					</button>
 				</div>
-			</div>
+			</div> */}
 			<div className="app">
 				<div className="input-section">
 					<div className="input-container">

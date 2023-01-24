@@ -17,7 +17,6 @@
 }
 
 .homepage-header {
-  visibility: hidden;
   grid-column: 1 / 4;
   display: grid;
   grid-template-columns: 2fr 3fr 2fr;
@@ -284,4 +283,8 @@
 
 .logout-button {
   text-decoration: none;
+}
+
+.past-mealpacks-page, .profile-page, .app-container {
+  margin-top: 100px;
 }

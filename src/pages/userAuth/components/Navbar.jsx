@@ -2,7 +2,7 @@ import whLogo from "./white-Mealtime.svg";
 
 const Navbar = () => {
   return (
-    <nav class="navbar is-fixed-top mb-4 pl-6 pr-6 pt-3 pb-3" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-fixed-top pl-6 pr-6 pt-3 pb-3" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="/home">
           <img src={whLogo}></img>
