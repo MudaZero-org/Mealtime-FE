@@ -1,4 +1,4 @@
-import whLogo from "./white-Mealtime.svg";
+import whLogo from "../../../images/white-Mealtime.svg";
 import AuthUtils from "../utils/authenticate";
 import { useNavigate } from "react-router-dom";
 
