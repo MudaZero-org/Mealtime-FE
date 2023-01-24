@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { UNSAFE_NavigationContext, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
 	const [storeName, setStoreName] = useState("");
-	const [companyName, setCompanyName] = useState("");
-	const [postalCode, setPostalCode] = useState("");
-	const [address, setAddress] = useState("");
-	const [phoneNumber, setPhoneNumber] = useState("");
+	// const [companyName, setCompanyName] = useState("");
+	// const [postalCode, setPostalCode] = useState("");
+	// const [address, setAddress] = useState("");
+	// const [phoneNumber, setPhoneNumber] = useState("");
 	const [email, setEmail] = useState("");
-	const [storeManager, setStoreManager] = useState("");
+	// const [storeManager, setStoreManager] = useState("");
 	const [password, setPassword] = useState("");
 	const [secondPassword, setSecondPassword] = useState("")
 	const [passwordsMatch, setPasswordsMatch] = useState(true)
@@ -87,12 +87,12 @@ const SignUp = (props) => {
 
 										AuthUtils.signUp(
 											storeName,
-											companyName,
-											postalCode,
-											address,
-											phoneNumber,
+											// companyName,
+											// postalCode,
+											// address,
+											// phoneNumber,
 											email,
-											storeManager,
+											// storeManager,
 											password
 										).then((res) => {
 											toTheHomepage();
