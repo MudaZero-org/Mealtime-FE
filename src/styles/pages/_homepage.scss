@@ -17,6 +17,7 @@
 }
 
 .homepage-header {
+  visibility: hidden;
   grid-column: 1 / 4;
   display: grid;
   grid-template-columns: 2fr 3fr 2fr;
@@ -265,4 +266,22 @@
 
 .ingredient-button {
   padding: 0px 5px;
+}
+
+
+// NAVBAR STYLES
+
+.navbar {
+  background-color: hsl(171, 100%, 29%);
+}
+
+.navbar-item {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  height: 35px;
+}
+
+.logout-button {
+  text-decoration: none;
 }
