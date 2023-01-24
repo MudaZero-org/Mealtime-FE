@@ -129,9 +129,7 @@ const Homepage = (props) => {
 				<div className="input-section">
 					<div className="input-container">
 						<h3>Ingredients</h3>
-						<p className="input-instructions">
-							Type or copy/paste ingredients to use below<br></br>
-						</p>
+						<p className="input-instructions">Type or copy/paste ingredients to use below<br></br></p>
 						<input
 							id="userInput"
 							className="input" 
@@ -144,8 +142,12 @@ const Homepage = (props) => {
 							onClick={() => {
 								let arr = [...testInputArr]
 								arr.unshift(testInput)
-								setTestInputArr(arr)
-								clearInput();
+								if (testInput) {
+									console.log("🫀")
+									setTestInputArr(arr)
+									clearInput();
+									setTestInput(null)
+								}
 							}}
 						>Add</button>
 						{testInputArr.length > 0 && testInputArr.map((e) => {
@@ -196,9 +198,7 @@ const Homepage = (props) => {
 				{mealPacks && (
 					<div className="user-selection-container">
 						<div className="generated-mealpacks-container">
-							<h3 className="generated-mealpacks-title">
-								Generated Meal Packs
-							</h3>
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 							{mealPacks &&
 								mealPacks.map((e) => {
 									return (
@@ -206,18 +206,14 @@ const Homepage = (props) => {
 											<button
 												className="mealpack-add-button button"
 												onClick={() => addToMyMealPacks(e)}
-											>
-												Add To "My Meal Packs"
-											</button>
+											>Add To "My Meal Packs"</button>
 											<button
 												className="mealpack-info-button button"
 												onClick={() => {
 													setSelectedMealPack(e);
 													setShow(true);
 												}}
-											>
-												See Meal Pack Info
-											</button>
+											>See Meal Pack Info</button>
 											<p className="mealpack-title">
 												<strong>{e.title}</strong> meal pack
 											</p>
@@ -235,18 +231,14 @@ const Homepage = (props) => {
 												<button
 													onClick={() => removeFromMyMealPacks(e)}
 													className="button"
-												>
-													Remove from "My Meal Packs"
-												</button>
+												>Remove from "My Meal Packs"</button>
 												<button
 													className="mealpack-info-button button"
 													onClick={() => {
 														setSelectedMealPack(e);
 														setShow(true);
 													}}
-												>
-													See Meal Pack Info
-												</button>
+												>See Meal Pack Info</button>
 												<p className="mealpack-title" key={index}>
 													<strong>{e.title}</strong> meal pack
 												</p>
@@ -262,15 +254,11 @@ const Homepage = (props) => {
 									publishMealPacks();
 									setMyMealPacks([]);
 								}}
-							>
-								Save
-							</button>
+							>Save</button>
 							<button
 								className="publish-button button is-primary is-outlined is-dark"
 								onClick={() => setMealPacks(null)}
-							>
-								Close
-							</button>
+							>Close</button>
 						</div>
 					</div>
 				)}
