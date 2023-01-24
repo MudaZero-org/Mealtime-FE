@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { UNSAFE_NavigationContext, useNavigate } from "react-router-dom";
 
 import AuthUtils from "./utils/authenticate";
 
@@ -12,8 +12,8 @@ const SignUp = (props) => {
 	const [email, setEmail] = useState("");
 	const [storeManager, setStoreManager] = useState("");
 	const [password, setPassword] = useState("");
-	const [err, setErr] = useState("");
-	const [errPwd, setErrPwd] = useState("");
+	const [secondPassword, setSecondPassword] = useState("")
+	const [passwordsMatch, setPasswordsMatch] = useState(true)
 
 	const navigate = useNavigate();
 	const reroute = () => {
@@ -69,16 +69,22 @@ const SignUp = (props) => {
 							<input
 								type="password"
 								placeholder="Re-enter password"
-								// onChange={(e) => {
-								// 	setPassword(e.target.value);
-								// }}
+								onChange={(e) => {
+									setSecondPassword(e.target.value);
+								}}
 							></input>
 						</div>
+						{passwordsMatch === false && <p style={{ textAlign: "center", marginTop: "1rem", color: "red" }}><em>Passwords don't match!</em></p>}
 						<div className="input-field">
 							<button className="button is-medium"
 								onClick={async (e) => {
 									e.preventDefault();
 									try {
+										if (password !== secondPassword) {
+											setPasswordsMatch(false)
+											return;
+										}
+
 										AuthUtils.signUp(
 											storeName,
 											companyName,
@@ -93,15 +99,9 @@ const SignUp = (props) => {
 										});
 									} catch (error) {
 										console.log(error);
-										//Error handling
-										// if (err === "") {
-										// 	setLoginView("login");
-										// }
 									}
 								}}
-							>
-								Signup
-							</button>
+							>Signup</button>
 						</div>
 						<div className="spacer"></div>
 					</form>
