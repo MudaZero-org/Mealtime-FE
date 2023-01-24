@@ -45,62 +45,12 @@ const SignUp = (props) => {
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Company name:</label>
-							<input
-								type="text"
-								placeholder="Enter company name"
-								onChange={(e) => {
-									setCompanyName(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Postal Code:</label>
-							<input
-								type="text"
-								placeholder="Enter postal code"
-								onChange={(e) => {
-									setPostalCode(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Store Address:</label>
-							<input
-								type="text"
-								placeholder="Enter store address"
-								onChange={(e) => {
-									setAddress(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Phone Number:</label>
-							<input
-								type="text"
-								placeholder="Enter phone number"
-								onChange={(e) => {
-									setPhoneNumber(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
 							<label>Email Address:</label>
 							<input
 								type="email"
 								placeholder="Enter email address"
 								onChange={(e) => {
 									setEmail(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Store Manager:</label>
-							<input
-								type="text"
-								placeholder="Enter store manager"
-								onChange={(e) => {
-									setStoreManager(e.target.value);
 								}}
 							></input>
 						</div>
@@ -112,6 +62,16 @@ const SignUp = (props) => {
 								onChange={(e) => {
 									setPassword(e.target.value);
 								}}
+							></input>
+						</div>
+						<div className="input-field">
+							<label>Password:</label>
+							<input
+								type="password"
+								placeholder="Re-enter password"
+								// onChange={(e) => {
+								// 	setPassword(e.target.value);
+								// }}
 							></input>
 						</div>
 						<div className="input-field">
