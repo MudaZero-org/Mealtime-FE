@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from 'uuid';
+import API_URL from "../../../Constants";
 
 const ActiveView = (props) => {
   const { activeMealPacks, setActiveMealPacks, setPastMealPacks, pastMealPacks, selectedActivePack, setSelectedActivePastPack } = props;
@@ -12,7 +13,7 @@ const ActiveView = (props) => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
 		  const storeId = user.data.userId
-      let data = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`, {
+      let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
         headers: {authorization: `Bearer ${user.accessToken}`}
       });
       setActiveMealPacks(data.data)
@@ -24,7 +25,7 @@ const ActiveView = (props) => {
   const fetchActivePacks = async () => {
     const user = JSON.parse(localStorage.getItem("user"))
     const storeId = user.data.userId
-    let data = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`,{
+    let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`,{
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
     console.log("hello")
@@ -72,7 +73,7 @@ const ActiveView = (props) => {
     const user = JSON.parse(localStorage.getItem("user"))
 		const storeId = user.data.userId
     console.log(meal.mealpackName)
-    await axios.put(`http://13.231.182.135:8080/store/${storeId}/mealpack/${meal.id}`, {
+    await axios.put(`${API_URL}/store/${storeId}/mealpack/${meal.id}`, {
       isPublishing: false,
       mealpackName: meal.mealpackName,
       isDelete: false
@@ -80,7 +81,7 @@ const ActiveView = (props) => {
     {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		})
-    let data = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/false`, {
+    let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/false`, {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
     setPastMealPacks(data.data)

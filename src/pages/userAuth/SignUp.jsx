@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { UNSAFE_NavigationContext, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
 	const [storeName, setStoreName] = useState("");
-	const [companyName, setCompanyName] = useState("");
-	const [postalCode, setPostalCode] = useState("");
-	const [address, setAddress] = useState("");
-	const [phoneNumber, setPhoneNumber] = useState("");
+	const [companyName, setCompanyName] = useState("test-company");
+	const [postalCode, setPostalCode] = useState(12345);
+	const [address, setAddress] = useState("test-address");
+	const [phoneNumber, setPhoneNumber] = useState(67890);
 	const [email, setEmail] = useState("");
-	const [storeManager, setStoreManager] = useState("");
+	const [storeManager, setStoreManager] = useState("test-manager");
 	const [password, setPassword] = useState("");
 	const [secondPassword, setSecondPassword] = useState("")
 	const [passwordsMatch, setPasswordsMatch] = useState(true)
