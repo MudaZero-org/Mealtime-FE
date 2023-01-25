@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import API_URL from "../../../Constants";
 
 const PastView = (props) => {
-  const { pastMealPacks, setPastMealPacks, activeMealPacks, setActiveMealPacks, setSelectedActivePastPack } = props;
+  const { pastMealPacks, setPastMealPacks, setActiveMealPacks, setSelectedActivePastPack } = props;
 
   useEffect(() => {
     async function fetchData() {

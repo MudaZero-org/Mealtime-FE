@@ -68,7 +68,12 @@ function App() {
           element={
             <>
               <Navbar />
-              <PastMealpacks />
+              <PastMealpacks
+                setActiveMealPacks={setActiveMealPacks}
+                setPastMealPacks={setPastMealPacks}
+                pastMealPacks={pastMealPacks}
+                setSelectedActivePastPack={setSelectedActivePastPack}
+              />
             </>
           }
         ></Route>
