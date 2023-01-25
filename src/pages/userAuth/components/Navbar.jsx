@@ -1,8 +1,10 @@
 import whLogo from "../../../images/white-Mealtime.svg";
 import AuthUtils from "../utils/authenticate";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [isActive, setIsActive] = useState(false)
 
   const navigate = useNavigate();
 	const logout = () => {
@@ -17,29 +19,25 @@ const Navbar = () => {
           <img src={whLogo}></img>
         </a>
 
-        <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a onClick={() => setIsActive(!isActive)} role="button" className={`navbar-burger burger ${isActive ? 'is-active' : ''}`} aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
 
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div id="navMenu" className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
         <div className="navbar-start">
-          <a href="/home" className="navbar-item">
+          <a href="/home" className={`navbar-item ${isActive ? "dark" : ""}`}>
             Home
           </a>
-
-          <a href="/past-mealpacks" className="navbar-item">
+          <a href="/past-mealpacks" className={`navbar-item ${isActive ? "dark" : ""}`}>
             Past Meal Packs
           </a>
-
-          <a href="/profile" className="navbar-item">
+          <a href="/profile" className={`navbar-item ${isActive ? "dark" : ""}`}>
             Profile
           </a>
         </div>
-
-
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
