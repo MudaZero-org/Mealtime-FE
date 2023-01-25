@@ -5,6 +5,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  background-image: url("../../images/background-img.jpg");
+  background-size: cover;
 }
 
 .card {
@@ -35,5 +37,8 @@
 }
 
 .register-link {
-  color: blue;
+  color: rgb(187, 90, 77);
+  &:hover {
+    color: rgb(116, 56, 48)
+  }
 }

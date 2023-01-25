@@ -23,11 +23,11 @@ const SignIn = (props) => {
 	return (
 		<div className="signup-signin-app">
 			<div className="card">
-				<div className="card-header has-background-primary-dark">
+				<header className="card-header has-background-primary-dark">
 					<div className="card-header-title is-centered">
 						<h1 className="card-title">Mealtime</h1>
 					</div>
-				</div>
+				</header>
 				<div className="card-content">
 					<form>
 						<div className="input-field">

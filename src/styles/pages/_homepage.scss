@@ -3,12 +3,13 @@
 .app-container {
   display: grid;
   grid-template-columns: 10% auto 10%;
+  background-color: $my-background;
 }
 
 .app {
   grid-column: 2/3;
-  background-color: $my-white;
   color: black;
+  background-color: $my-background;
 }
 
 .footer {
@@ -206,7 +207,7 @@
   border: 1px solid black;
   margin: 1rem;
   border-radius: 5px;
-  background-color: $my-background;
+  background-color: white;
 }
 
 
@@ -287,5 +288,7 @@
 }
 
 .past-mealpacks-page, .profile-page, .app-container, .info-page-container {
-  margin-top: 100px;
+  padding-top: 100px;
+  background-color: $my-background;
+  min-height: 100vh;
 }
