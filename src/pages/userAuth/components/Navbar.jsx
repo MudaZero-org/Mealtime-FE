@@ -31,8 +31,11 @@ const Navbar = () => {
           <a href="/home" className={`navbar-item ${isActive ? "dark" : ""}`}>
             Home
           </a>
+          <a href="/active-mealpacks" className={`navbar-item ${isActive ? "dark" : ""}`}>
+            Active View
+          </a>
           <a href="/past-mealpacks" className={`navbar-item ${isActive ? "dark" : ""}`}>
-            Past Meal Packs
+            Past View
           </a>
           <a href="/profile" className={`navbar-item ${isActive ? "dark" : ""}`}>
             Profile

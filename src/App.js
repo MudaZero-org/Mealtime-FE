@@ -10,6 +10,7 @@ import MealPack from "./pages/userAuth/MealPack";
 import Profile from "./pages/userAuth/Profile";
 import PastMealpacks from "./pages/userAuth/PastMealpacks";
 import Navbar from "./pages/userAuth/components/Navbar";
+import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
 
 function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
@@ -73,6 +74,23 @@ function App() {
                 setPastMealPacks={setPastMealPacks}
                 pastMealPacks={pastMealPacks}
                 setSelectedActivePastPack={setSelectedActivePastPack}
+              />
+            </>
+          }
+        ></Route>
+        <Route
+          exact
+          path="/active-mealpacks"
+          element={
+            <>
+              <Navbar />
+              <ActiveMealpacks
+                selectedActivePack={selectedActivePack}
+                setSelectedActivePastPack={setSelectedActivePastPack}
+                activeMealPacks={activeMealPacks}
+                setActiveMealPacks={setActiveMealPacks}
+                pastMealPacks={pastMealPacks}
+                setPastMealPacks={setPastMealPacks}
               />
             </>
           }

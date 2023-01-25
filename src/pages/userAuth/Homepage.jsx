@@ -247,16 +247,6 @@ const Homepage = (props) => {
 						</div>
 					</div>
 				)}
-				<div className="active-view">
-					<ActiveView
-						selectedActivePack={selectedActivePack}
-						setSelectedActivePastPack={setSelectedActivePastPack}
-						activeMealPacks={activeMealPacks}
-						setActiveMealPacks={setActiveMealPacks}
-						pastMealPacks={pastMealPacks}
-						setPastMealPacks={setPastMealPacks}
-					/>
-				</div>
 				<MealPackModal
 					selectedMealPack={selectedMealPack}
 					setSelectedMealPack={setSelectedMealPack}
