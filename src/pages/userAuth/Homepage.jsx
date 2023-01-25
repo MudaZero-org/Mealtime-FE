@@ -6,6 +6,7 @@ import MealPackModal from "./components/MealPackModal";
 import { useState, useEffect, useRef } from "react";
 import "../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from 'uuid';
+import API_URL from "../../Constants";
 
 const Homepage = (props) => {
 	const {
@@ -42,7 +43,7 @@ const Homepage = (props) => {
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				const data = await axios.post("http://13.231.182.135:8080/sample/recipe", {
+				const data = await axios.post(`${API_URL}/sample/recipe`, {
 					ingredients: ingredientArr,
 					filteredWords: filteredArr,
 				},
@@ -77,13 +78,13 @@ const Homepage = (props) => {
 		for (let e of myMealPacks) {
 			idArray.push({ id: e.id });
 		}
-		await axios.post(`http://13.231.182.135:8080/store/${storeId}/mealpack`, {
+		await axios.post(`${API_URL}/store/${storeId}/mealpack`, {
 			data: idArray,
 		}, 
 		{
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
-		let info = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`, {
+		let info = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
 		setActiveMealPacks(info.data);
