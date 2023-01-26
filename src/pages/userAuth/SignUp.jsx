@@ -32,51 +32,55 @@ const SignUp = (props) => {
 						<h1 className="card-title">Mealtime</h1>
 					</div>
 				</div>
-				<div className="card-content">
-					<form>
+				<div className="card-content signup-content">
+					<form className="form">
 						<div className="input-field">
-							<label>Store name:</label>
+							<label>Store Name</label>
 							<input
+								className="text-input-field"
 								type="text"
-								placeholder="Enter store name"
+								placeholder="Store Name"
 								onChange={(e) => {
 									setStoreName(e.target.value);
 								}}
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Email Address:</label>
+							<label>Email</label>
 							<input
+								className="text-input-field"
 								type="email"
-								placeholder="Enter email address"
+								placeholder="Email"
 								onChange={(e) => {
 									setEmail(e.target.value);
 								}}
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Password:</label>
+							<label>Password</label>
 							<input
+								className="text-input-field"
 								type="password"
-								placeholder="Enter password"
+								placeholder="Password"
 								onChange={(e) => {
 									setPassword(e.target.value);
 								}}
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Password:</label>
+							<label>Password</label>
 							<input
+								className="text-input-field"
 								type="password"
-								placeholder="Re-enter password"
+								placeholder="Re-enter Password"
 								onChange={(e) => {
 									setSecondPassword(e.target.value);
 								}}
 							></input>
 						</div>
 						{passwordsMatch === false && <p style={{ textAlign: "center", marginTop: "1rem", color: "red" }}><em>Passwords don't match!</em></p>}
-						<div className="input-field">
-							<button className="button is-medium"
+						<div className="input-field signup-button">
+							<button className="button is-large"
 								onClick={async (e) => {
 									e.preventDefault();
 									try {
@@ -104,10 +108,10 @@ const SignUp = (props) => {
 							>Signup</button>
 						</div>
 						<div className="spacer"></div>
+						<div className="input-field login-text">
+							<p>Already have an account?<br></br> <a onClick={reroute} className="register-link">Login here!</a></p>
+						</div>
 					</form>
-					<div className="input-field">
-						<p>Already have an account? <a onClick={reroute} className="register-link">Login here!</a></p>
-					</div>
 				</div>
 			</div>
 		</div>
