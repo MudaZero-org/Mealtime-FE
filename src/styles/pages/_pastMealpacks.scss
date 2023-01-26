@@ -1,0 +1,8 @@
+.past-mealpacks-page {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+}
+
+.past-view {
+  grid-column: 2;
+}

@@ -5,11 +5,22 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  background-image: url("../../images/background-img.jpg");
+  background-size: cover;
 }
 
 .card {
   grid-column: 2;
-  margin-bottom: 10rem;
+  margin: 0 3rem 10rem;
+}
+
+.login-content, .signup-content {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+}
+
+.form {
+  grid-column: 2;
 }
 
 .card-title {
@@ -18,22 +29,35 @@
 }
 
 .input-field {
-  display: flex;
-  justify-content: center;
   margin-top: 10px;
-  align-items: center;
   font-size: 20px;
 }
 
-.spacer {
-  height: 40px;
+.text-input-field {
+  width: 100%;
 }
 
-.input-field input {
-  margin-left: 10px;
-  margin-top: 10px;
+.login-button, .signup-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.signup-text, .login-text {
+  text-align: center;
+}
+
+.spacer {
+  height: 20px;
 }
 
 .register-link {
-  color: blue;
+  color: rgb(187, 90, 77);
+  &:hover {
+    color: rgb(116, 56, 48)
+  }
+}
+
+label {
+  color: black;
 }

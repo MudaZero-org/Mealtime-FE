@@ -1,8 +1,8 @@
 $card-header-color: white;
+$body-overflow-y: auto;
 
 @forward "./utils/variables";
 @forward "./utils/components";
 @forward "./utils/layout";
 
 @import "../../node_modules/bulma/bulma.sass";
-

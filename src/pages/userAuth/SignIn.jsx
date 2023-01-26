@@ -23,16 +23,17 @@ const SignIn = (props) => {
 	return (
 		<div className="signup-signin-app">
 			<div className="card">
-				<div className="card-header has-background-primary-dark">
+				<header className="card-header has-background-primary-dark">
 					<div className="card-header-title is-centered">
 						<h1 className="card-title">Mealtime</h1>
 					</div>
-				</div>
-				<div className="card-content">
-					<form>
+				</header>
+				<div className="card-content login-content">
+					<form className="form">
 						<div className="input-field">
-							<label>Email Address:</label>
+							<label>Email</label><br></br>
 							<input
+								className="text-input-field input"
 								type="text"
 								placeholder="Email"
 								onChange={(e) => {
@@ -41,8 +42,9 @@ const SignIn = (props) => {
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Password:</label>
+							<label>Password</label><br></br>
 							<input
+								className="text-input-field input"
 								type="password"
 								placeholder="Password"
 								onChange={(e) => {
@@ -50,8 +52,8 @@ const SignIn = (props) => {
 								}}
 							></input>
 						</div>
-						<div className="input-field">
-							<button className="button is-medium"
+						<div className="login-button">
+							<button className="button is-large"
 								onClick={async (e) => {
 									e.preventDefault();
 									try {
@@ -67,13 +69,11 @@ const SignIn = (props) => {
 										// });
 									}
 								}}
-							>
-								Login
-							</button>
+							>Login</button>
 						</div>
 						<div className="spacer"></div>
-						<div className="input-field">
-							<p>Don't have an account? <a className="register-link" onClick={reroute}>Sign up here!</a></p>
+						<div className="input-field signup-text">
+							<p>Don't have an account?<br></br> <a className="register-link" onClick={reroute}>Sign up here!</a></p>
 						</div>
 					</form>
 				</div>

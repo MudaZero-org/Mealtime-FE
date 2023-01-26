@@ -7,45 +7,97 @@ import SignIn from "./pages/userAuth/SignIn";
 import SignUp from "./pages/userAuth/SignUp";
 import Homepage from "./pages/userAuth/Homepage";
 import MealPack from "./pages/userAuth/MealPack";
+import Profile from "./pages/userAuth/Profile";
+import PastMealpacks from "./pages/userAuth/PastMealpacks";
+import Navbar from "./pages/userAuth/components/Navbar";
+import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
 
 function App() {
-  const [activeMealPacks, setActiveMealPacks] = useState(null);
-  const [pastMealPacks, setPastMealPacks] = useState(null);
-  const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
+	const [activeMealPacks, setActiveMealPacks] = useState(null);
+	const [pastMealPacks, setPastMealPacks] = useState(null);
+	const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/user" element={<User />} />
-        <Route
-          exact
-          path="/home"
-          element={
-            <Homepage
-              selectedActivePack={selectedActivePack}
-              setSelectedActivePastPack={setSelectedActivePastPack}
-              activeMealPacks={activeMealPacks}
-              setActiveMealPacks={setActiveMealPacks}
-              pastMealPacks={pastMealPacks}
-              setPastMealPacks={setPastMealPacks}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/mealpack"
-          element={
-            <MealPack
-              selectedActivePack={selectedActivePack}
-              setSelectedActivePastPack={setSelectedActivePastPack}
-            />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route exact path="/" element={<SignIn />} />
+				<Route exact path="/signup" element={<SignUp />} />
+				<Route exact path="/user" element={<User />} />
+				<Route
+					exact
+					path="/home"
+					element={
+						<>
+							<Navbar />
+							<Homepage
+								selectedActivePack={selectedActivePack}
+								setSelectedActivePastPack={setSelectedActivePastPack}
+								activeMealPacks={activeMealPacks}
+								setActiveMealPacks={setActiveMealPacks}
+								pastMealPacks={pastMealPacks}
+								setPastMealPacks={setPastMealPacks}
+							/>
+						</>
+					}
+				/>
+				<Route
+					exact
+					path="/mealpack"
+					element={
+						<>
+							<Navbar />
+							<MealPack
+								selectedActivePack={selectedActivePack}
+								setSelectedActivePastPack={setSelectedActivePastPack}
+							/>
+						</>
+					}
+				/>
+				<Route
+					exact
+					path="/profile"
+					element={
+						<>
+							<Navbar />
+							<Profile />
+						</>
+					}
+				></Route>
+				<Route
+					exact
+					path="/past-mealpacks"
+					element={
+						<>
+							<Navbar />
+							<PastMealpacks
+								setActiveMealPacks={setActiveMealPacks}
+								setPastMealPacks={setPastMealPacks}
+								pastMealPacks={pastMealPacks}
+								setSelectedActivePastPack={setSelectedActivePastPack}
+							/>
+						</>
+					}
+				></Route>
+				<Route
+					exact
+					path="/active-mealpacks"
+					element={
+						<>
+							<Navbar />
+							<ActiveMealpacks
+								selectedActivePack={selectedActivePack}
+								setSelectedActivePastPack={setSelectedActivePastPack}
+								activeMealPacks={activeMealPacks}
+								setActiveMealPacks={setActiveMealPacks}
+								pastMealPacks={pastMealPacks}
+								setPastMealPacks={setPastMealPacks}
+							/>
+						</>
+					}
+				></Route>
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default App;
