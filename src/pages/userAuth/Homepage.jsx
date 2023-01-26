@@ -69,7 +69,7 @@ const Homepage = (props) => {
 	};
 
 	const publishMealPacks = async () => {
-		const storeId = user.data.userId;
+		const storeId = user.data.storeId;
 		const idArray = [];
 		for (let e of myMealPacks) {
 			idArray.push({ id: e.id });

@@ -1,4 +1,4 @@
-import "../../styles/pages/_homepage.scss";
+import "../../styles/pages/_profilePage.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "../../Constants";
@@ -11,7 +11,7 @@ const Profile = () => {
 	useEffect(() => {
 		async function fetchUserData() {
 			const user = JSON.parse(localStorage.getItem("user"));
-			const userID = user.data.storeId;
+			const userID = user.data.userId;
 			const userData = await axios.get(`${API_URL}/user/${userID}`, {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			});
