@@ -79,6 +79,7 @@
 
 .generate-button {
 	display: block;
+	color: white;
 }
 
 .wrapper {
@@ -137,6 +138,8 @@
   border: solid 1px black;
   box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow: scroll;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 .generated-mealpacks-container {
@@ -263,6 +266,7 @@
 	margin: 0px;
 	padding: 0px;
 	display: flex;
+	border-bottom: 1px solid rgb(207, 207, 207);
 	align-items: center;
 }
 
@@ -344,7 +348,7 @@
 
 /* Style the accordion ribs. Note: hidden by default */
 .ribs {
-  padding: 0 18px;
+  padding: 0 18px 18px;
   background-color: white;
   display: none;
   overflow: hidden;
