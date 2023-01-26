@@ -32,24 +32,24 @@ const Profile = () => {
 
 	return (
 		<div className="profile-page">
-			<div class="card">
-				<figure class="image is-128x128">
+			<div className="card">
+				<figure className="image profile-image is-128x128">
 					<img
-						class="is-rounded"
+						className="is-rounded"
 						src="https://bulma.io/images/placeholders/256x256.png"
 					></img>
 				</figure>
 				<hr></hr>
-				<div class="card-content">
-					<p class="title is-3">Profile</p>
-					<div class="media">
-						<div class="media-left"></div>
-						<div class="media-content">
-							<p class="title is-5">Store Name:</p>
-							<p class="subtitle is-6">{storeName}</p>
+				<div className="card-content">
+					<p className="title is-3">Profile</p>
+					<div className="media">
+						<div className="media-left"></div>
+						<div className="media-content">
+							<p className="title is-5">Store Name:</p>
+							<p className="subtitle is-6">{storeName}</p>
 							<hr></hr>
-							<p class="title is-5">Email Address:</p>
-							<p class="subtitle is-6">{email}</p>
+							<p className="title is-5">Email Address:</p>
+							<p className="subtitle is-6">{email}</p>
 						</div>
 					</div>
 					{/* <div class="media">
@@ -61,7 +61,7 @@ const Profile = () => {
 					</div> */}
 					<div>
 						<button
-							class="button is-light"
+							className="button profile-button is-light"
 							onClick={() => {
 								navigate("/profile/editProfile");
 								console.log("Hello");
@@ -70,7 +70,7 @@ const Profile = () => {
 							Edit Profile
 						</button>
 						<button
-							class="button is-light"
+							className="button profile-button is-light"
 							onClick={() => {
 								navigate("/profile/editPassword");
 								console.log("World");
