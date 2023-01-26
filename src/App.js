@@ -11,6 +11,8 @@ import Profile from "./pages/userAuth/Profile";
 import PastMealpacks from "./pages/userAuth/PastMealpacks";
 import Navbar from "./pages/userAuth/components/Navbar";
 import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
+import EditProfile from "./pages/userAuth/EditProfile";
+import EditPassword from "./pages/userAuth/EditPassword";
 
 function App() {
 	const [activeMealPacks, setActiveMealPacks] = useState(null);
@@ -54,15 +56,52 @@ function App() {
 					}
 				/>
 				<Route
-					exact
 					path="/profile"
+					// element={
+					// 	<>
+					// 		<Navbar />
+					// 		<Profile />
+					// 	</>
+					// }
+				>
+					<Route
+						index
+						element={
+							<>
+								<Navbar />
+								<Profile />
+							</>
+						}
+					></Route>
+					<Route
+						path="editProfile"
+						element={
+							<>
+								<Navbar />
+								<EditProfile />
+							</>
+						}
+					></Route>
+					<Route
+						path="editPassword"
+						element={
+							<>
+								<Navbar />
+								<EditPassword />
+							</>
+						}
+					></Route>
+				</Route>
+				{/* <Route
+					exact
+					path="/editProfile"
 					element={
 						<>
 							<Navbar />
-							<Profile />
+							<EditProfile />
 						</>
 					}
-				></Route>
+				></Route> */}
 				<Route
 					exact
 					path="/past-mealpacks"
