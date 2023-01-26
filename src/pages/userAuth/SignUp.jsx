@@ -37,7 +37,7 @@ const SignUp = (props) => {
 						<div className="input-field">
 							<label>Store Name</label>
 							<input
-								className="text-input-field"
+								className="text-input-field input"
 								type="text"
 								placeholder="Store Name"
 								onChange={(e) => {
@@ -48,7 +48,7 @@ const SignUp = (props) => {
 						<div className="input-field">
 							<label>Email</label>
 							<input
-								className="text-input-field"
+								className="text-input-field input"
 								type="email"
 								placeholder="Email"
 								onChange={(e) => {
@@ -59,7 +59,7 @@ const SignUp = (props) => {
 						<div className="input-field">
 							<label>Password</label>
 							<input
-								className="text-input-field"
+								className="text-input-field input"
 								type="password"
 								placeholder="Password"
 								onChange={(e) => {
@@ -70,7 +70,7 @@ const SignUp = (props) => {
 						<div className="input-field">
 							<label>Password</label>
 							<input
-								className="text-input-field"
+								className="text-input-field input"
 								type="password"
 								placeholder="Re-enter Password"
 								onChange={(e) => {

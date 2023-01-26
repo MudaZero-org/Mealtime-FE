@@ -1,20 +1,23 @@
 @use "../main" as *;
 
 .app-container {
-	display: grid;
-	grid-template-columns: 10% auto 10%;
-	background-color: $my-background;
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 4fr 4fr 1fr;
+  background-color: $my-background;
 }
 
 .app {
-	grid-column: 2/3;
-	color: black;
-	background-color: $my-background;
+  grid-column: 2/4;
+  color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: $my-background;
 }
 
 .footer {
-	grid-column: 1 / 4;
-	background-color: hsl(171, 100%, 29%);
+  grid-column: 1 / 5;
+  background-color:hsl(171, 100%, 29%);
 }
 
 .homepage-header {
@@ -53,20 +56,25 @@
 }
 
 .input-section {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin-bottom: 3rem;
+  margin-bottom: 3rem;
+  grid-column: 1;
+  margin-right: 3rem;
 }
 
 .input-container {
-	margin: 0 4rem;
+  width: 100%;
+  border-bottom: 1px solid gray;
+  margin-bottom: 1rem;
+}
+
+.input {
+  width: 100%;
 }
 
 .user-selection-container {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	margin: 20px 0;
+  // display: grid;
+  // grid-template-columns: 1fr 1fr;
+  grid-column: 2;
 }
 
 .generate-button {
@@ -74,8 +82,8 @@
 }
 
 .wrapper {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  margin-bottom: 1.5rem;
 }
 
 .filter-container {
@@ -122,38 +130,32 @@
 }
 
 .selected-mealpacks-container {
-	margin-top: 10px;
-	height: 35rem;
-	width: 100%;
-	border: solid 1px black;
-	border-radius: 5px;
-	box-shadow: 2px 2px 5px rgb(134, 134, 134);
-	overflow: scroll;
+  height: fit-content;
+  min-height: 17.1rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  border: solid 1px black;
+  box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  overflow: scroll;
 }
 
 .generated-mealpacks-container {
-	margin-right: 30px;
-	height: 35rem;
-	margin-top: 10px;
-	overflow: scroll;
-	border: solid black 1px;
-	border-radius: 5px;
-	box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  height: 35rem;
+  overflow: scroll;
+  width: 100%;
+  border: solid black 1px;
+  box-shadow: 2px 2px 5px rgb(134, 134, 134);
 }
 
-.generated-mealpacks-title,
-.my-mealpacks-title,
-.active-title {
-	text-align: center;
-	padding: 30px 0;
-	background-color: hsl(171, 100%, 29%);
-	color: white;
-	font-size: 40px;
-	font-weight: bold;
-	position: sticky;
-	top: 0;
-	margin-bottom: 20px;
-	z-index: 1;
+.generated-mealpacks-title, .my-mealpacks-title, .active-title {
+  text-align: center;
+  padding: 30px 0;
+  background-color: hsl(171, 100%, 29%);
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  z-index: 1;
 }
 
 .past-title {
@@ -301,8 +303,66 @@
 }
 
 .dark {
-	color: black;
+  color: black;
 }
+
+
+// Accordion settings ###################################
+
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  transition: 0.2s;
+  transition-timing-function: linear;
+}
+
+.open-default {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  transition: 0.2s;
+  transition-timing-function: linear;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion ribs. Note: hidden by default */
+.ribs {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+}
+
+.accordion:after {
+  content: '\276f'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #777;
+  float: left;
+  margin-right: 10px;
+  transition: 0.2s;
+}
+
+.active:after {
+  transform: rotate(90deg)
+}
+
 
 //For Profile page
 .profile-page {

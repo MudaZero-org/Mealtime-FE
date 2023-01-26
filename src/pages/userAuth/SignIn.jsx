@@ -33,7 +33,7 @@ const SignIn = (props) => {
 						<div className="input-field">
 							<label>Email</label><br></br>
 							<input
-								className="text-input-field"
+								className="text-input-field input"
 								type="text"
 								placeholder="Email"
 								onChange={(e) => {
@@ -44,7 +44,7 @@ const SignIn = (props) => {
 						<div className="input-field">
 							<label>Password</label><br></br>
 							<input
-								className="text-input-field"
+								className="text-input-field input"
 								type="password"
 								placeholder="Password"
 								onChange={(e) => {
