@@ -12,6 +12,9 @@ const Navbar = () => {
 		navigate("/");
 	};
 
+  const user = JSON.parse(localStorage.getItem("user"));
+	const storeName = user.data.storeName;
+
   return (
     <nav className="navbar is-fixed-top pl-6 pr-6 pt-3 pb-3" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
@@ -20,9 +23,9 @@ const Navbar = () => {
         </a>
 
         <a onClick={() => setIsActive(!isActive)} role="button" className={`navbar-burger burger ${isActive ? 'is-active' : ''}`} aria-label="menu" aria-expanded="false" data-target="navMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+          <span style={{ color: "white" }} aria-hidden="true"></span>
+          <span style={{ color: "white" }} aria-hidden="true"></span>
+          <span style={{ color: "white" }} aria-hidden="true"></span>
         </a>
       </div>
 
@@ -42,11 +45,10 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-end">
+          <h5 className="is-family-primary has-text-weight-normal" style={{ color: "white", marginTop: ".5rem" }}>User: {storeName}</h5>
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button logout-button" onClick={logout}>
-                Log Out
-              </a>
+              <a className="button logout-button" onClick={logout}>Log Out</a>
             </div>
           </div>
         </div>
