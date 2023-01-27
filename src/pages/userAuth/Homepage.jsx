@@ -201,7 +201,7 @@ const Homepage = (props) => {
 
 
 					<div className="input-container">
-						<button className="accordion">Filter Ingredients</button>
+						<button className="accordion">Filter Ingredients <em>optional</em></button>
 						<div className="ribs">
 							<p className="input-instructions">
 								Type or copy/paste ingredients you DON'T want to include in

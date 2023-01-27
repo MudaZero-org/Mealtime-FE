@@ -32,7 +32,7 @@ const Profile = () => {
 
 	return (
 		<div className="profile-page">
-			<div className="card">
+			<div className="card" id="profile-card">
 				<figure className="image profile-image is-128x128">
 					<img
 						className="is-rounded"
