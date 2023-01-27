@@ -25,15 +25,18 @@ const Homepage = (props) => {
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [myMealPacks, setMyMealPacks] = useState([]);
 
+	const [ingredientInput, setIngredientInput] = useState(null);
+	const [ingredientInputArr, setIngredientInputArr] = useState([]);
+	const [filteredInput, setFilteredInput] = useState(null);
+	const [filteredInputArr, setFilteredInputArr] = useState([]);
+
 	const user = JSON.parse(localStorage.getItem("user"));
 
-	const makeIngredientArr = () => {
-		let arr = [...testInputArr]
-		setIngredientArr(arr)
-	};
-
-	const makeFilteredArr = () => {
-		filteredText && setFilteredArr(filteredText.split(/\r?\n/));
+	const makeArr = () => {
+		let ingredientArr = [...ingredientInputArr]
+		setIngredientArr(ingredientArr)
+		let filteredArr = [...filteredInputArr]
+		setFilteredArr(filteredArr)
 	};
 
 	useEffect(() => {
@@ -69,7 +72,7 @@ const Homepage = (props) => {
 	};
 
 	const publishMealPacks = async () => {
-		const storeId = user.data.userId;
+		const storeId = user.data.storeId;
 		const idArray = [];
 		for (let e of myMealPacks) {
 			idArray.push({ id: e.id });
@@ -84,24 +87,55 @@ const Homepage = (props) => {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
 		setActiveMealPacks(info.data);
-	};
-
-	const [testInput, setTestInput] = useState(null);
-	const [testInputArr, setTestInputArr] = useState([]);
+	};	
 
 	const clearIngredientInput = () => {
 		let input = document.getElementById("userIngredientInput");
 		input.value = "";
 	}
 
+	const clearFilteredInput = () => {
+		let input = document.getElementById("userFilteredInput");
+		input.value = "";
+	}
+
 	const removeIngredient = (ingredient) => {
-		const arr = [...testInputArr];
+		const arr = [...ingredientInputArr];
 		arr.splice(arr.indexOf(ingredient), 1)
-		setTestInputArr(arr)
+		setIngredientInputArr(arr)
+	}
+
+	const removeFiltered = (ingredient) => {
+		const arr = [...filteredInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setFilteredInputArr(arr)
+	}
+
+	const ingredientKeyHandler = (e) => {
+		if (e.which === 13) {
+			let arr = [...ingredientInputArr]
+			arr.unshift(ingredientInput)
+			if (ingredientInput) {
+				setIngredientInputArr(arr)
+				clearIngredientInput();
+				setIngredientInput(null)
+			}
+		}
+	};
+
+	const filteredKeyHandler = (e) => {
+		if (e.which === 13) {
+			let arr = [...filteredInputArr]
+			arr.unshift(filteredInput)
+			if (filteredInput) {
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+			}
+		}
 	}
 
 	// Accordion settings start #######################################
-
 	useEffect(() => {
 		let acc = document.getElementsByClassName("accordion");
 		let i;
@@ -122,37 +156,39 @@ const Homepage = (props) => {
 			}
 		document.getElementsByClassName("open-default")[0].click();
 	}, [])
-
 	// According settings end #########################################
 
 	return (
 		<div className="app-container">
 			<div className="app">
+
+
 				<div className="input-section">
 					<div className="input-container">
-						<button onClick={() => console.log("hello")} className="accordion open-default">Ingredients</button>
+						<button className="accordion open-default">Ingredients</button>
 						<div className="ribs">
 							<p className="input-instructions">Type or copy/paste ingredients to use below<br></br></p>
 							<input
+								onKeyDown={ingredientKeyHandler}
 								id="userIngredientInput"
 								className="input" 
 								type="text"
-								onChange={(e) => setTestInput(e.target.value)}
-								placeholder="type ingredient here"
+								onChange={(e) => setIngredientInput(e.target.value)}
+								placeholder="type ingredient here + hit 'enter'"
 							></input>
-							<button 
+							{/* <button 
 								className="button"
 								onClick={() => {
-									let arr = [...testInputArr]
-									arr.unshift(testInput)
-									if (testInput) {
-										setTestInputArr(arr)
+									let arr = [...ingredientInputArr]
+									arr.unshift(ingredientInput)
+									if (ingredientInput) {
+										setIngredientInputArr(arr)
 										clearIngredientInput();
-										setTestInput(null)
+										setIngredientInput(null)
 									}
 								}}
-							>Add</button>
-							{testInputArr.length > 0 && testInputArr.map((e) => {
+							>Add</button> */}
+							{ingredientInputArr.length > 0 && ingredientInputArr.map((e) => {
 								return (
 									<div key={uuidv4()} className="ingredient-name">
 										<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
@@ -160,46 +196,56 @@ const Homepage = (props) => {
 									</div>
 								)
 							})}
-							<div className="wrapper">
-								<button
-									onClick={makeIngredientArr}
-									className="generate-button button is-medium"
-								>Generate Meal Packs</button>
-							</div>
 						</div>
 					</div>
+
+
 					<div className="input-container">
-						<button className="accordion">Filter Ingredients</button>
+						<button className="accordion">Filter Ingredients <em>optional</em></button>
 						<div className="ribs">
 							<p className="input-instructions">
 								Type or copy/paste ingredients you DON'T want to include in
 								recipes<br></br>
 								<em>(each ingredient must be on a new line)</em>
 							</p>
-							<textarea
-								onChange={(e) => setFilteredText(e.target.value)}
-								className="input-box"
-								cols="50"
-								rows="10"
-								placeholder="pork&#10;milk&#10;cheese"
-							></textarea>
-							<div className="wrapper">
-								<button
-									onClick={makeFilteredArr}
-									className="generate-button button is-medium"
-								>Save filters</button>
-								<button className="button is-medium" onClick={() => setFilteredArr([])}>Clear filters</button>
-							</div>
-							<div className="filter-container">
-								<h3>Filters:</h3>
-								<div className="filter-contents">
-									{filteredArr &&
-										filteredArr.map((e) => <p key={uuidv4()} className="filter-words">-{e}</p>)}
-								</div>
-							</div>
+							<input
+								onKeyDown={filteredKeyHandler}
+								id="userFilteredInput"
+								className="input" 
+								type="text"
+								onChange={(e) => setFilteredInput(e.target.value)}
+								placeholder="type ingredient here + hit 'enter'"
+							></input>
+							{/* <button 
+								className="button"
+								onClick={() => {
+									let arr = [...filteredInputArr]
+									arr.unshift(filteredInput)
+									if (filteredInput) {
+										setFilteredInputArr(arr)
+										clearFilteredInput();
+										setFilteredInput(null)
+									}
+								}}
+							>Add</button> */}
+							{filteredInputArr.length > 0 && filteredInputArr.map((e) => {
+								return (
+									<div key={uuidv4()} className="ingredient-name">
+										<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeFiltered(e)}>X</button>
+										<p key={uuidv4()} className="ingredient-title">{e}</p>
+									</div>
+								)
+							})}
 						</div>
 					</div>
+					<button
+						onClick={makeArr}
+						className="generate-button button has-background-danger"
+					>Generate Meal Packs</button>
 				</div>
+
+
+
 				<div className="right-side">
 					<div className="selected-mealpacks">
 						<div className="selected-mealpacks-container">
