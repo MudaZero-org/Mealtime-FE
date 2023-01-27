@@ -281,7 +281,8 @@ const Homepage = (props) => {
 					</div>
 					<button
 						onClick={makeArr}
-						className="generate-button button has-background-danger"
+						className="generate-button button is-large has-background-danger"
+						id="generate-button"
 					>Generate Meal Packs</button>
 				</div>
 
