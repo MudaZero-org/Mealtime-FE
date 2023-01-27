@@ -7,9 +7,15 @@ const MealPack = (props) => {
   const { selectedActivePack, setSelectedActivePastPack} = props;
 
   const navigate = useNavigate();
-	const rerouteToHome = () => {
-		navigate("/home")
+	const reroute = () => {
+    if (selectedActivePack.isPublishing) {
+      navigate("/active-mealpacks")
+    } else {
+      navigate("/past-mealpacks")
+    }
 	}
+
+  console.log(selectedActivePack)
 
   const mealPack = selectedActivePack.recipeDetail;
 
@@ -28,7 +34,7 @@ const MealPack = (props) => {
           {mealPack.analyzedInstructions[0].steps.map((e) => <p key={uuidv4()} className="instruction"><strong>{e.number}.</strong> {e.step}</p>)}
         </div>
         <div className="wrapper">
-          <button className="button to-home-button is-medium is-danger" onClick={rerouteToHome}>Back to Home</button>
+          <button className="button back-button is-medium is-danger" onClick={reroute}>Back</button>
         </div>
       </div>
     </div>
