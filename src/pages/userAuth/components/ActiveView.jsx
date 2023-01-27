@@ -41,7 +41,6 @@ const ActiveView = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
 		);
-		console.log("hello");
 		setActiveMealPacks(data.data);
 	};
 
@@ -52,14 +51,12 @@ const ActiveView = (props) => {
 	};
 
 	const downloadPDF = (meal) => {
-		console.log(meal)
 		let qrCode = generateQRCode(meal);
 		const doc = new jsPDF("p", "mm", "a4");
 		let width = doc.internal.pageSize.getWidth();
 		const name = meal.mealpackName;
 		const details = meal.recipeDetail;
 		const ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-		console.log(ingredients)
 		doc.setFontSize(24);
 		doc.text(10, 90, `${name}`);
 		doc.setFontSize(18);
@@ -80,10 +77,10 @@ const ActiveView = (props) => {
 	};
 
 	const generateQRCode = (meal) => {
-		console.log(meal);
 		const QRCode = require("qrcode");
 		let qrCodeDataUrl;
-		QRCode.toDataURL(meal.recipeDetail.sourceUrl, function (err, url) {
+		let recipeId = meal.recipeId
+		QRCode.toDataURL(`http://localhost:3000/info/${recipeId}`, function (err, url) {
 			qrCodeDataUrl = url;
 		});
 		return qrCodeDataUrl;
@@ -92,7 +89,6 @@ const ActiveView = (props) => {
 	const deactivateMealPack = async (meal) => {
 		const user = JSON.parse(localStorage.getItem("user"));
 		const storeId = user.data.storeId;
-		console.log(meal.mealpackName);
 		await axios.put(
 			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
 			{
