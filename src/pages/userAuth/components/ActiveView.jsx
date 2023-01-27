@@ -52,18 +52,25 @@ const ActiveView = (props) => {
 	};
 
 	const downloadPDF = (meal) => {
+		console.log(meal)
 		let qrCode = generateQRCode(meal);
 		const doc = new jsPDF("p", "mm", "a4");
 		let width = doc.internal.pageSize.getWidth();
 		const name = meal.mealpackName;
 		const details = meal.recipeDetail;
+		const ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
+		console.log(ingredients)
 		doc.setFontSize(24);
 		doc.text(10, 90, `${name}`);
 		doc.setFontSize(18);
-		doc.text(10, 110, [`${details.instructions}`], {
+		doc.text(10, 110, [`Ingredients: ${ingredients}`], {
+			maxWidth: width / 1.15,
+		})
+		doc.text(10, 140, [`${details.instructions}`], {
 			maxWidth: width / 1.15,
 		});
 		doc.addImage(qrCode, "PNG", 10, 15, 50, 50);
+		doc.addImage(meal.recipeDetail.image, "JPG", 100, 15, 80, 50)
 		doc.autoPrint({ variant: "non-conform" });
 		doc.save("print-mealpacks.pdf");
 	};
