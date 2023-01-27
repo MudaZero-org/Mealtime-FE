@@ -9,7 +9,7 @@ const Profile = () => {
 
 	const [storeName, setStoreName] = useState("");
 	const [email, setEmail] = useState("");
-	const [picture, setPicture] = useState("");
+	const [image, setImage] = useState("");
 	const [password, setPassword] = useState("");
 
 	useEffect(() => {
@@ -21,6 +21,7 @@ const Profile = () => {
 			});
 			setStoreName(userData.data.storeName);
 			setEmail(user.data.email);
+			setImage(user.data.profileImg);
 		}
 
 		fetchUserData();
@@ -41,7 +42,7 @@ const Profile = () => {
 				</figure>
 				<hr></hr>
 				<div className="card-content">
-					<p className="title is-3">Profile</p>
+					{/* <p className="title is-3">Profile</p> */}
 					<div className="media">
 						<div className="media-left"></div>
 						<div className="media-content">
@@ -52,19 +53,35 @@ const Profile = () => {
 							<p className="subtitle is-6">{email}</p>
 						</div>
 					</div>
-					{/* <div class="media">
-						<div class="media-left"></div>
-						<div class="media-content">
-							<p class="title is-4">Email Address:</p>
-							<p class="subtitle is-6">{email}</p>
+					<div class="field is-grouped">
+						<div class="control">
+							<button
+								className="button is-light"
+								onClick={() => {
+									navigate("/profile/editProfile");
+									console.log("Hello");
+								}}
+							>
+								Edit Profile
+							</button>
 						</div>
-					</div> */}
-					<div>
+						<div class="control">
+							<button
+								className="button is-light"
+								onClick={(e) => {
+									navigate("/profile/editPassword");
+								}}
+							>
+								Change Password
+							</button>
+						</div>
+					</div>
+					{/* <div>
 						<button
 							className="button profile-button is-light"
 							onClick={() => {
-								navigate("/profile/editProfile");
-								console.log("Hello");
+								navigate("/profile/editPassword");
+								console.log("World");
 							}}
 						>
 							Edit Profile
@@ -78,7 +95,7 @@ const Profile = () => {
 						>
 							Change Password
 						</button>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>
