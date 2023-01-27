@@ -89,6 +89,12 @@
 	color: white;
 }
 
+#generate-button {
+	margin-top: 2rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .wrapper {
   display: flex;
   margin-bottom: 1.5rem;
@@ -295,6 +301,9 @@
 	display: flex;
 	border-bottom: 1px solid rgb(207, 207, 207);
 	align-items: center;
+	&:hover {
+		background-color: rgb(208, 208, 208);
+	}
 }
 
 .ingredient-title {

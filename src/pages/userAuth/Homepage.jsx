@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import "../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from 'uuid';
 import API_URL from "../../Constants";
+import vegetarianArr from "./utils/vegetarian.json";
+import dairyFreeArr from "./utils/dairyFree.json";
+import glutenFreeArr from "./utils/glutenFree.json";
 
 const Homepage = (props) => {
 	const {
@@ -158,6 +161,39 @@ const Homepage = (props) => {
 	}, [])
 	// According settings end #########################################
 
+
+	const addFilters = (type) => {
+		let arr = [...filteredInputArr]
+		switch(type) {
+			case "veg":
+				for (let x of vegetarianArr) {
+					arr.unshift(x)
+				}
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+				break;
+			
+			case "glu":
+				for (let x of glutenFreeArr) {
+					arr.unshift(x)
+				}
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+				break;
+			
+			case "dai":
+				for (let x of dairyFreeArr) {
+					arr.unshift(x)
+				}
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+				break;
+		}
+	}
+
 	return (
 		<div className="app-container">
 			<div className="app">
@@ -208,6 +244,11 @@ const Homepage = (props) => {
 								recipes<br></br>
 								<em>(each ingredient must be on a new line)</em>
 							</p>
+							<div className="level-left">
+								<button onClick={() => addFilters("veg")} className="button is-small has-background-success">Vegetarian</button>
+								<button onClick={() => addFilters("glu")} className="button is-small has-background-warning">Gluten-Free</button>
+								<button onClick={() => addFilters("dai")} className="button is-small has-background-info">Dairy-Free</button>
+							</div>
 							<input
 								onKeyDown={filteredKeyHandler}
 								id="userFilteredInput"
@@ -240,7 +281,8 @@ const Homepage = (props) => {
 					</div>
 					<button
 						onClick={makeArr}
-						className="generate-button button has-background-danger"
+						className="generate-button button is-large has-background-danger"
+						id="generate-button"
 					>Generate Meal Packs</button>
 				</div>
 
