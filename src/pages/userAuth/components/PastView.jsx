@@ -16,7 +16,7 @@ const PastView = (props) => {
   useEffect(() => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
-		  const storeId = user.data.userId
+		  const storeId = user.data.storeId
       let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/false`,{
         headers: {authorization: `Bearer ${user.accessToken}`}
       });
@@ -28,7 +28,7 @@ const PastView = (props) => {
   // fetchPastPacks copies above useEffect, wittout causing infinite loop
   const fetchPastPacks = async () => {
     const user = JSON.parse(localStorage.getItem("user"))
-    const storeId = user.data.userId
+    const storeId = user.data.storeId
     let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/false`, {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
