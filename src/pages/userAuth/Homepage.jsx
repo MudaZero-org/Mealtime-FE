@@ -198,10 +198,9 @@ const Homepage = (props) => {
 		<div className="app-container">
 			<div className="app">
 
-
 				<div className="input-section">
 					<div className="input-container">
-						<button className="accordion open-default">Ingredients</button>
+						<button className="accordion open-default"><strong>Ingredients</strong></button>
 						<div className="ribs">
 							<p className="input-instructions">Add ingredients you want to search with below<br></br></p>
 							<input
@@ -237,7 +236,7 @@ const Homepage = (props) => {
 
 
 					<div className="input-container">
-						<button className="accordion">Filter Ingredients <em>optional</em></button>
+						<button className="accordion"><strong>Filter Ingredients</strong> <em>optional</em></button>
 						<div className="ribs">
 							<p className="input-instructions">
 								Add ingredients you DON'T want to include in meal packs<br></br>
@@ -316,6 +315,21 @@ const Homepage = (props) => {
 						</div>
 					</div>
 					{mealPacks && (
+						<div className="buttons-container">
+							<button
+								className="publish-button is-large button is-danger"
+								onClick={() => {
+									publishMealPacks();
+									setMyMealPacks([]);
+								}}
+							>Save</button>
+							<button
+								className="publish-button button has-background-primary-dark is-large"
+								onClick={() => setMealPacks(null)}
+							>Close</button>
+						</div>
+					)}
+					{mealPacks && (
 						<div className="user-selection-container">
 							<div className="generated-mealpacks-container">
 								<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
@@ -342,19 +356,6 @@ const Homepage = (props) => {
 											</div>
 										);
 									})}
-							</div>
-							<div className="buttons-container">
-								<button
-									className="publish-button is-large button is-danger"
-									onClick={() => {
-										publishMealPacks();
-										setMyMealPacks([]);
-									}}
-								>Save</button>
-								<button
-									className="publish-button button has-background-primary-dark is-large"
-									onClick={() => setMealPacks(null)}
-								>Close</button>
 							</div>
 						</div>
 					)}
