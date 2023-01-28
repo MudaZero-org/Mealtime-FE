@@ -17,7 +17,7 @@
 
 .footer {
   grid-column: 1 / 5;
-  background-color: hsl(171, 100%, 29%);
+  background-color: $my-background;
 }
 
 .homepage-header {
@@ -367,8 +367,8 @@
 // Accordion settings ###################################
 
 .accordion {
-  background-color: #eee;
-  color: #444;
+  background-color: $my-background;
+  color: black;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -381,8 +381,8 @@
 }
 
 .open-default {
-  background-color: #eee;
-  color: #444;
+  background-color: $my-background;
+  color: black;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -395,15 +395,15 @@
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active,
+// .active,
 .accordion:hover {
   background-color: #ccc;
 }
 
 /* Style the accordion ribs. Note: hidden by default */
 .ribs {
-  padding: 0 18px 18px;
-  background-color: white;
+  padding: 0 18px 18px 36px;
+  background-color: $my-background;
   display: none;
   overflow: hidden;
 }
