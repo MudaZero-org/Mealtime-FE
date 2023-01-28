@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "../../Constants";
 import { useNavigate } from "react-router-dom";
+import Hiroshi from "../../images/hiroshi.png";
 
 const Profile = () => {
 	const navigate = useNavigate();
@@ -34,10 +35,11 @@ const Profile = () => {
 	return (
 		<div className="profile-page">
 			<div className="card" id="profile-card">
-				<figure className="image profile-image is-128x128">
+				<figure className="image profile-image">
 					<img
 						className="is-rounded"
-						src="https://bulma.io/images/placeholders/256x256.png"
+						style={{ objectFit: "cover", width: "256px", height: "256px" }}
+						src={Hiroshi}
 					></img>
 				</figure>
 				<hr></hr>
