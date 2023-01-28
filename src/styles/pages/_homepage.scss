@@ -115,7 +115,7 @@
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr 1fr;
   margin: 5px 10px;
-  background: $my-background;
+  background: rgb(234, 234, 234);
   padding: 10px 30px 10px 10px;
   align-items: center;
   border: 1px solid black;
@@ -152,6 +152,10 @@
   // box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow: scroll;
 	overflow-x: hidden;
+  background-color: white;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .generated-mealpacks-container {
@@ -161,6 +165,10 @@
   border: solid black 1px;
   // box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow-x: hidden;
+  background-color: white;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .active-title {
