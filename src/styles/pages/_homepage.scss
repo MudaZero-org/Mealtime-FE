@@ -1,19 +1,24 @@
 @use "../main" as *;
 
 .app-container {
+  padding-top: 4rem;
   display: grid;
-  grid-template-columns: 10% auto 10%;
+  grid-template-columns: 1fr 4fr 4fr 1fr;
+  background-color: $my-background;
 }
 
 .app {
-  grid-column: 2/3;
-  background-color: $my-white;
+  grid-column: 2/4;
   color: black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: $my-background;
 }
 
 .footer {
-  grid-column: 1 / 4;
-  background-color:hsl(171, 100%, 29%);
+  grid-column: 1 / 5;
+  background-color: $my-background;
+  padding-bottom: 150px;
 }
 
 .homepage-header {
@@ -27,7 +32,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  box-shadow: 0 4px 2px -2px black;;
+  box-shadow: 0 4px 2px -2px black;
 }
 
 .app-title {
@@ -35,7 +40,7 @@
   text-align: center;
   align-self: center;
   font-size: 80px;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
 }
 
 .user-info {
@@ -52,29 +57,48 @@
 }
 
 .input-section {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
   margin-bottom: 3rem;
+  grid-column: 1;
+  margin-right: 3rem;
 }
 
 .input-container {
-  margin: 0 4rem;
+  width: 100%;
+  border-bottom: 1px solid gray;
+  margin-bottom: 1rem;
+}
+
+.input {
+  width: 100%;
+}
+
+#userFilteredInput, #userIngredientInput {
+	margin-bottom: 0.5rem;
+	// border: none;
+	// box-shadow: none;
+	// border-top: 1px solid rgb(191, 191, 191);
+	// border-radius: 0px;
+	// border-bottom: 1px solid rgb(191, 191, 191);
 }
 
 .user-selection-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 20px 0;
+  grid-column: 2;
 }
 
 .generate-button {
-  display: block;
+	display: block;
+	color: white;
+}
+
+#generate-button {
+	margin-top: 2rem;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .wrapper {
   display: flex;
-  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
 .filter-container {
@@ -91,7 +115,7 @@
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr 1fr;
   margin: 5px 10px;
-  background: $my-background;
+  background: rgb(234, 234, 234);
   padding: 10px 30px 10px 10px;
   align-items: center;
   border: 1px solid black;
@@ -121,48 +145,77 @@
 }
 
 .selected-mealpacks-container {
-  margin-top: 10px;
-  height: 35rem;
+  height: 30rem;
+  // margin-bottom: 3rem;
   width: 100%;
   border: solid 1px black;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow: scroll;
+	overflow-x: hidden;
+  background-color: white;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .generated-mealpacks-container {
-  margin-right: 30px;
-  height: 35rem;
-  margin-top: 10px;
+  height: 30rem;
   overflow: scroll;
+  width: 100%;
   border: solid black 1px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  overflow-x: hidden;
+  background-color: white;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
-.generated-mealpacks-title, .my-mealpacks-title, .active-title {
-  text-align: center;
-  padding: 30px 0;
-  background-color: hsl(171, 100%, 29%);
-  color: white;
+.active-title {
+  padding: 50px 0 20px 15px;
   font-size: 40px;
   font-weight: bold;
-  position: sticky;
-  top: 0;
   margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  margin-left: 5%;
+  margin-right: 5%;
   z-index: 1;
 }
 
-.past-title {
-  text-align: center;
-  padding: 30px 0;
-  background-color: hsl(0, 0%, 28%);
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
+.my-mealpacks-title, .generated-mealpacks-title {
+	text-align: center;
+	color: white;
+	font-size: 20px;
+  border-top: 1px black solid;
+  border-right: 1px black solid;
+  border-left: 1px black solid;
+	font-weight: bold;
+	// margin-bottom: 20px;
+	z-index: 1;
+	padding: 16px;
+  margin-bottom: 0px;
+}
+
+.my-mealpacks-title {
+	background-color: hsl(171, 100%, 29%);
   position: sticky;
   top: 0;
+}
+
+.generated-mealpacks-title {
+	background-color: hsl(0, 0%, 28%);
+  position: sticky;
+  top: 0;
+}
+
+.past-title {
+  padding: 50px 0 20px 15px;
+  font-size: 40px;
+  font-weight: bold;
   margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  margin-left: 5%;
+  margin-right: 5%;
   z-index: 1;
 }
 
@@ -186,27 +239,52 @@
 .buttons-container {
   display: flex;
   grid-column: 2;
+  margin-bottom: 3rem;
 }
 
-.past-view, .active-view {
+.past-view,
+.active-view {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   border: solid 1px black;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgb(134, 134, 134);
-  margin: 5rem 0;
+  // border-radius: 5px;
+  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  // margin: 5rem 0;
+  min-width: 100vw;
 }
 
-.active-container, .past-container {
-  width: 100%;
+.active-container,
+.past-container {
+  width: 100vw;
 }
 
-.active-mealpack-container, .past-mealpack-container {
+.active-mealpacks,
+.past-mealpacks{
+	display: flex;
+	flex-wrap: wrap;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.active-mealpack-container,
+.past-mealpack-container {
   border: 1px solid black;
   margin: 1rem;
   border-radius: 5px;
-  background-color: $my-background;
+  background-color: white;
+}
+
+.food-small-image {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  border-top-right-radius: 3.5px;
+  border-top-left-radius: 3.5px;
+}
+
+.active-mealpacks-tags,
+.past-mealpacks-tags {
+  margin: 0.5rem;
 }
 
 
@@ -230,9 +308,11 @@
   margin: 2rem auto;
 }
 
-.to-home-button {
-  width: fit-content;
-  margin-bottom: 2rem;
+.back-button {
+	width: fit-content;
+	margin-bottom: 2rem;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .ingredients-block {
@@ -250,4 +330,139 @@
 
 .instruction {
   margin: 1rem;
+}
+
+.ingredient-name {
+	margin: 0px;
+	padding: 0px;
+	display: flex;
+	border-bottom: 1px solid rgb(207, 207, 207);
+	align-items: center;
+	&:hover {
+		background-color: rgb(208, 208, 208);
+	}
+}
+
+.ingredient-title {
+  margin: 0px;
+}
+
+.ingredient-button {
+  padding: 0px 5px;
+}
+
+// NAVBAR STYLES
+
+.navbar {
+  background-color: hsl(171, 100%, 29%);
+  border-bottom: 1px solid black;
+}
+
+.navbar-item {
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  height: 35px;
+}
+
+.logout-button {
+  text-decoration: none;
+}
+
+.past-mealpacks-page,
+.active-mealpacks-page,
+.profile-page,
+// .app-container,
+.info-page-container {
+  padding-top: 84px;
+  background-color: $my-background;
+  min-height: 100vh;
+}
+
+.All {
+  background-color: $my-background;
+}
+
+.homepage-title {
+  font-size: 40px;
+  padding-top: 50px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 20px;
+  margin-top: 84px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: $my-background;
+  border-bottom: 1px solid black;
+}
+
+.dark {
+  color: black;
+}
+
+// Accordion settings ###################################
+
+.accordion {
+  background-color: $my-background;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  transition: 0.2s;
+  transition-timing-function: linear;
+}
+
+.open-default {
+  background-color: $my-background;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  transition: 0.2s;
+  transition-timing-function: linear;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+// .active,
+.accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion ribs. Note: hidden by default */
+.ribs {
+  padding: 0 18px 18px 36px;
+  background-color: $my-background;
+  display: none;
+  overflow: hidden;
+}
+
+.accordion:after {
+  content: "\276f"; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #777;
+  float: left;
+  margin-right: 10px;
+  transition: 0.2s;
+}
+
+.active:after {
+  transform: rotate(90deg);
+}
+
+//For Profile page
+.profile-page {
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  display: grid;
 }

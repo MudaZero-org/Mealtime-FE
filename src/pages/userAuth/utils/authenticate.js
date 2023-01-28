@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../../../Constants";
 
 //Sending info to backend for sign-up
 
@@ -13,7 +14,7 @@ const signUp = async (
   password
 ) => {
   return await axios
-    .post("http://13.231.182.135:8080/user/signUp", {
+    .post(`${API_URL}/user/signUp`, {
       storeName: storename,
       companyName: companyname,
       postalCode: postalcode,
@@ -35,7 +36,7 @@ const signUp = async (
 
 const logIn = async (email, password) => {
   return await axios
-    .post("http://13.231.182.135:8080/user/logIn", {
+    .post(`${API_URL}/user/logIn`, {
       userEmail: email,
       userPassword: password,
     })

@@ -1,12 +1,12 @@
 import axios from "axios";
-import ActiveView from "./components/ActiveView";
-import PastView from "./components/PastView";
-import MealPack from "./MealPack";
 import MealPackModal from "./components/MealPackModal";
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/pages/_homepage.scss";
-import AuthUtils from "./utils/authenticate";
+import { v4 as uuidv4 } from 'uuid';
+import API_URL from "../../Constants";
+import vegetarianArr from "./utils/vegetarian.json";
+import dairyFreeArr from "./utils/dairyFree.json";
+import glutenFreeArr from "./utils/glutenFree.json";
 
 const Homepage = (props) => {
 	const {
@@ -28,21 +28,24 @@ const Homepage = (props) => {
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [myMealPacks, setMyMealPacks] = useState([]);
 
+	const [ingredientInput, setIngredientInput] = useState(null);
+	const [ingredientInputArr, setIngredientInputArr] = useState([]);
+	const [filteredInput, setFilteredInput] = useState(null);
+	const [filteredInputArr, setFilteredInputArr] = useState([]);
+
 	const user = JSON.parse(localStorage.getItem("user"));
-	const storeName = user.data.storeName;
 
-	const makeIngredientArr = () => {
-		text && setIngredientArr(text.split(/\r?\n/));
-	};
-
-	const makeFilteredArr = () => {
-		filteredText && setFilteredArr(filteredText.split(/\r?\n/));
+	const makeArr = () => {
+		let ingredientArr = [...ingredientInputArr]
+		setIngredientArr(ingredientArr)
+		let filteredArr = [...filteredInputArr]
+		setFilteredArr(filteredArr)
 	};
 
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				const data = await axios.post("http://13.231.182.135:8080/sample/recipe", {
+				const data = await axios.post(`${API_URL}/sample/recipe`, {
 					ingredients: ingredientArr,
 					filteredWords: filteredArr,
 				},
@@ -72,196 +75,292 @@ const Homepage = (props) => {
 	};
 
 	const publishMealPacks = async () => {
-		const storeId = user.data.userId;
+		const storeId = user.data.storeId;
 		const idArray = [];
 		for (let e of myMealPacks) {
 			idArray.push({ id: e.id });
 		}
-		await axios.post(`http://13.231.182.135:8080/store/${storeId}/mealpack`, {
+		await axios.post(`${API_URL}/store/${storeId}/mealpack`, {
 			data: idArray,
 		}, 
 		{
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
-		let info = await axios.get(`http://13.231.182.135:8080/store/${storeId}/mealpack/all/status/true`, {
+		let info = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
 		setActiveMealPacks(info.data);
+	};	
+
+	const clearIngredientInput = () => {
+		let input = document.getElementById("userIngredientInput");
+		input.value = "";
+	}
+
+	const clearFilteredInput = () => {
+		let input = document.getElementById("userFilteredInput");
+		input.value = "";
+	}
+
+	const removeIngredient = (ingredient) => {
+		const arr = [...ingredientInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setIngredientInputArr(arr)
+	}
+
+	const removeFiltered = (ingredient) => {
+		const arr = [...filteredInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setFilteredInputArr(arr)
+	}
+
+	const ingredientKeyHandler = (e) => {
+		if (e.which === 13) {
+			let arr = [...ingredientInputArr]
+			arr.unshift(ingredientInput)
+			if (ingredientInput) {
+				setIngredientInputArr(arr)
+				clearIngredientInput();
+				setIngredientInput(null)
+			}
+		}
 	};
 
-	const navigate = useNavigate();
-	const logout = () => {
-		AuthUtils.logOut();
-		navigate("/");
-	};
+	const filteredKeyHandler = (e) => {
+		if (e.which === 13) {
+			let arr = [...filteredInputArr]
+			arr.unshift(filteredInput)
+			if (filteredInput) {
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+			}
+		}
+	}
+
+	// Accordion settings start #######################################
+	useEffect(() => {
+		let acc = document.getElementsByClassName("accordion");
+		let i;
+		for (i = 0; i < acc.length; i++) {
+			  acc[i].addEventListener("click", function () {
+			    /* Toggle between adding and removing the "active" class,
+			    to highlight the button that controls the panel */
+			    this.classList.toggle("active");
+			
+			    /* Toggle between hiding and showing the active panel */
+			    let panel = this.nextElementSibling;
+			    if (panel.style.display === "block") {
+			      panel.style.display = "none";
+			    } else {
+			      panel.style.display = "block";
+			    }
+			  });
+			}
+		document.getElementsByClassName("open-default")[0].click();
+	}, [])
+	// According settings end #########################################
+
+
+	const addFilters = (type) => {
+		let arr = [...filteredInputArr]
+		switch(type) {
+			case "veg":
+				for (let x of vegetarianArr) {
+					arr.unshift(x)
+				}
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+				break;
+			
+			case "glu":
+				for (let x of glutenFreeArr) {
+					arr.unshift(x)
+				}
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+				break;
+			
+			case "dai":
+				for (let x of dairyFreeArr) {
+					arr.unshift(x)
+				}
+				setFilteredInputArr(arr)
+				clearFilteredInput();
+				setFilteredInput(null)
+				break;
+		}
+	}
 
 	return (
+		<div className="All">
+		<h1 className="homepage-title">Meal Pack Generator</h1>
 		<div className="app-container">
-			<div className="homepage-header">
-				<h1 className="app-title">Mealtime</h1>
-				<div className="user-info">
-					<h1 className="store-title" style={{ marginRight: "1rem" }}>
-						Account: {storeName}
-					</h1>
-					<button onClick={logout} className="logout-button button">
-						Logout
-					</button>
-				</div>
-			</div>
 			<div className="app">
+
 				<div className="input-section">
 					<div className="input-container">
-						<h3>Ingredients</h3>
-						<p className="input-instructions">
-							Type or copy/paste ingredients to use below<br></br>
-							<em>(each ingredient must be on a new line)</em>
-						</p>
-						<textarea
-							onChange={(e) => setText(e.target.value)}
-							className="input-box"
-							cols="50"
-							rows="10"
-							placeholder="eggplant&#10;white rice&#10;daikon&#10;chicken thigh"
-						></textarea>
-						<div className="wrapper">
-							<button
-								onClick={makeIngredientArr}
-								className="generate-button button is-medium"
-							>
-								Generate Meal Packs
-							</button>
+						<button className="accordion open-default"><strong>Ingredients</strong></button>
+						<div className="ribs">
+							<p className="input-instructions">Add ingredients you want to search with below<br></br></p>
+							<input
+								onKeyDown={ingredientKeyHandler}
+								id="userIngredientInput"
+								className="input" 
+								type="text"
+								onChange={(e) => setIngredientInput(e.target.value)}
+								placeholder="type ingredient here + hit 'enter'"
+							></input>
+							{/* <button 
+								className="button"
+								onClick={() => {
+									let arr = [...ingredientInputArr]
+									arr.unshift(ingredientInput)
+									if (ingredientInput) {
+										setIngredientInputArr(arr)
+										clearIngredientInput();
+										setIngredientInput(null)
+									}
+								}}
+							>Add</button> */}
+							{ingredientInputArr.length > 0 && ingredientInputArr.map((e) => {
+								return (
+									<div key={uuidv4()} className="ingredient-name">
+										<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
+										<p key={uuidv4()} className="ingredient-title">{e}</p>
+									</div>
+								)
+							})}
 						</div>
 					</div>
+
+
 					<div className="input-container">
-						<h3>Filter Ingredients</h3>
-						<p className="input-instructions">
-							Type or copy/paste ingredients you DON'T want to include in
-							recipes<br></br>
-							<em>(each ingredient must be on a new line)</em>
-						</p>
-						<textarea
-							onChange={(e) => setFilteredText(e.target.value)}
-							className="input-box"
-							cols="50"
-							rows="10"
-							placeholder="pork&#10;milk&#10;cheese"
-						></textarea>
-						<div className="wrapper">
-							<button
-								onClick={makeFilteredArr}
-								className="generate-button button is-medium"
-							>
-								Save filters
-							</button>
+						<button className="accordion"><strong>Filter Ingredients</strong> <em>optional</em></button>
+						<div className="ribs">
+							<p className="input-instructions">
+								Add ingredients you DON'T want to include in meal packs<br></br>
+							</p>
+							<div className="level-left">
+								<button onClick={() => addFilters("veg")} className="button is-small has-background-success">Vegetarian</button>
+								<button onClick={() => addFilters("glu")} className="button is-small has-background-warning">Gluten-Free</button>
+								<button onClick={() => addFilters("dai")} className="button is-small has-background-info">Dairy-Free</button>
+							</div>
+							<input
+								onKeyDown={filteredKeyHandler}
+								id="userFilteredInput"
+								className="input" 
+								type="text"
+								onChange={(e) => setFilteredInput(e.target.value)}
+								placeholder="type ingredient here + hit 'enter'"
+							></input>
+							{/* <button 
+								className="button"
+								onClick={() => {
+									let arr = [...filteredInputArr]
+									arr.unshift(filteredInput)
+									if (filteredInput) {
+										setFilteredInputArr(arr)
+										clearFilteredInput();
+										setFilteredInput(null)
+									}
+								}}
+							>Add</button> */}
+							{filteredInputArr.length > 0 && filteredInputArr.map((e) => {
+								return (
+									<div key={uuidv4()} className="ingredient-name">
+										<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeFiltered(e)}>X</button>
+										<p key={uuidv4()} className="ingredient-title">{e}</p>
+									</div>
+								)
+							})}
 						</div>
 					</div>
-					<div className="filter-container">
-						<h3>Filters:</h3>
-						<div className="filter-contents">
-							{filteredArr &&
-								filteredArr.map((e) => <p className="filter-words">-{e}</p>)}
-						</div>
-					</div>
+					<button
+						onClick={makeArr}
+						className="generate-button button is-large has-background-danger"
+						id="generate-button"
+					>Generate Meal Packs</button>
 				</div>
-				{mealPacks && (
-					<div className="user-selection-container">
-						<div className="generated-mealpacks-container">
-							<h3 className="generated-mealpacks-title">
-								Generated Meal Packs
-							</h3>
-							{mealPacks &&
-								mealPacks.map((e) => {
+
+
+
+				<div className="right-side">
+					<div className="selected-mealpacks">
+					<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
+						<div className="selected-mealpacks-container">
+							{myMealPacks &&
+								myMealPacks.map((e, index) => {
 									return (
-										<div key={e.id} className="mealpack-container">
+										<div key={uuidv4()} className="mealpack-container">
 											<button
-												className="mealpack-add-button button"
-												onClick={() => addToMyMealPacks(e)}
-											>
-												Add To "My Meal Packs"
-											</button>
+												key={uuidv4()}
+												onClick={() => removeFromMyMealPacks(e)}
+												className="button"
+											>Remove from "My Meal Packs"</button>
 											<button
+												key={uuidv4()}
 												className="mealpack-info-button button"
 												onClick={() => {
 													setSelectedMealPack(e);
 													setShow(true);
 												}}
-											>
-												See Meal Pack Info
-											</button>
-											<p className="mealpack-title">
-												<strong>{e.title}</strong> meal pack
+											>See Meal Pack Info</button>
+											<p key={uuidv4()} className="mealpack-title">
+												<strong>{e.title}</strong>
 											</p>
 										</div>
 									);
 								})}
 						</div>
-						<div className="selected-mealpacks">
-							<div className="selected-mealpacks-container">
-								<h3 className="my-mealpacks-title">My Meal Packs</h3>
-								{myMealPacks &&
-									myMealPacks.map((e, index) => {
+					</div>
+					{mealPacks && (
+						<div className="buttons-container">
+							<button
+								className="publish-button is-large button is-danger"
+								onClick={() => {
+									publishMealPacks();
+									setMyMealPacks([]);
+								}}
+							>Save</button>
+							<button
+								className="publish-button button has-background-primary-dark is-large"
+								onClick={() => setMealPacks(null)}
+							>Close</button>
+						</div>
+					)}
+					{mealPacks && (
+						<div className="user-selection-container">
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
+							<div className="generated-mealpacks-container">
+								{mealPacks &&
+									mealPacks.map((e) => {
 										return (
-											<div className="mealpack-container">
+											<div key={uuidv4()} className="mealpack-container">
 												<button
-													onClick={() => removeFromMyMealPacks(e)}
-													className="button"
-												>
-													Remove from "My Meal Packs"
-												</button>
+													key={uuidv4()}
+													className="mealpack-add-button button"
+													onClick={() => addToMyMealPacks(e)}
+												>Add To "Selected Meal Packs"</button>
 												<button
+													key={uuidv4()}
 													className="mealpack-info-button button"
 													onClick={() => {
 														setSelectedMealPack(e);
 														setShow(true);
 													}}
-												>
-													See Meal Pack Info
-												</button>
-												<p className="mealpack-title" key={index}>
-													<strong>{e.title}</strong> meal pack
+												>See Meal Pack Info</button>
+												<p key={uuidv4()} className="mealpack-title">
+													<strong>{e.title}</strong>
 												</p>
 											</div>
 										);
 									})}
 							</div>
 						</div>
-						<div className="buttons-container">
-							<button
-								className="publish-button button is-danger is-outlined"
-								onClick={() => {
-									publishMealPacks();
-									setMyMealPacks([]);
-								}}
-							>
-								Save
-							</button>
-							<button
-								className="publish-button button is-primary is-outlined is-dark"
-								onClick={() => setMealPacks(null)}
-							>
-								Close
-							</button>
-						</div>
-					</div>
-				)}
-				<div className="active-view">
-					<ActiveView
-						selectedActivePack={selectedActivePack}
-						setSelectedActivePastPack={setSelectedActivePastPack}
-						activeMealPacks={activeMealPacks}
-						setActiveMealPacks={setActiveMealPacks}
-						pastMealPacks={pastMealPacks}
-						setPastMealPacks={setPastMealPacks}
-					/>
-				</div>
-				<div className="past-view">
-					<PastView
-						activeMealPacks={activeMealPacks}
-						setActiveMealPacks={setActiveMealPacks}
-						setPastMealPacks={setPastMealPacks}
-						pastMealPacks={pastMealPacks}
-						setSelectedActivePastPack={setSelectedActivePastPack}
-					/>
+					)}
 				</div>
 				<MealPackModal
 					selectedMealPack={selectedMealPack}
@@ -271,6 +370,7 @@ const Homepage = (props) => {
 				/>
 			</div>
 			<footer className="footer"></footer>
+		</div>
 		</div>
 	);
 };

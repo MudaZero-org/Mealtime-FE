@@ -5,15 +5,15 @@ import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
 	const [storeName, setStoreName] = useState("");
-	const [companyName, setCompanyName] = useState("");
-	const [postalCode, setPostalCode] = useState("");
-	const [address, setAddress] = useState("");
-	const [phoneNumber, setPhoneNumber] = useState("");
+	const [companyName, setCompanyName] = useState("test-company");
+	const [postalCode, setPostalCode] = useState(12345);
+	const [address, setAddress] = useState("test-address");
+	const [phoneNumber, setPhoneNumber] = useState(67890);
 	const [email, setEmail] = useState("");
-	const [storeManager, setStoreManager] = useState("");
+	const [storeManager, setStoreManager] = useState("test-manager");
 	const [password, setPassword] = useState("");
-	const [err, setErr] = useState("");
-	const [errPwd, setErrPwd] = useState("");
+	const [secondPassword, setSecondPassword] = useState("")
+	const [passwordsMatch, setPasswordsMatch] = useState(true)
 
 	const navigate = useNavigate();
 	const reroute = () => {
@@ -32,93 +32,63 @@ const SignUp = (props) => {
 						<h1 className="card-title">Mealtime</h1>
 					</div>
 				</div>
-				<div className="card-content">
-					<form>
+				<div className="card-content signup-content">
+					<form className="form">
 						<div className="input-field">
-							<label>Store name:</label>
+							<label>Store Name</label>
 							<input
+								className="text-input-field input"
 								type="text"
-								placeholder="Enter store name"
+								placeholder="Store Name"
 								onChange={(e) => {
 									setStoreName(e.target.value);
 								}}
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Company name:</label>
+							<label>Email</label>
 							<input
-								type="text"
-								placeholder="Enter company name"
-								onChange={(e) => {
-									setCompanyName(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Postal Code:</label>
-							<input
-								type="text"
-								placeholder="Enter postal code"
-								onChange={(e) => {
-									setPostalCode(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Store Address:</label>
-							<input
-								type="text"
-								placeholder="Enter store address"
-								onChange={(e) => {
-									setAddress(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Phone Number:</label>
-							<input
-								type="text"
-								placeholder="Enter phone number"
-								onChange={(e) => {
-									setPhoneNumber(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Email Address:</label>
-							<input
+								className="text-input-field input"
 								type="email"
-								placeholder="Enter email address"
+								placeholder="Email"
 								onChange={(e) => {
 									setEmail(e.target.value);
 								}}
 							></input>
 						</div>
 						<div className="input-field">
-							<label>Store Manager:</label>
+							<label>Password</label>
 							<input
-								type="text"
-								placeholder="Enter store manager"
-								onChange={(e) => {
-									setStoreManager(e.target.value);
-								}}
-							></input>
-						</div>
-						<div className="input-field">
-							<label>Password:</label>
-							<input
+								className="text-input-field input"
 								type="password"
-								placeholder="Enter password"
+								placeholder="Password"
 								onChange={(e) => {
 									setPassword(e.target.value);
 								}}
 							></input>
 						</div>
 						<div className="input-field">
-							<button className="button is-medium"
+							<label>Password</label>
+							<input
+								className="text-input-field input"
+								type="password"
+								placeholder="Re-enter Password"
+								onChange={(e) => {
+									setSecondPassword(e.target.value);
+								}}
+							></input>
+						</div>
+						{passwordsMatch === false && <p style={{ textAlign: "center", marginTop: "1rem", color: "red" }}><em>Passwords don't match!</em></p>}
+						<div className="input-field signup-button">
+							<button className="button is-large"
 								onClick={async (e) => {
 									e.preventDefault();
 									try {
+										if (password !== secondPassword) {
+											setPasswordsMatch(false)
+											return;
+										}
+
 										AuthUtils.signUp(
 											storeName,
 											companyName,
@@ -133,21 +103,15 @@ const SignUp = (props) => {
 										});
 									} catch (error) {
 										console.log(error);
-										//Error handling
-										// if (err === "") {
-										// 	setLoginView("login");
-										// }
 									}
 								}}
-							>
-								Signup
-							</button>
+							>Signup</button>
 						</div>
 						<div className="spacer"></div>
+						<div className="input-field login-text">
+							<p>Already have an account?<br></br> <a onClick={reroute} className="register-link">Login here!</a></p>
+						</div>
 					</form>
-					<div className="input-field">
-						<p>Already have an account? <a onClick={reroute} className="register-link">Login here!</a></p>
-					</div>
 				</div>
 			</div>
 		</div>
