@@ -119,11 +119,11 @@ const ActiveView = (props) => {
             <div className="tile is-child is-4">
               <div key={uuidv4()} className="active-mealpack-container">
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
-                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong> meal pack</p>
+                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
                 <div className="tags active-mealpacks-tags">
                   {e.recipeDetail.vegetarian && <span className="tag is-primary">vegetarian</span>}
                   {e.recipeDetail.vegan && <span className="tag is-danger">vegan</span>}
-                  {e.recipeDetail.glutenFree && <span className="tag is-warning ">gulten free</span>}
+                  {e.recipeDetail.glutenFree && <span className="tag is-warning ">gluten free</span>}
                   {e.recipeDetail.dairyFree && <span className="tag is-info">dairy free</span>}
                 </div>
                 <div className="active-mealpacks-buttons">
@@ -139,6 +139,7 @@ const ActiveView = (props) => {
           );
         })}
       </div>
+			<footer className="footer"></footer>
     </div>
   )
 }

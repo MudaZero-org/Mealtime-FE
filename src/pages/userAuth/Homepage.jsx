@@ -198,12 +198,11 @@ const Homepage = (props) => {
 		<div className="app-container">
 			<div className="app">
 
-
 				<div className="input-section">
 					<div className="input-container">
-						<button className="accordion open-default">Ingredients</button>
+						<button className="accordion open-default"><strong>Ingredients</strong></button>
 						<div className="ribs">
-							<p className="input-instructions">Type or copy/paste ingredients to use below<br></br></p>
+							<p className="input-instructions">Add ingredients you want to search with below<br></br></p>
 							<input
 								onKeyDown={ingredientKeyHandler}
 								id="userIngredientInput"
@@ -237,12 +236,10 @@ const Homepage = (props) => {
 
 
 					<div className="input-container">
-						<button className="accordion">Filter Ingredients <em>optional</em></button>
+						<button className="accordion"><strong>Filter Ingredients</strong> <em>optional</em></button>
 						<div className="ribs">
 							<p className="input-instructions">
-								Type or copy/paste ingredients you DON'T want to include in
-								recipes<br></br>
-								<em>(each ingredient must be on a new line)</em>
+								Add ingredients you DON'T want to include in meal packs<br></br>
 							</p>
 							<div className="level-left">
 								<button onClick={() => addFilters("veg")} className="button is-small has-background-success">Vegetarian</button>
@@ -310,13 +307,28 @@ const Homepage = (props) => {
 												}}
 											>See Meal Pack Info</button>
 											<p key={uuidv4()} className="mealpack-title">
-												<strong>{e.title}</strong> meal pack
+												<strong>{e.title}</strong>
 											</p>
 										</div>
 									);
 								})}
 						</div>
 					</div>
+					{mealPacks && (
+						<div className="buttons-container">
+							<button
+								className="publish-button is-large button is-danger"
+								onClick={() => {
+									publishMealPacks();
+									setMyMealPacks([]);
+								}}
+							>Save</button>
+							<button
+								className="publish-button button has-background-primary-dark is-large"
+								onClick={() => setMealPacks(null)}
+							>Close</button>
+						</div>
+					)}
 					{mealPacks && (
 						<div className="user-selection-container">
 							<div className="generated-mealpacks-container">
@@ -339,24 +351,11 @@ const Homepage = (props) => {
 													}}
 												>See Meal Pack Info</button>
 												<p key={uuidv4()} className="mealpack-title">
-													<strong>{e.title}</strong> meal pack
+													<strong>{e.title}</strong>
 												</p>
 											</div>
 										);
 									})}
-							</div>
-							<div className="buttons-container">
-								<button
-									className="publish-button button is-danger is-outlined"
-									onClick={() => {
-										publishMealPacks();
-										setMyMealPacks([]);
-									}}
-								>Save</button>
-								<button
-									className="publish-button button is-primary is-outlined is-dark"
-									onClick={() => setMealPacks(null)}
-								>Close</button>
 							</div>
 						</div>
 					)}
