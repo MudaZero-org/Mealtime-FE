@@ -80,7 +80,7 @@ const ActiveView = (props) => {
 		const QRCode = require("qrcode");
 		let qrCodeDataUrl;
 		let recipeId = meal.recipeId
-		QRCode.toDataURL(`http://localhost:3000/info/${recipeId}`, function (err, url) {
+		QRCode.toDataURL(`${API_URL}/info/${recipeId}`, function (err, url) {
 			qrCodeDataUrl = url;
 		});
 		return qrCodeDataUrl;
