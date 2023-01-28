@@ -195,6 +195,8 @@ const Homepage = (props) => {
 	}
 
 	return (
+		<div className="All">
+		<h1 className="homepage-title">Meal Pack Generator</h1>
 		<div className="app-container">
 			<div className="app">
 
@@ -287,8 +289,8 @@ const Homepage = (props) => {
 
 				<div className="right-side">
 					<div className="selected-mealpacks">
+					<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
 						<div className="selected-mealpacks-container">
-							<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
 							{myMealPacks &&
 								myMealPacks.map((e, index) => {
 									return (
@@ -331,8 +333,8 @@ const Homepage = (props) => {
 					)}
 					{mealPacks && (
 						<div className="user-selection-container">
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 							<div className="generated-mealpacks-container">
-								<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 								{mealPacks &&
 									mealPacks.map((e) => {
 										return (
@@ -368,6 +370,7 @@ const Homepage = (props) => {
 				/>
 			</div>
 			<footer className="footer"></footer>
+		</div>
 		</div>
 	);
 };
