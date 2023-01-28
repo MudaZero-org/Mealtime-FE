@@ -1,7 +1,7 @@
 @use "../main" as *;
 
 .app-container {
-  margin-top: 3rem;
+  padding-top: 4rem;
   display: grid;
   grid-template-columns: 1fr 4fr 4fr 1fr;
   background-color: $my-background;
@@ -17,42 +17,43 @@
 
 .footer {
   grid-column: 1 / 5;
-  background-color:hsl(171, 100%, 29%);
+  background-color: $my-background;
+  padding-bottom: 150px;
 }
 
 .homepage-header {
-	grid-column: 1 / 4;
-	display: grid;
-	grid-template-columns: 2fr 3fr 2fr;
-	height: 8rem;
-	background-color: hsl(171, 100%, 29%);
-	color: white;
-	margin-bottom: 3rem;
-	position: sticky;
-	top: 0;
-	z-index: 2;
-	box-shadow: 0 4px 2px -2px black;
+  grid-column: 1 / 4;
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+  height: 8rem;
+  background-color: hsl(171, 100%, 29%);
+  color: white;
+  margin-bottom: 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 4px 2px -2px black;
 }
 
 .app-title {
-	grid-column: 2;
-	text-align: center;
-	align-self: center;
-	font-size: 80px;
-	font-family: "Lobster", cursive;
+  grid-column: 2;
+  text-align: center;
+  align-self: center;
+  font-size: 80px;
+  font-family: "Lobster", cursive;
 }
 
 .user-info {
-	grid-column: 3;
-	display: flex;
-	justify-content: right;
-	padding-right: 2rem;
-	align-self: flex-end;
-	align-items: flex-end;
+  grid-column: 3;
+  display: flex;
+  justify-content: right;
+  padding-right: 2rem;
+  align-self: flex-end;
+  align-items: flex-end;
 }
 
 .store-title {
-	font-size: 16px;
+  font-size: 16px;
 }
 
 .input-section {
@@ -89,184 +90,246 @@
 	color: white;
 }
 
+#generate-button {
+	margin-top: 2rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .wrapper {
   display: flex;
   margin-bottom: 1.5rem;
 }
 
 .filter-container {
-	margin: 0 3rem;
+  margin: 0 3rem;
 }
 
 .filter-words {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .mealpack-container {
-	display: grid;
-	grid-template-columns: 1fr 2fr;
-	grid-template-rows: 1fr 1fr;
-	margin: 5px 10px;
-	background: $my-background;
-	padding: 10px 30px 10px 10px;
-	align-items: center;
-	border: 1px solid black;
-	border-radius: 5px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  margin: 5px 10px;
+  background: rgb(234, 234, 234);
+  padding: 10px 30px 10px 10px;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .button {
-	height: fit-content;
-	margin: 5px;
-	&:hover {
-		background-color: gray;
-		color: white;
-	}
+  height: fit-content;
+  margin: 5px;
+  &:hover {
+    background-color: gray;
+    color: white;
+  }
 }
 
 .publish-button {
-	margin-top: 20px;
-	padding: 5px 100px;
-	width: fit-content;
-	margin-left: auto;
-	margin-right: auto;
-	grid-column: 2;
-	font-size: 38px;
-	color: white;
-	border-radius: 5px;
-	font-weight: bold;
+  margin-top: 20px;
+  padding: 5px 100px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  grid-column: 2;
+  font-size: 38px;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .selected-mealpacks-container {
-  height: fit-content;
-  min-height: 17.1rem;
-  margin-bottom: 3rem;
+  height: 30rem;
+  // margin-bottom: 3rem;
   width: 100%;
   border: solid 1px black;
-  box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow: scroll;
-	overflow-y: hidden;
 	overflow-x: hidden;
+  background-color: white;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .generated-mealpacks-container {
-  height: 35rem;
+  height: 30rem;
   overflow: scroll;
   width: 100%;
   border: solid black 1px;
-  box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  overflow-x: hidden;
+  background-color: white;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
-.generated-mealpacks-title, .my-mealpacks-title, .active-title {
-  text-align: center;
-  padding: 30px 0;
-  background-color: hsl(171, 100%, 29%);
-  color: white;
+.active-title {
+  padding: 50px 0 20px 15px;
   font-size: 40px;
   font-weight: bold;
   margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  margin-left: 5%;
+  margin-right: 5%;
   z-index: 1;
 }
 
-.past-title {
+.my-mealpacks-title, .generated-mealpacks-title {
 	text-align: center;
-	padding: 30px 0;
-	background-color: hsl(0, 0%, 28%);
 	color: white;
-	font-size: 40px;
+	font-size: 20px;
+  border-top: 1px black solid;
+  border-right: 1px black solid;
+  border-left: 1px black solid;
 	font-weight: bold;
-	position: sticky;
-	top: 0;
-	margin-bottom: 20px;
+	// margin-bottom: 20px;
 	z-index: 1;
+	padding: 16px;
+  margin-bottom: 0px;
+}
+
+.my-mealpacks-title {
+	background-color: hsl(171, 100%, 29%);
+  position: sticky;
+  top: 0;
+}
+
+.generated-mealpacks-title {
+	background-color: hsl(0, 0%, 28%);
+  position: sticky;
+  top: 0;
+}
+
+.past-title {
+  padding: 50px 0 20px 15px;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  margin-left: 5%;
+  margin-right: 5%;
+  z-index: 1;
 }
 
 .mealpack-add-button {
-	grid-column: 1;
-	grid-row: 1;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .mealpack-info-button {
-	grid-column: 1;
-	grid-row: 2;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .mealpack-title {
-	grid-column: 2;
-	grid-row: 1 / 3;
-	font-size: 24px;
-	margin-left: 10px;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  font-size: 24px;
+  margin-left: 10px;
 }
 
 .buttons-container {
-	display: flex;
-	grid-column: 2;
+  display: flex;
+  grid-column: 2;
+  margin-bottom: 3rem;
 }
 
 .past-view,
 .active-view {
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	border: solid 1px black;
-	border-radius: 5px;
-	box-shadow: 2px 2px 5px rgb(134, 134, 134);
-	margin: 5rem 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border: solid 1px black;
+  // border-radius: 5px;
+  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  // margin: 5rem 0;
+  min-width: 100vw;
 }
 
 .active-container,
 .past-container {
-	width: 100%;
+  width: 100vw;
+}
+
+.active-mealpacks,
+.past-mealpacks{
+	display: flex;
+	flex-wrap: wrap;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .active-mealpack-container,
 .past-mealpack-container {
-	border: 1px solid black;
-	margin: 1rem;
-	border-radius: 5px;
-	background-color: white;
+  border: 1px solid black;
+  margin: 1rem;
+  border-radius: 5px;
+  background-color: white;
 }
+
+.food-small-image {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  border-top-right-radius: 3.5px;
+  border-top-left-radius: 3.5px;
+}
+
+.active-mealpacks-tags,
+.past-mealpacks-tags {
+  margin: 0.5rem;
+}
+
 
 // MEAL PACK PAGE
 
 .info-page-container {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .mealpack-info-page {
-	margin: 30px;
-	width: 50%;
-	text-align: center;
-	padding: 1rem 2rem;
+  margin: 30px;
+  width: 50%;
+  text-align: center;
+  padding: 1rem 2rem;
 }
 
 .food-image {
-	height: auto;
-	width: 300px;
-	margin: 2rem auto;
+  height: auto;
+  width: 300px;
+  margin: 2rem auto;
 }
 
-.to-home-button {
+.back-button {
 	width: fit-content;
 	margin-bottom: 2rem;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .ingredients-block {
-	margin: 1rem;
+  margin: 1rem;
 }
 
 .ingredient {
-	margin: 0px;
-	padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .instructions-block {
-	text-align: left;
+  text-align: left;
 }
 
 .instruction {
-	margin: 1rem;
+  margin: 1rem;
 }
 
 .ingredient-name {
@@ -275,54 +338,75 @@
 	display: flex;
 	border-bottom: 1px solid rgb(207, 207, 207);
 	align-items: center;
+	&:hover {
+		background-color: rgb(208, 208, 208);
+	}
 }
 
 .ingredient-title {
-	margin: 0px;
+  margin: 0px;
 }
 
 .ingredient-button {
-	padding: 0px 5px;
+  padding: 0px 5px;
 }
 
 // NAVBAR STYLES
 
 .navbar {
-	background-color: hsl(171, 100%, 29%);
-	border-bottom: 1px solid black;
+  background-color: hsl(171, 100%, 29%);
+  border-bottom: 1px solid black;
 }
 
 .navbar-item {
-	color: white;
-	font-size: 20px;
-	text-decoration: none;
-	height: 35px;
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  height: 35px;
 }
 
 .logout-button {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .past-mealpacks-page,
 .active-mealpacks-page,
 .profile-page,
-.app-container,
+// .app-container,
 .info-page-container {
-	padding-top: 100px;
-	background-color: $my-background;
-	min-height: 100vh;
+  padding-top: 84px;
+  background-color: $my-background;
+  min-height: 100vh;
+}
+
+.All {
+  background-color: $my-background;
+}
+
+.homepage-title {
+  font-size: 40px;
+  padding-top: 50px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 20px;
+  margin-top: 84px;
+  margin-bottom: 0px;
+  font-weight: bold;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: $my-background;
+  border-bottom: 1px solid black;
 }
 
 .dark {
   color: black;
 }
 
-
 // Accordion settings ###################################
 
 .accordion {
-  background-color: #eee;
-  color: #444;
+  background-color: $my-background;
+  color: black;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -335,8 +419,8 @@
 }
 
 .open-default {
-  background-color: #eee;
-  color: #444;
+  background-color: $my-background;
+  color: black;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -349,20 +433,21 @@
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .accordion:hover {
+// .active,
+.accordion:hover {
   background-color: #ccc;
 }
 
 /* Style the accordion ribs. Note: hidden by default */
 .ribs {
-  padding: 0 18px 18px;
-  background-color: white;
+  padding: 0 18px 18px 36px;
+  background-color: $my-background;
   display: none;
   overflow: hidden;
 }
 
 .accordion:after {
-  content: '\276f'; /* Unicode character for "plus" sign (+) */
+  content: "\276f"; /* Unicode character for "plus" sign (+) */
   font-size: 13px;
   color: #777;
   float: left;
@@ -371,15 +456,13 @@
 }
 
 .active:after {
-  transform: rotate(90deg)
+  transform: rotate(90deg);
 }
-
 
 //For Profile page
 .profile-page {
-	height: 100vh;
-	align-items: center;
-	justify-content: center;
-	display: grid;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  display: grid;
 }
-
