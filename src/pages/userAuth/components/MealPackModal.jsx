@@ -6,7 +6,8 @@ const MealPackModal = (props) => {
   const handleClose = () => setShow(false);
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+    centered show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>{selectedMealPack && <h1>{selectedMealPack.title}</h1>}</Modal.Title>
       </Modal.Header>
