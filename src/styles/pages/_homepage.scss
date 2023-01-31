@@ -102,6 +102,15 @@
   margin: 0;
 }
 
+.clear-button {
+  margin-bottom: 5px; 
+  margin-top: 10px;
+  cursor: pointer; 
+  text-decoration: underline;
+  color: $my-red;
+  text-align: right;
+}
+
 .mealpack-container {
   display: grid;
   grid-template-columns: 1fr 2fr;
