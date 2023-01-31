@@ -5,6 +5,7 @@ import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
 import API_URL from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
+import {Popover, OverlayTrigger, Button} from 'react-bootstrap';
 
 const PastView = (props) => {
   const [show, setShow] = useState(false);
@@ -68,6 +69,57 @@ const PastView = (props) => {
 		setActiveMealPacks(data.data);
 	};
 
+  //Handles deleting mealpack
+	const deleteMealPack = async (meal) => {
+		const user = JSON.parse(localStorage.getItem("user"));
+		const storeId = user.data.storeId;
+		//route
+		await axios.delete(
+			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
+			{
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			}
+		);
+		let data = await axios.get(
+			`${API_URL}/store/${storeId}/mealpack/all/status/false`,
+			{
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			}
+		);
+		setPastMealPacks(data.data);
+	}
+
+
+  //Popoever
+const popover = (e) => (
+  <Popover id="popover-basic">
+    <Popover.Header as="h3">Delete mealpack?</Popover.Header>
+    <Popover.Body>
+        Are you sure you want to <strong>delete</strong> this mealpack?
+      </Popover.Body>
+      <Button
+        variant="primary"
+        onClick={async () => {
+          //As of the moment to check if it is working
+          await activateMealPack(e)
+          fetchPastPacks()
+        }}
+      >
+        Yes
+      </Button>{" "}
+      <Button
+        variant="primary"
+        onClick={() => {
+          document.body.click()
+        }}
+      >
+        No
+      </Button>{" "}
+  </Popover>
+);
+
+
+
 	return (
 		<div className="past-container">
 			<h2 className="past-title">
@@ -98,6 +150,9 @@ const PastView = (props) => {
                     await activateMealPack(e)
                     fetchPastPacks()
                   }} style={{ marginBottom: "10px" }}>Add to Favorites</button>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={popover(e)}>
+  									<button className="button">Delete</button>
+									</OverlayTrigger>
                 </div>
               </div>
             </div>
