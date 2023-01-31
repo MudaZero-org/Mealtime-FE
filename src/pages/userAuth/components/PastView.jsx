@@ -1,11 +1,15 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
 import API_URL from "../../../Constants";
+import MealPackDetailsModal from "./MealPackDetailsModal"
 
 const PastView = (props) => {
+  const [show, setShow] = useState(false);
+	const [selectedMealPack, setSelectedMealPack] = useState(null);
+
 	const {
 		pastMealPacks,
 		setPastMealPacks,
@@ -67,7 +71,7 @@ const PastView = (props) => {
 	return (
 		<div className="past-container">
 			<h2 className="past-title">
-				Past Meal Packs <em>&#40;inactive&#41;</em>
+				Meal Packs <em>&#40;inactive&#41;</em>
 			</h2>
 
       <div className="tile is-parent past-mealpacks">
@@ -84,11 +88,16 @@ const PastView = (props) => {
                   {e.recipeDetail.dairyFree && <span className="tag is-info">dairy free</span>}
                 </div>
                 <div className="past-mealpacks-buttons">
-                  <button key={uuidv4()} className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
+                  <button key={uuidv4()} className="button" onClick={() => {
+                    //Old Code
+                    // rerouteToMealpack(e)
+                    setShow(true)
+										setSelectedMealPack(e)
+                    }}>See Meal Pack Info</button>
                   <button key={uuidv4()} className="button" onClick={async () => {
                     await activateMealPack(e)
                     fetchPastPacks()
-                  }} style={{ marginBottom: "10px" }}>Activate Meal Pack</button>
+                  }} style={{ marginBottom: "10px" }}>Add to Favorites</button>
                 </div>
               </div>
             </div>
@@ -97,6 +106,12 @@ const PastView = (props) => {
         })}
       </div>
       <footer className="footer"></footer>
+      <MealPackDetailsModal
+				selectedMealPack={selectedMealPack}
+					setSelectedMealPack={setSelectedMealPack}
+					show={show}
+					setShow={setShow}
+			/>
     </div>
   )
 }
