@@ -125,10 +125,10 @@ const ActiveView = (props) => {
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
                 <div className="tags active-mealpacks-tags">
-                  {e.recipeDetail.vegetarian && <span className="tag is-primary">vegetarian</span>}
-                  {e.recipeDetail.vegan && <span className="tag is-danger">vegan</span>}
-                  {e.recipeDetail.glutenFree && <span className="tag is-warning ">gluten free</span>}
-                  {e.recipeDetail.dairyFree && <span className="tag is-info">dairy free</span>}
+                  {e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
+                  {e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
+                  {e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
+                  {e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
                 </div>
                 <div className="active-mealpacks-buttons">
                   <button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
