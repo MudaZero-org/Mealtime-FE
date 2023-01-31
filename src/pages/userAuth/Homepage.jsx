@@ -199,8 +199,10 @@ const Homepage = (props) => {
 		<h1 className="homepage-title">Meal Pack Generator</h1>
 		<div className="app-container">
 			<div className="app">
-
+				
 				<div className="input-section">
+					
+					
 					<div className="input-container">
 						<button className="accordion open-default"><strong>Ingredients</strong></button>
 						<div className="ribs">
@@ -220,9 +222,9 @@ const Homepage = (props) => {
 										let arr = [...ingredientInputArr]
 										arr.unshift(ingredientInput)
 										if (ingredientInput) {
-											setIngredientInputArr(arr)
+											setIngredientInputArr(arr);
 											clearIngredientInput();
-											setIngredientInput(null)
+											setIngredientInput(null);
 										}
 									}}
 								>Add</button>
@@ -235,6 +237,11 @@ const Homepage = (props) => {
 									</div>
 								)
 							})}
+							{ingredientInputArr.length > 0 && <p onClick={() => {
+								setIngredientInputArr([]);
+								clearIngredientInput();
+								setIngredientInput(null);
+							}} className="clear-button">[x]clear all</p>}
 						</div>
 					</div>
 
@@ -280,8 +287,15 @@ const Homepage = (props) => {
 									</div>
 								)
 							})}
+							{filteredInputArr.length > 0 && <p onClick={() => {
+								setFilteredInputArr([])
+								clearFilteredInput();
+								setFilteredInput(null)
+							}} className="clear-button">[x]clear all</p>}
 						</div>
 					</div>
+
+
 					<button
 						onClick={makeArr}
 						className="generate-button button is-medium"
@@ -302,6 +316,8 @@ const Homepage = (props) => {
 							>Close</button> */}
 						</div>
 					)}
+
+
 				</div>
 
 
