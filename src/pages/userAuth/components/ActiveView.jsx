@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
-import API_URL from "../../../Constants";
+import API_URL, {REACT_APP_URL} from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
 
 const ActiveView = (props) => {
@@ -84,7 +84,7 @@ const ActiveView = (props) => {
 		const QRCode = require("qrcode");
 		let qrCodeDataUrl;
 		let recipeId = meal.recipeId
-		QRCode.toDataURL(`${API_URL}/info/${recipeId}`, function (err, url) {
+		QRCode.toDataURL(`${REACT_APP_URL}/info/${recipeId}`, function (err, url) {
 			qrCodeDataUrl = url;
 		});
 		return qrCodeDataUrl;
