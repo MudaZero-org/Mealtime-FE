@@ -77,7 +77,7 @@ const PastView = (props) => {
       <div className="tile is-parent past-mealpacks">
         {pastMealPacks && pastMealPacks.map((e) => {
           return (
-            <div className="tile is-child is-4">
+            <div key={uuidv4()} className="tile is-child is-4">
               <div key={uuidv4()} className="past-mealpack-container">
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
