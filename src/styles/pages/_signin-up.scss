@@ -3,7 +3,7 @@
 .signup-signin-app {
   height: 100vh;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr minmax(min-content, 1fr) 1fr;
   align-items: center;
   background-image: url("../../images/background-img.jpg");
   background-size: cover;
@@ -11,7 +11,7 @@
 
 .card {
   grid-column: 2;
-  margin: 0 3rem 10rem;
+  overflow: auto;
 }
 
 .login-content, .signup-content {

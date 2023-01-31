@@ -57,14 +57,7 @@ function App() {
           }
         />
         <Route
-          path="/profile"
-          // element={
-          // 	<>
-          // 		<Navbar />
-          // 		<Profile />
-          // 	</>
-          // }
-        >
+          path="/profile">
           <Route
             index
             element={
@@ -93,16 +86,6 @@ function App() {
             }
           ></Route>
         </Route>
-        {/* <Route
-					exact
-					path="/editProfile"
-					element={
-						<>
-							<Navbar />
-							<EditProfile />
-						</>
-					}
-				></Route> */}
         <Route
           exact
           path="/past-mealpacks"

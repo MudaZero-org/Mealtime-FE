@@ -53,13 +53,13 @@ const Navbar = () => {
 						href="/active-mealpacks"
 						className={`navbar-item ${isActive ? "dark" : ""}`}
 					>
-						Active View
+						Favorites
 					</a>
 					<a
 						href="/past-mealpacks"
 						className={`navbar-item ${isActive ? "dark" : ""}`}
 					>
-						Past View
+						Meal Packs
 					</a>
 					<a
 						href="/profile"

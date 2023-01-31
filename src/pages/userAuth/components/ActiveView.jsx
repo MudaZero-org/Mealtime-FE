@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
-import API_URL from "../../../Constants";
+import API_URL, {REACT_APP_URL} from "../../../Constants";
+import MealPackDetailsModal from "./MealPackDetailsModal"
 
 const ActiveView = (props) => {
+	const [show, setShow] = useState(false);
+	const [selectedMealPack, setSelectedMealPack] = useState(null);
+
 	const {
 		activeMealPacks,
 		setActiveMealPacks,
@@ -80,7 +84,7 @@ const ActiveView = (props) => {
 		const QRCode = require("qrcode");
 		let qrCodeDataUrl;
 		let recipeId = meal.recipeId
-		QRCode.toDataURL(`${API_URL}/info/${recipeId}`, function (err, url) {
+		QRCode.toDataURL(`${REACT_APP_URL}/info/${recipeId}`, function (err, url) {
 			qrCodeDataUrl = url;
 		});
 		return qrCodeDataUrl;
@@ -111,7 +115,7 @@ const ActiveView = (props) => {
 
   return (
     <div className="active-container">
-      <h2 className="active-title">Active Meal Packs</h2>
+      <h2 className="active-title">Favorite Meal Packs</h2>
 
       <div className="tile is-parent active-mealpacks">
         {activeMealPacks && activeMealPacks.map((e, index) => {
@@ -128,11 +132,16 @@ const ActiveView = (props) => {
                 </div>
                 <div className="active-mealpacks-buttons">
                   <button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
-                  <button key={uuidv4()} className="button" onClick={() => rerouteToMealpack(e)}>See Meal Pack Info</button>
+                  <button key={uuidv4()} className="button" onClick={() => {
+										//Old code
+										// rerouteToMealpack(e)
+										setShow(true)
+										setSelectedMealPack(e)
+										}}>See Meal Pack Info</button>
                   <button key={uuidv4()} className="button" onClick={async () => {
                     await deactivateMealPack(e)
                     fetchActivePacks()
-                  }}>Deactivate Meal Pack</button>
+                  }}>Remove from Favorites</button>
                 </div>
               </div>
             </div>
@@ -140,6 +149,12 @@ const ActiveView = (props) => {
         })}
       </div>
 			<footer className="footer"></footer>
+			<MealPackDetailsModal
+				selectedMealPack={selectedMealPack}
+					setSelectedMealPack={setSelectedMealPack}
+					show={show}
+					setShow={setShow}
+			/>
     </div>
   )
 }
