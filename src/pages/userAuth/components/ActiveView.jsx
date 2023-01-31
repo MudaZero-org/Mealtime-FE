@@ -120,7 +120,7 @@ const ActiveView = (props) => {
       <div className="tile is-parent active-mealpacks">
         {activeMealPacks && activeMealPacks.map((e, index) => {
           return (
-            <div className="tile is-child is-4">
+            <div key={uuidv4()} className="tile is-child is-4">
               <div key={uuidv4()} className="active-mealpack-container">
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
