@@ -13,6 +13,7 @@ import Navbar from "./pages/userAuth/components/Navbar";
 import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
 import EditProfile from "./pages/userAuth/EditProfile";
 import EditPassword from "./pages/userAuth/EditPassword";
+import HowToUse from "./pages/userAuth/HowToUse"
 import Info from "./pages/info";
 
 function App() {
@@ -119,6 +120,12 @@ function App() {
           }
         ></Route>
         <Route exact path="/info/:recipeId" element={<Info />}></Route>
+        <Route exact path="/howToUse" element={
+          <>
+            <HowToUse/>
+          </>
+
+        }></Route>
       </Routes>
     </BrowserRouter>
   );
