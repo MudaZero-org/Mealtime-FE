@@ -32,7 +32,7 @@ const Homepage = (props) => {
 	const [ingredientInputArr, setIngredientInputArr] = useState([]);
 	const [filteredInput, setFilteredInput] = useState(null);
 	const [filteredInputArr, setFilteredInputArr] = useState([]);
-	const [buttonStatus, setButtonStatus] = useState(true)
+	const [buttonStatus, setButtonStatus] = useState(true);
 
 	const user = JSON.parse(localStorage.getItem("user"));
 
@@ -53,6 +53,7 @@ const Homepage = (props) => {
 				{
 					headers: {authorization: `Bearer ${user.accessToken}`}
 				});
+				data.data.map((meal) => meal.clicked = false)
 				setMealPacks(data.data);
 				const idArray = [];
 				data.data.forEach((e) => idArray.push(e.id));
@@ -203,6 +204,33 @@ const Homepage = (props) => {
 		}
 	}
 
+	const renderAddButton = (meal) => {
+		if (!meal.clicked) {
+			return (
+				<button
+					key={uuidv4()}
+					className="mealpack-add-button button is-medium"
+					onClick={() => {
+						addToMyMealPacks(meal);
+						toggleAddButton(meal);
+					}}
+				>Add</button>
+			)
+		} else {
+			return (
+				<button
+					disabled
+					key={uuidv4()}
+					className="mealpack-add-button button is-medium"
+				>Added</button>
+			)
+		}
+	}
+
+	const toggleAddButton = (meal) => {
+		meal.clicked = !meal.clicked;
+	}
+
 	return (
 		<div className="All">
 			<h1 className="homepage-title">Meal Pack Generator</h1>
@@ -277,9 +305,9 @@ const Homepage = (props) => {
 											let arr = [...filteredInputArr]
 											arr.unshift(filteredInput)
 											if (filteredInput) {
-												setFilteredInputArr(arr)
+												setFilteredInputArr(arr);
 												clearFilteredInput();
-												setFilteredInput(null)
+												setFilteredInput(null);
 											}
 										}}
 									>Add</button>
@@ -320,7 +348,10 @@ const Homepage = (props) => {
 													<div className="mealpack-container-buttons">
 														<button
 															key={uuidv4()}
-															onClick={() => removeFromMyMealPacks(e)}
+															onClick={() => {
+																removeFromMyMealPacks(e)
+																toggleAddButton(e)
+															}}
 															className="button is-medium mealpack-add-button"
 														>Remove</button>
 														<button
@@ -371,15 +402,19 @@ const Homepage = (props) => {
 								<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
 								<div className="generated-mealpacks-container">
 									{mealPacks &&
-										mealPacks.map((e) => {
+										mealPacks.map((e, index) => {
 											return (
 												<div key={uuidv4()} className="mealpack-container">
 													<div className="mealpack-container-buttons">
-													<button
-														key={uuidv4()}
-														className="mealpack-add-button is-medium button"
-														onClick={() => addToMyMealPacks(e)}
-													>Add</button>
+														{renderAddButton(e)}
+														{/* <button
+															key={uuidv4()}
+															className="mealpack-add-button button is-medium"
+															onClick={() => {
+																addToMyMealPacks(e);
+																toggleAddButton(index);
+															}}
+														>Add</button> */}
 													<button
 														key={uuidv4()}
 														className="mealpack-info-button is-medium button"
