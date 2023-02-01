@@ -80,7 +80,7 @@ function HowToUse(props) {
         <div class="level">
           
           <div class="level-left">
-            <button class="button" onClick={() => setModalShow(false)}>Skip</button>
+            <button class="button" onClick={() => navigate("/home")}>Skip</button>
           </div>
           <div class="level-right">
               {index !== 0 ? <span aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
