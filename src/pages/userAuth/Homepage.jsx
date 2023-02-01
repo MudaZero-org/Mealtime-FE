@@ -32,6 +32,7 @@ const Homepage = (props) => {
 	const [ingredientInputArr, setIngredientInputArr] = useState([]);
 	const [filteredInput, setFilteredInput] = useState(null);
 	const [filteredInputArr, setFilteredInputArr] = useState([]);
+	const [buttonStatus, setButtonStatus] = useState(true)
 
 	const user = JSON.parse(localStorage.getItem("user"));
 
@@ -73,6 +74,14 @@ const Homepage = (props) => {
 		array.splice(array.indexOf(meal), 1);
 		setMyMealPacks(array);
 	};
+
+	useEffect(() => {
+		if (myMealPacks.length > 0) {
+			setButtonStatus(false)
+		} else {
+			setButtonStatus(true)
+		}
+	}, [myMealPacks])
 
 	const publishMealPacks = async () => {
 		const storeId = user.data.storeId;
@@ -301,22 +310,6 @@ const Homepage = (props) => {
 						className="generate-button button is-medium"
 						id="generate-button"
 					>Generate Meal Packs</button>
-					{mealPacks && (
-						<div className="buttons-container">
-							<button
-								className="publish-button is-medium button is-danger"
-								onClick={() => {
-									publishMealPacks();
-									setMyMealPacks([]);
-								}}
-							>Save</button>
-							{/* <button
-								className="publish-button button has-background-primary-dark is-medium"
-								onClick={() => setMealPacks(null)}
-							>Close</button> */}
-						</div>
-					)}
-
 
 				</div>
 
@@ -349,6 +342,27 @@ const Homepage = (props) => {
 										</div>
 									);
 								})}
+						</div>
+						<div className="bottom-save-button">
+							<div className="buttons-container">
+								<button
+									id="save-mealpacks-button"
+									disabled={buttonStatus}
+									className="publish-button is-medium button is-danger"
+									onClick={() => {
+										publishMealPacks();
+										setMyMealPacks([]);
+									}}
+								>Save</button>
+								<button 
+									id="clear-mealpacks-button"
+									className="button is-medium publish-button is-primary"
+									disabled={buttonStatus}
+									onClick={() => {
+										setMyMealPacks([])
+									}}
+								>Clear</button>
+							</div>
 						</div>
 					</div>
 					<div className="generated-mealpacks">
