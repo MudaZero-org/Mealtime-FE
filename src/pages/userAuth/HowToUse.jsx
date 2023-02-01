@@ -1,15 +1,24 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Carousel, Modal, Button} from "react-bootstrap"
-import Hiroshi from "../../images/hiroshi.png"
-import Hirosha from "../../images/background-img.jpg"
+import CarouselImg from "../../images/howToUse.jpg"
 import {useNavigate} from "react-router-dom"
 import "../../styles/pages/_howToUse.scss";
 
 function HowToUse(props) {
+  const storeName = JSON.parse(localStorage.getItem("user")).data.storeName;
+  const ref = useRef(null);
   const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(true);
   const [index, setIndex] = useState(0);
 
+  const onPrevClick = () => {
+    ref.current.prev();
+  };
+  const onNextClick = () => {
+    ref.current.next();
+  };
+
+  console.log(storeName)
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -25,72 +34,66 @@ function HowToUse(props) {
         animation={false}
         backdrop="static"
       >
-        <Carousel activeIndex={index} onSelect={handleSelect} interval={null}>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src={Hiroshi}
-          alt="First slide"
-        />
-        
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item nextIcon={nextButton()}>
-        <img
-          className="d-block w-100"
-          src={Hirosha}
-          alt="Second slide"
-        />
+    
+        <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} controls={false} indicators={false}>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg}
+              alt="First slide"
+            />
+            
+            
+            <Carousel.Caption className="carousel-text">
+              <h3>Hi {storeName}, you have successfully signed up!</h3>
+              <p>Welcome! This walkthrough will help you get started with MealTime.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg }
+              alt="Second slide"
+            />
 
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=20232a"
-          alt="Third slide"
-        />
+            <Carousel.Caption className="carousel-text">
+              <h3>Second slide label</h3>
+              <p></p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg}
+              alt="Third slide"
+            />
 
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => navigate("/home")}>Skip</Button>
-        </Modal.Footer>
+            <Carousel.Caption className="carousel-text">
+              <h3>Third slide label</h3>
+              <p>
+                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+              </p>
+            </Carousel.Caption>
+          </Carousel.Item>
+      </Carousel>
+        <div class="level">
+          
+          <div class="level-left">
+            <button class="button" onClick={() => setModalShow(false)}>Skip</button>
+          </div>
+          <div class="level-right">
+              {index !== 0 ? <span aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
+            }/> : ""}
+            
+            
+            {index !== 2 ? <span aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button">Let's get started!</button>}
+          </div>
+        </div>
       </Modal>
     );
   }
 
-  const nextButton = () => {
-    console.log(index)
-    return <figure className="carousel-control-prev-icon">
-        <img src={Hiroshi}/>
-      </figure>
-  }
 
 
   return (

@@ -82,7 +82,7 @@ const SignUp = (props) => {
 											return;
 										}
 
-										AuthUtils.signUp(
+										await AuthUtils.signUp(
 											storeName,
 											companyName,
 											postalCode,
@@ -91,9 +91,8 @@ const SignUp = (props) => {
 											email,
 											storeManager,
 											password
-										).then((res) => {
-											navigate("/howToUse");
-										});
+										)
+										navigate("/howToUse")
 									} catch (error) {
 										console.log(error);
 									}
