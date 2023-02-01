@@ -87,7 +87,7 @@ function HowToUse(props) {
             }/> : ""}
             
             
-            {index !== 2 ? <span aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button">Let's get started!</button>}
+            {index !== 2 ? <span aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button" onClick={() => navigate("/home")}>Let's get started!</button>}
           </div>
         </div>
       </Modal>
