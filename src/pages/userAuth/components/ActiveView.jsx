@@ -6,6 +6,8 @@ import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
 import API_URL, {REACT_APP_URL} from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
+import star from "../../../images/star.png";
+import starWhite from "../../../images/star-white.png"
 
 
 const ActiveView = (props) => {
@@ -115,7 +117,15 @@ const ActiveView = (props) => {
 	};
 
 	
+	const starIt = (index) => {
+		const clickedStar = document.getElementsByClassName("hidden-star")[index]
+		clickedStar.classList.toggle("hidden")
+	}
 
+	const unStar = (index) => {
+		const clickedStar = document.getElementsByClassName("hidden-star")[index]
+		clickedStar.classList.toggle("hidden")
+	}
 	
 
   return (
@@ -127,6 +137,8 @@ const ActiveView = (props) => {
           return (
             <div key={uuidv4()} className="tile is-child is-4">
               <div key={uuidv4()} className="active-mealpack-container">
+								<img className="star" onClick={() => starIt(index)} src={starWhite}></img>
+								<img className="star hidden-star hidden" onClick={() => unStar(index)} src={star}></img>
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
                 <div className="tags active-mealpacks-tags">
