@@ -205,205 +205,210 @@ const Homepage = (props) => {
 
 	return (
 		<div className="All">
-		<h1 className="homepage-title">Meal Pack Generator</h1>
-		<div className="app-container">
-			<div className="app">
-				
-				<div className="input-section">
+			<h1 className="homepage-title">Meal Pack Generator</h1>
+			<div className="app-container">
+				<div className="app">
 					
-					
-					<div className="input-container">
-						<button className="accordion open-default"><strong>Ingredients</strong></button>
-						<div className="ribs">
-							<p className="input-instructions">Add ingredients you want to search with below<br></br></p>
-							<div className="level-left">
-								<input
-									onKeyDown={ingredientKeyHandler}
-									id="userIngredientInput"
-									className="input" 
-									type="text"
-									onChange={(e) => setIngredientInput(e.target.value)}
-									placeholder="type ingredient here + hit 'enter'"
-								></input>
-								<button 
-									className="button"
-									onClick={() => {
-										let arr = [...ingredientInputArr]
-										arr.unshift(ingredientInput)
-										if (ingredientInput) {
-											setIngredientInputArr(arr);
-											clearIngredientInput();
-											setIngredientInput(null);
-										}
-									}}
-								>Add</button>
-							</div>
-							{ingredientInputArr.length > 0 && ingredientInputArr.map((e) => {
-								return (
-									<div key={uuidv4()} className="ingredient-name">
-										<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
-										<p key={uuidv4()} className="ingredient-title">{e}</p>
-									</div>
-								)
-							})}
-							{ingredientInputArr.length > 0 && <p onClick={() => {
-								setIngredientInputArr([]);
-								clearIngredientInput();
-								setIngredientInput(null);
-							}} className="clear-button">[x]clear all</p>}
-						</div>
-					</div>
-
-
-					<div className="input-container">
-						<button className="accordion"><strong>Filter Ingredients</strong> <em>optional</em></button>
-						<div className="ribs">
-							<p className="input-instructions">
-								Add ingredients you DON'T want to include in meal packs<br></br>
-							</p>
-							<div className="level-left">
-								<button onClick={() => addFilters("veg")} className="button is-small">Vegetarian</button>
-								<button onClick={() => addFilters("glu")} className="button is-small">Gluten-Free</button>
-								<button onClick={() => addFilters("dai")} className="button is-small">Dairy-Free</button>
-							</div>
-							<div className="level-left">
-								<input
-									onKeyDown={filteredKeyHandler}
-									id="userFilteredInput"
-									className="input" 
-									type="text"
-									onChange={(e) => setFilteredInput(e.target.value)}
-									placeholder="type ingredient here + hit 'enter'"
-								></input>
-								<button 
-									className="button"
-									onClick={() => {
-										let arr = [...filteredInputArr]
-										arr.unshift(filteredInput)
-										if (filteredInput) {
-											setFilteredInputArr(arr)
-											clearFilteredInput();
-											setFilteredInput(null)
-										}
-									}}
-								>Add</button>
-							</div>
-							{filteredInputArr.length > 0 && filteredInputArr.map((e) => {
-								return (
-									<div key={uuidv4()} className="ingredient-name">
-										<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeFiltered(e)}>X</button>
-										<p key={uuidv4()} className="ingredient-title">{e}</p>
-									</div>
-								)
-							})}
-							{filteredInputArr.length > 0 && <p onClick={() => {
-								setFilteredInputArr([])
-								clearFilteredInput();
-								setFilteredInput(null)
-							}} className="clear-button">[x]clear all</p>}
-						</div>
-					</div>
-
-
-					<button
-						onClick={makeArr}
-						className="generate-button button is-medium"
-						id="generate-button"
-					>Generate Meal Packs</button>
-
-				</div>
-
-
-
-				<div className="right-side">
-					<div className="selected-mealpacks">
-						<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
-						<div className="selected-mealpacks-container">
-							{myMealPacks &&
-								myMealPacks.map((e, index) => {
+					<div className="input-section">
+						<div className="input-container">
+							<button className="accordion open-default"><strong>Ingredients</strong></button>
+							<div className="ribs">
+								<p className="input-instructions">Add ingredients you want to search with below<br></br></p>
+								<div className="level-left">
+									<input
+										onKeyDown={ingredientKeyHandler}
+										id="userIngredientInput"
+										className="input" 
+										type="text"
+										onChange={(e) => setIngredientInput(e.target.value)}
+										placeholder="type ingredient here + hit 'enter'"
+									></input>
+									<button 
+										className="button"
+										onClick={() => {
+											let arr = [...ingredientInputArr]
+											arr.unshift(ingredientInput)
+											if (ingredientInput) {
+												setIngredientInputArr(arr);
+												clearIngredientInput();
+												setIngredientInput(null);
+											}
+										}}
+									>Add</button>
+								</div>
+								{ingredientInputArr.length > 0 && ingredientInputArr.map((e) => {
 									return (
-										<div key={uuidv4()} className="mealpack-container">
-											<button
-												key={uuidv4()}
-												onClick={() => removeFromMyMealPacks(e)}
-												className="button"
-											>Remove</button>
-											<button
-												key={uuidv4()}
-												className="mealpack-info-button button"
-												onClick={() => {
-													setSelectedMealPack(e);
-													setShow(true);
-												}}
-											>See Info</button>
-											<p key={uuidv4()} className="mealpack-title">
-												<strong>{e.title}</strong>
-											</p>
+										<div key={uuidv4()} className="ingredient-name">
+											<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
+											<p key={uuidv4()} className="ingredient-title">{e}</p>
 										</div>
-									);
+									)
 								})}
+								{ingredientInputArr.length > 0 && <p onClick={() => {
+									setIngredientInputArr([]);
+									clearIngredientInput();
+									setIngredientInput(null);
+								}} className="clear-button">[x]clear all</p>}
+							</div>
 						</div>
-						<div className="bottom-save-button">
-							<div className="buttons-container">
-								<button
-									id="save-mealpacks-button"
-									disabled={buttonStatus}
-									className="publish-button is-medium button is-danger"
-									onClick={() => {
-										publishMealPacks();
-										setMyMealPacks([]);
-									}}
-								>Save</button>
-								<button 
-									id="clear-mealpacks-button"
-									className="button is-medium publish-button is-primary"
-									disabled={buttonStatus}
-									onClick={() => {
-										setMyMealPacks([])
-									}}
-								>Clear</button>
+						<div className="input-container">
+							<button className="accordion"><strong>Filter Ingredients</strong> <em>optional</em></button>
+							<div className="ribs">
+								<p className="input-instructions">
+									Add ingredients you DON'T want to include in meal packs<br></br>
+								</p>
+								<div className="level-left">
+									<button onClick={() => addFilters("veg")} className="button is-small">Vegetarian</button>
+									<button onClick={() => addFilters("glu")} className="button is-small">Gluten-Free</button>
+									<button onClick={() => addFilters("dai")} className="button is-small">Dairy-Free</button>
+								</div>
+								<div className="level-left">
+									<input
+										onKeyDown={filteredKeyHandler}
+										id="userFilteredInput"
+										className="input" 
+										type="text"
+										onChange={(e) => setFilteredInput(e.target.value)}
+										placeholder="type ingredient here + hit 'enter'"
+									></input>
+									<button 
+										className="button"
+										onClick={() => {
+											let arr = [...filteredInputArr]
+											arr.unshift(filteredInput)
+											if (filteredInput) {
+												setFilteredInputArr(arr)
+												clearFilteredInput();
+												setFilteredInput(null)
+											}
+										}}
+									>Add</button>
+								</div>
+								{filteredInputArr.length > 0 && filteredInputArr.map((e) => {
+									return (
+										<div key={uuidv4()} className="ingredient-name">
+											<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeFiltered(e)}>X</button>
+											<p key={uuidv4()} className="ingredient-title">{e}</p>
+										</div>
+									)
+								})}
+								{filteredInputArr.length > 0 && <p onClick={() => {
+									setFilteredInputArr([])
+									clearFilteredInput();
+									setFilteredInput(null)
+								}} className="clear-button">[x]clear all</p>}
+							</div>
+						</div>
+						<button
+							onClick={makeArr}
+							className="generate-button button is-medium"
+							id="generate-button"
+						>Generate Meal Packs</button>
+					</div>
+
+
+
+					<div className="right-side">
+						<div className="selected-mealpacks">
+							<div className="user-selection-container">
+								<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
+								<div className="selected-mealpacks-container">
+									{myMealPacks &&
+										myMealPacks.map((e, index) => {
+											return (
+												<div key={uuidv4()} className="mealpack-container">
+													<div className="mealpack-container-buttons">
+														<button
+															key={uuidv4()}
+															onClick={() => removeFromMyMealPacks(e)}
+															className="button is-medium mealpack-add-button"
+														>Remove</button>
+														<button
+															key={uuidv4()}
+															className="mealpack-info-button button is-medium"
+															onClick={() => {
+																setSelectedMealPack(e);
+																setShow(true);
+															}}
+														>See Info</button>
+													</div>
+													<p key={uuidv4()} className="mealpack-title" id="mealpack-title">
+														<strong>{e.title}</strong>
+													</p>
+													<img className="generated-image" src={e.image}></img>
+												</div>
+											);
+										})
+									}
+								</div>
+							</div>
+							<div className="bottom-save-button">
+								<div className="buttons-container">
+									<button
+										id="save-mealpacks-button"
+										disabled={buttonStatus}
+										className="publish-button is-medium button is-danger"
+										onClick={() => {
+											publishMealPacks();
+											setMyMealPacks([]);
+										}}
+									>Save</button>
+									<button 
+										id="clear-mealpacks-button"
+										className="button is-medium publish-button is-primary"
+										disabled={buttonStatus}
+										onClick={() => {
+											setMyMealPacks([])
+										}}
+									>Clear</button>
+								</div>
+							</div>
+						</div>
+
+
+						<div className="generated-mealpacks">
+							<div className="user-selection-container">
+								<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
+								<div className="generated-mealpacks-container">
+									{mealPacks &&
+										mealPacks.map((e) => {
+											return (
+												<div key={uuidv4()} className="mealpack-container">
+													<div className="mealpack-container-buttons">
+													<button
+														key={uuidv4()}
+														className="mealpack-add-button is-medium button"
+														onClick={() => addToMyMealPacks(e)}
+													>Add</button>
+													<button
+														key={uuidv4()}
+														className="mealpack-info-button is-medium button"
+														onClick={() => {
+															setSelectedMealPack(e);
+															setShow(true);
+														}}
+													>See Info</button>
+													</div>
+													<p key={uuidv4()} className="mealpack-title" id="mealpack-title">
+														<strong>{e.title}</strong>
+													</p>
+													<img className="generated-image" src={e.image}></img>
+												</div>
+											);
+										})
+									}
+								</div>
 							</div>
 						</div>
 					</div>
-					<div className="generated-mealpacks">
-						<div className="user-selection-container">
-							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
-							<div className="generated-mealpacks-container">
-								{mealPacks &&
-									mealPacks.map((e) => {
-										return (
-											<div key={uuidv4()} className="mealpack-container">
-												<button
-													key={uuidv4()}
-													className="mealpack-add-button button"
-													onClick={() => addToMyMealPacks(e)}
-												>Add</button>
-												<button
-													key={uuidv4()}
-													className="mealpack-info-button button"
-													onClick={() => {
-														setSelectedMealPack(e);
-														setShow(true);
-													}}
-												>See Info</button>
-												<p key={uuidv4()} className="mealpack-title">
-													<strong>{e.title}</strong>
-												</p>
-											</div>
-										);
-									})}
-							</div>
-						</div>
-					</div>
+					<MealPackModal
+						selectedMealPack={selectedMealPack}
+						setSelectedMealPack={setSelectedMealPack}
+						show={show}
+						setShow={setShow}
+					/>
 				</div>
-				<MealPackModal
-					selectedMealPack={selectedMealPack}
-					setSelectedMealPack={setSelectedMealPack}
-					show={show}
-					setShow={setShow}
-				/>
 			</div>
-		</div>
 		</div>
 	);
 };
