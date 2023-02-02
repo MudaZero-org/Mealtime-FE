@@ -7,12 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 import API_URL, {REACT_APP_URL} from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
 import star from "../../../images/star.png";
-import starWhite from "../../../images/star-white.png"
 
 
 const ActiveView = (props) => {
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
+	const [selectionArr, setSelectionArr] = useState([]);
 
 	const {
 		activeMealPacks,
@@ -117,14 +117,27 @@ const ActiveView = (props) => {
 	};
 
 	
-	const starIt = (index) => {
-		const clickedStar = document.getElementsByClassName("hidden-star")[index]
-		clickedStar.classList.toggle("hidden")
-	}
+	// const starIt = (index) => {
+	// 	const clickedStar = document.getElementsByClassName("hidden-star")[index]
+	// 	clickedStar.classList.toggle("hidden")
+	// }
 
-	const unStar = (index) => {
-		const clickedStar = document.getElementsByClassName("hidden-star")[index]
-		clickedStar.classList.toggle("hidden")
+	// const unStar = (index) => {
+	// 	const clickedStar = document.getElementsByClassName("hidden-star")[index]
+	// 	clickedStar.classList.toggle("hidden")
+	// }
+
+	const addToSelectedArr = (meal) => {
+		if (selectionArr.includes(meal)) {
+			const arr = [...selectionArr]
+			arr.splice(arr.indexOf(meal), 1)
+			setSelectionArr(arr)
+		} else {
+			const arr = [...selectionArr];
+			arr.push(meal)
+			console.log(arr)
+			setSelectionArr(arr)
+		}
 	}
 	
 
@@ -137,8 +150,6 @@ const ActiveView = (props) => {
           return (
             <div key={uuidv4()} className="tile is-child is-4">
               <div key={uuidv4()} className="active-mealpack-container">
-								<img className="star" onClick={() => starIt(index)} src={starWhite}></img>
-								<img className="star hidden-star hidden" onClick={() => unStar(index)} src={star}></img>
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
                 <div className="tags active-mealpacks-tags">
@@ -159,6 +170,8 @@ const ActiveView = (props) => {
                     await deactivateMealPack(e)
                     fetchActivePacks()
                   }}>Remove from Favorites</button>
+									<input name="check" type="checkbox" onChange={() => addToSelectedArr(e)}></input>
+									<label>Select Meal Pack</label>
                 </div>
               </div>
             </div>
@@ -166,6 +179,11 @@ const ActiveView = (props) => {
         })}
       </div>
 			<footer className="footer"></footer>
+			{selectionArr.length > 0 && (
+				<div className="selection-footer">
+					<h1>This will have the print pdf button</h1>
+				</div>
+			)}
 			<MealPackDetailsModal
 				selectedMealPack={selectedMealPack}
 					setSelectedMealPack={setSelectedMealPack}

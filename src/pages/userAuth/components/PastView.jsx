@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import API_URL from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
 import {Popover, OverlayTrigger, Button} from 'react-bootstrap';
+import star from "../../../images/star.png";
 
 const PastView = (props) => {
   const [show, setShow] = useState(false);
@@ -91,39 +92,39 @@ const PastView = (props) => {
 
 
   //Popoever
-const popover = (e) => (
-  <Popover id="popover-basic">
-    <Popover.Header as="h3">Delete mealpack?</Popover.Header>
-    <Popover.Body>
-        Are you sure you want to <strong>delete</strong> this mealpack?
-      </Popover.Body>
-      <Button
-        variant="primary"
-        onClick={async () => {
-          //As of the moment to check if it is working
-          await activateMealPack(e)
-          fetchPastPacks()
-        }}
-      >
-        Yes
-      </Button>{" "}
-      <Button
-        variant="primary"
-        onClick={() => {
-          document.body.click()
-        }}
-      >
-        No
-      </Button>{" "}
-  </Popover>
-);
+  const popover = (e) => (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Delete mealpack?</Popover.Header>
+      <Popover.Body>
+          Are you sure you want to <strong>delete</strong> this mealpack?
+        </Popover.Body>
+        <Button
+          variant="primary"
+          onClick={async () => {
+            //As of the moment to check if it is working
+            await activateMealPack(e)
+            fetchPastPacks()
+          }}
+        >
+          Yes
+        </Button>{" "}
+        <Button
+          variant="primary"
+          onClick={() => {
+            document.body.click()
+          }}
+        >
+          No
+        </Button>{" "}
+    </Popover>
+  );
 
 
 
 	return (
 		<div className="past-container">
 			<h2 className="past-title">
-				Meal Packs <em>&#40;inactive&#41;</em>
+				All Meal Packs
 			</h2>
 
       <div className="tile is-parent past-mealpacks">
