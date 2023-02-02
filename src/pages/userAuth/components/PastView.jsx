@@ -114,7 +114,7 @@ const PastView = (props) => {
             fetchPastPacks()
           }}
         >
-          Yes
+          ✓ Delete
         </button>
         <button
           className="button"
@@ -123,7 +123,7 @@ const PastView = (props) => {
             document.body.click()
           }}
         >
-          No
+          X Cancel
         </button>{" "}
     </Popover>
   );
