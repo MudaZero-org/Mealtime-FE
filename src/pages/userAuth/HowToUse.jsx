@@ -77,17 +77,17 @@ function HowToUse(props) {
             </Carousel.Caption>
           </Carousel.Item>
       </Carousel>
-        <div class="level">
+        <div class="level carousel-buttons">
           
           <div class="level-left">
             <button class="button" onClick={() => navigate("/home")}>Skip</button>
           </div>
           <div class="level-right">
-              {index !== 0 ? <span aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
+              {index !== 0 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
             }/> : ""}
             
             
-            {index !== 2 ? <span aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button" onClick={() => navigate("/home")}>Let's get started!</button>}
+            {index !== 2 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button" onClick={() => navigate("/home")}>Let's get started!</button>}
           </div>
         </div>
       </Modal>
