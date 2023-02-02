@@ -34,7 +34,6 @@ const ActiveView = (props) => {
 				}
 			);
 			data.data.map((meal) => meal.selectedFav = false)
-			console.log(data.data)
 			setActiveMealPacks(data.data);
 		}
 		fetchData();

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
-import API_URL from "../../../Constants";
+import API_URL, {REACT_APP_URL} from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
 import {Popover, OverlayTrigger, Button} from 'react-bootstrap';
 import star from "../../../images/star.png";
@@ -11,6 +11,7 @@ import star from "../../../images/star.png";
 const PastView = (props) => {
   const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
+  const [selectionArr, setSelectionArr] = useState([]);
 
 	const {
 		pastMealPacks,
@@ -26,6 +27,7 @@ const PastView = (props) => {
       let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/false`,{
         headers: {authorization: `Bearer ${user.accessToken}`}
       });
+      data.data.map((meal) => meal.selectedFav = false)
       setPastMealPacks(data.data)
     }
     fetchData();
@@ -91,7 +93,7 @@ const PastView = (props) => {
 	}
 
 
-  //Popoever
+  //Popover
   const popover = (e) => (
     <Popover id="popover-basic">
       <Popover.Header as="h3">Delete mealpack?</Popover.Header>
@@ -119,20 +121,58 @@ const PastView = (props) => {
     </Popover>
   );
 
+  const addToSelectedArr = (meal) => {
+		if (meal.selectedFav) {
+			const arr = [...selectionArr]
+			arr.splice(arr.indexOf(meal), 1);
+			setSelectionArr(arr);
+			meal.selectedFav = false;
+		} else {
+			const arr = [...selectionArr];
+			arr.push(meal)
+			setSelectionArr(arr)
+			meal.selectedFav = true;
+		}
+	}
 
+	const renderInput = (meal) => {
+		if (meal.selectedFav) {
+			return (
+				<input checked className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+			)
+		} else {
+			return (
+				<input className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+			)
+		}
+	}
+
+	const downloadAllPDF = () => {
+		console.log("not yet dummy");
+	};
+
+	const generateQRCode = (meal) => {
+		const QRCode = require("qrcode");
+		let qrCodeDataUrl;
+		let recipeId = meal.recipeId
+		QRCode.toDataURL(`${REACT_APP_URL}/info/${recipeId}`, function (err, url) {
+			qrCodeDataUrl = url;
+		});
+		return qrCodeDataUrl;
+	};
 
 	return (
 		<div className="past-container">
-			<h2 className="past-title">
-				All Meal Packs
-			</h2>
+			<h2 className="past-title">All Meal Packs</h2>
 
-      <div className="tile is-parent past-mealpacks">
+      <div className="tile is-parent active-mealpacks">
         {pastMealPacks && pastMealPacks.map((e) => {
           return (
             <div key={uuidv4()} className="tile is-child is-4">
-              <div key={uuidv4()} className="past-mealpack-container">
+              <div key={uuidv4()} className="active-mealpack-container">
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
+                {renderInput(e)}
+
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
                 <div className="tags past-mealpacks-tags">
                   {e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
@@ -162,6 +202,21 @@ const PastView = (props) => {
         })}
       </div>
       <footer className="footer"></footer>
+      {selectionArr.length > 0 && (
+				<div className="selection-footer">
+					<div className="selection-popup-container">
+						<h1 style={{ color: "black" }}>You have selected {selectionArr.length} meal packs to print</h1>
+						<div className="selection-popup-buttons">
+							<button key={uuidv4()} className="button is-medium print-all-button" onClick={downloadAllPDF}>Download Selected PDF's</button>
+							<button 
+								onClick={() => {
+									setSelectionArr([])
+									pastMealPacks.map((meal) => meal.selectedFav = false)
+								}} className="button is-medium clear-selection-button">Clear All Selected</button>
+						</div>
+					</div>
+				</div>
+			)}
       <MealPackDetailsModal
 				selectedMealPack={selectedMealPack}
 					setSelectedMealPack={setSelectedMealPack}
