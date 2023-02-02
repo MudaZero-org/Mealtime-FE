@@ -46,7 +46,7 @@ const Homepage = (props) => {
 	useEffect(() => {
 		async function fetchData() {
 			if (isMounted.current) {
-				const data = await axios.post(`${API_URL}/sample/recipe`, {
+				const data = await axios.post(`${API_URL}/mealpack/recipe`, {
 					ingredients: ingredientArr,
 					filteredWords: filteredArr,
 				},
@@ -96,10 +96,10 @@ const Homepage = (props) => {
 		{
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
-		let info = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
-			headers: {authorization: `Bearer ${user.accessToken}`}
-		});
-		setActiveMealPacks(info.data);
+		// let info = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
+		// 	headers: {authorization: `Bearer ${user.accessToken}`}
+		// });
+		// setActiveMealPacks(info.data);
 	};	
 
 	const clearIngredientInput = () => {

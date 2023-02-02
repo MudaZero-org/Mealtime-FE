@@ -3,6 +3,8 @@ import "../../styles/pages/_profilePage.scss";
 import { useEffect, useState } from "react";
 import API_URL from "../../Constants";
 import { useNavigate } from "react-router-dom";
+import storage from "../../firebaseConfig";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const EditProfile = () => {
 	const navigate = useNavigate(null);
@@ -15,6 +17,37 @@ const EditProfile = () => {
 	const [storeManager, setStoreManager] = useState(null);
 	const [image, setImage] = useState(null);
 	const user = JSON.parse(localStorage.getItem("user"));
+
+	const [file, setFile] = useState("");
+	function handleChange(event) {
+		setFile(event.target.files[0]);
+	}
+	const [percent, setPercent] = useState(0);
+
+	const handleUpload = () => {
+		if (!file) {
+			alert("Please choose a file first!")
+		}
+		const storageRef = ref(storage, `/files/${file.name}`);
+		const uploadTask = uploadBytesResumable(storageRef, file);
+
+		uploadTask.on(
+			"state_changed",
+			(snapshot) => {
+				const percent = Math.round(
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+				);
+
+				setPercent(percent);
+			},
+			(err) => console.log(err),
+			() => {
+				getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+					console.log(url);
+				})
+			}
+		)
+	}
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -56,16 +89,16 @@ const EditProfile = () => {
 
 	return (
 		<div className="profile-page">
-			<div class="card" id="profile-card">
+			<div className="card" id="profile-card">
 				<div className="card-content">
 					<form className="form">
 						<h1>Edit Profile</h1>
 						<hr></hr>
-						<div class="field">
-							<label class="label">Store name</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Store name</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder={storeName}
 									onChange={(e) => {
@@ -74,11 +107,11 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Company name</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Company name</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -87,11 +120,11 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Postal code</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Postal code</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -100,11 +133,11 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Store address</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Store address</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -113,11 +146,11 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Phone number</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Phone number</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -126,11 +159,11 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Store Manager</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Store Manager</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -139,11 +172,11 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Image</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Image</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -153,10 +186,16 @@ const EditProfile = () => {
 							</div>
 						</div>
 
-						<div class="field is-grouped">
-							<div class="control">
+						<div>
+							<input type="file" accept="/image/*" onChange={handleChange}></input>
+							<button onClick={handleUpload}>Upload Picture</button>
+							<p>{percent}% done</p>
+						</div>
+
+						<div className="field is-grouped">
+							<div className="control">
 								<button
-									class="button is-success"
+									className="button is-success"
 									onClick={(e) => {
 										handleSubmit(e);
 									}}
@@ -164,9 +203,9 @@ const EditProfile = () => {
 									Update
 								</button>
 							</div>
-							<div class="control">
+							<div className="control">
 								<button
-									class="button is-link is-light"
+									className="button is-link is-light"
 									onClick={(e) => {
 										navigate("/profile");
 									}}
