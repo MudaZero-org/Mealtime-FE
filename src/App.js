@@ -20,12 +20,20 @@ function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
   const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
+  const [showGuide, setShowGuide] = useState(true)
+  const [firstLogIn, setFirstLogIn] = useState(true)
 
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp />} />
+        <Route exact path="/signup" element={<SignUp 
+        showGuide={showGuide}
+        setShowGuide={setShowGuide}
+        firstLogIn={firstLogIn}
+        setFirstLogIn={setFirstLogIn}/>} 
+        
+        />
         <Route exact path="/user" element={<User />} />
         <Route
           exact
@@ -40,6 +48,10 @@ function App() {
                 setActiveMealPacks={setActiveMealPacks}
                 pastMealPacks={pastMealPacks}
                 setPastMealPacks={setPastMealPacks}
+                showGuide={showGuide}
+                setShowGuide={setShowGuide}
+                firstLogIn={firstLogIn}
+                setFirstLogIn={setFirstLogIn}
               />
             </>
           }
@@ -120,12 +132,6 @@ function App() {
           }
         ></Route>
         <Route exact path="/info/:recipeId" element={<Info />}></Route>
-        <Route exact path="/howToUse" element={
-          <>
-            <HowToUse/>
-          </>
-
-        }></Route>
       </Routes>
     </BrowserRouter>
   );

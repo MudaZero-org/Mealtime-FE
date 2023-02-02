@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
+	const {showGuide, setShowGuide, firstLogIn, setFirstLogIn} = props;
+	console.log(firstLogIn)
+
+
 	const [storeName, setStoreName] = useState("");
 	const [companyName, setCompanyName] = useState("test-company");
 	const [postalCode, setPostalCode] = useState(12345);
@@ -92,7 +96,9 @@ const SignUp = (props) => {
 											storeManager,
 											password
 										)
-										navigate("/howToUse")
+										setShowGuide(true)
+										setFirstLogIn(true)
+										navigate("/home")
 									} catch (error) {
 										console.log(error);
 									}

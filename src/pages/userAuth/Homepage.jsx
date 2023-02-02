@@ -8,6 +8,10 @@ import vegetarianArr from "./utils/vegetarian.json";
 import dairyFreeArr from "./utils/dairyFree.json";
 import glutenFreeArr from "./utils/glutenFree.json";
 
+//Added Carousel and image
+import {Carousel, Modal} from "react-bootstrap"
+import CarouselImg from "../../images/howToUse.jpg"
+
 const Homepage = (props) => {
 	const {
 		selectedActivePack,
@@ -16,8 +20,17 @@ const Homepage = (props) => {
 		setActiveMealPacks,
 		pastMealPacks,
 		setPastMealPacks,
+		//Added showGuide and firstLogIn
+		showGuide,
+		setShowGuide,
+		firstLogIn,
+		setFirstLogIn
 	} = props;
-
+	
+	
+	//Added ref and index
+	const ref = useRef(null);
+	const [index, setIndex] = useState(0);
 	const [text, setText] = useState(null);
 	const [filteredText, setFilteredText] = useState(null);
 	const [ingredientArr, setIngredientArr] = useState([]);
@@ -35,6 +48,121 @@ const Homepage = (props) => {
 	const [buttonStatus, setButtonStatus] = useState(true);
 
 	const user = JSON.parse(localStorage.getItem("user"));
+	
+	//Added onPrevNextClick
+	const onPrevClick = () => {
+    ref.current.prev();
+  };
+  const onNextClick = () => {
+    ref.current.next();
+  };
+
+	const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
+
+	function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        animation={false}
+        backdrop="static"
+      >
+    
+        <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} controls={false} indicators={false}>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg}
+              alt="First slide"
+            />
+            <Carousel.Caption className="carousel-text">
+              {firstLogIn ? <h3>Hi {user.data.storeName}, you have successfully signed up!</h3>: <h3>Hi {user.data.storeName}</h3>}
+							{firstLogIn ? <p>Welcome! This walkthrough will help you get started with MealTime.</p>: <p>This quick guide will help you how to use with MealTime.</p>}
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg }
+              alt="Second slide"
+            />
+
+            <Carousel.Caption className="carousel-text">
+              <h3>Quick Guide:</h3>
+              <p>Put in ingredients in the "Ingredients" box.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg}
+              alt="Third slide"
+            />
+
+            <Carousel.Caption className="carousel-text">
+              <h3>Quick Guide:</h3>
+              <p>
+                Press "Generate Meal Packs".
+              </p>
+            </Carousel.Caption>
+          </Carousel.Item>
+					<Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg}
+              alt="Third slide"
+            />
+
+            <Carousel.Caption className="carousel-text">
+              <h3>Quick Guide:</h3>
+              <p>
+                Add Meal Packs you like.
+              </p>
+            </Carousel.Caption>
+          </Carousel.Item>
+					<Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={CarouselImg}
+              alt="Third slide"
+            />
+
+            <Carousel.Caption className="carousel-text">
+              <h3>Quick Guide:</h3>
+              <p>
+                Press and you are good to go.
+              </p>
+            </Carousel.Caption>
+          </Carousel.Item>
+      </Carousel>
+			
+        <div class="level carousel-buttons">
+          
+          <div class="level-left">
+            <button class="button" onClick={() => {
+							setIndex(0)
+							setShowGuide(false)
+							setFirstLogIn(false)
+						}}>Close</button>
+          </div>
+          <div class="level-right">
+              {index !== 0 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
+            }/> : ""}
+            
+            
+            {index !== 4 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button" onClick={() => {
+							setIndex(0)
+							setShowGuide(false)
+							setFirstLogIn(false)}}>Let's get started!</button>}
+          </div>
+        </div>
+      </Modal>
+    );
+  }
 
 	const makeArr = () => {
 		let ingredientArr = [...ingredientInputArr]
@@ -235,7 +363,7 @@ const Homepage = (props) => {
 		<div className="All">
 			<div className="homepage-title-container level">
 				<h1 className="homepage-title">Meal Pack Generator</h1>
-				<button className="help-button button"><span className="question-mark">?</span>Help</button>
+				<button onClick={()=> setShowGuide(true)}  className="help-button button"><span className="question-mark">?</span>Help</button>
 			</div>
 			<div className="app-container">
 				<div className="app">
@@ -437,6 +565,10 @@ const Homepage = (props) => {
 						show={show}
 						setShow={setShow}
 					/>
+					<MyVerticallyCenteredModal
+        	show={showGuide}
+        	onHide={() => setShowGuide(false)}
+      	/>
 				</div>
 			</div>
 		</div>

@@ -31,7 +31,7 @@ function HowToUse(props) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        animation={false}
+        
         backdrop="static"
       >
     
