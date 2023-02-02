@@ -28,7 +28,7 @@ const ActiveView = (props) => {
 			const user = JSON.parse(localStorage.getItem("user"));
 			const storeId = user.data.storeId;
 			let data = await axios.get(
-				`${API_URL}/store/${storeId}/mealpack/all/status/true`,
+				`${API_URL}/store/${storeId}/mealpack/all/favorite`,
 				{
 					headers: { authorization: `Bearer ${user.accessToken}` },
 				}
@@ -44,7 +44,7 @@ const ActiveView = (props) => {
 		const user = JSON.parse(localStorage.getItem("user"));
 		const storeId = user.data.storeId;
 		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/status/true`,
+			`${API_URL}/store/${storeId}/mealpack/all/favorite`,
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
@@ -100,7 +100,7 @@ const ActiveView = (props) => {
 		await axios.put(
 			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
 			{
-				isPublishing: false,
+				isFavorite: false,
 				mealpackName: meal.mealpackName,
 				isDelete: false,
 			},
@@ -109,7 +109,7 @@ const ActiveView = (props) => {
 			}
 		);
 		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/status/false`,
+			`${API_URL}/store/${storeId}/mealpack/all`,
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}

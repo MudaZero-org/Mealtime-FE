@@ -24,7 +24,7 @@ const PastView = (props) => {
     async function fetchData() {
       const user = JSON.parse(localStorage.getItem("user"))
 		  const storeId = user.data.storeId
-      let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/false`,{
+      let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`,{
         headers: {authorization: `Bearer ${user.accessToken}`}
       });
       data.data.map((meal) => meal.selectedFav = false)
@@ -37,7 +37,7 @@ const PastView = (props) => {
   const fetchPastPacks = async () => {
     const user = JSON.parse(localStorage.getItem("user"))
     const storeId = user.data.storeId
-    let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/false`, {
+    let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
     setPastMealPacks(data.data)
@@ -55,7 +55,7 @@ const PastView = (props) => {
 		await axios.put(
 			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
 			{
-				isPublishing: true,
+				isFavorite: true,
 				mealpackName: meal.mealpackName,
 				isDelete: false,
 			},
@@ -64,7 +64,7 @@ const PastView = (props) => {
 			}
 		);
 		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/status/true`,
+			`${API_URL}/store/${storeId}/mealpack/all/favorite`,
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
@@ -84,7 +84,7 @@ const PastView = (props) => {
 			}
 		);
 		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/status/false`,
+			`${API_URL}/store/${storeId}/mealpack/all`,
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
