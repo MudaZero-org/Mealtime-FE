@@ -233,7 +233,10 @@ const Homepage = (props) => {
 
 	return (
 		<div className="All">
-			<h1 className="homepage-title">Meal Pack Generator</h1>
+			<div className="homepage-title-container level">
+				<h1 className="homepage-title">Meal Pack Generator</h1>
+				<button className="help-button button"><span className="question-mark">?</span>Help</button>
+			</div>
 			<div className="app-container">
 				<div className="app">
 					
@@ -406,15 +409,7 @@ const Homepage = (props) => {
 											return (
 												<div key={uuidv4()} className="mealpack-container">
 													<div className="mealpack-container-buttons">
-														{renderAddButton(e)}
-														{/* <button
-															key={uuidv4()}
-															className="mealpack-add-button button is-medium"
-															onClick={() => {
-																addToMyMealPacks(e);
-																toggleAddButton(index);
-															}}
-														>Add</button> */}
+													{renderAddButton(e)}
 													<button
 														key={uuidv4()}
 														className="mealpack-info-button is-medium button"
