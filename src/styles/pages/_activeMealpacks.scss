@@ -43,6 +43,25 @@
 .selection-footer {
   position: sticky;
   bottom: 0;
-  height: 100px;
-  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  background-color: rgb(246, 198, 121);
+}
+
+.print-all-button {
+  margin-left: 3rem;
+}
+
+.checkbox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.clear-selection-button {
+  margin-left: 3rem;
 }

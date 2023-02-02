@@ -33,6 +33,8 @@ const ActiveView = (props) => {
 					headers: { authorization: `Bearer ${user.accessToken}` },
 				}
 			);
+			data.data.map((meal) => meal.selectedFav = false)
+			console.log(data.data)
 			setActiveMealPacks(data.data);
 		}
 		fetchData();
@@ -116,27 +118,29 @@ const ActiveView = (props) => {
 		setPastMealPacks(data.data);
 	};
 
-	
-	// const starIt = (index) => {
-	// 	const clickedStar = document.getElementsByClassName("hidden-star")[index]
-	// 	clickedStar.classList.toggle("hidden")
-	// }
-
-	// const unStar = (index) => {
-	// 	const clickedStar = document.getElementsByClassName("hidden-star")[index]
-	// 	clickedStar.classList.toggle("hidden")
-	// }
-
 	const addToSelectedArr = (meal) => {
-		if (selectionArr.includes(meal)) {
+		if (meal.selectedFav) {
 			const arr = [...selectionArr]
-			arr.splice(arr.indexOf(meal), 1)
-			setSelectionArr(arr)
+			arr.splice(arr.indexOf(meal), 1);
+			setSelectionArr(arr);
+			meal.selectedFav = false;
 		} else {
 			const arr = [...selectionArr];
 			arr.push(meal)
-			console.log(arr)
 			setSelectionArr(arr)
+			meal.selectedFav = true;
+		}
+	}
+
+	const renderInput = (meal) => {
+		if (meal.selectedFav) {
+			return (
+				<input checked className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+			)
+		} else {
+			return (
+				<input className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+			)
 		}
 	}
 	
@@ -151,6 +155,8 @@ const ActiveView = (props) => {
             <div key={uuidv4()} className="tile is-child is-4">
               <div key={uuidv4()} className="active-mealpack-container">
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
+								{renderInput(e)}
+
                 <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
                 <div className="tags active-mealpacks-tags">
                   {e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
@@ -170,8 +176,6 @@ const ActiveView = (props) => {
                     await deactivateMealPack(e)
                     fetchActivePacks()
                   }}>Remove from Favorites</button>
-									<input name="check" type="checkbox" onChange={() => addToSelectedArr(e)}></input>
-									<label>Select Meal Pack</label>
                 </div>
               </div>
             </div>
@@ -181,7 +185,17 @@ const ActiveView = (props) => {
 			<footer className="footer"></footer>
 			{selectionArr.length > 0 && (
 				<div className="selection-footer">
-					<h1>This will have the print pdf button</h1>
+					<div className="selection-popup-container">
+						<h1 style={{ color: "black" }}>You have selected {selectionArr.length} meal packs to print</h1>
+						<div className="selection-popup-buttons">
+							<button key={uuidv4()} className="button is-medium print-all-button" onClick={downloadAllPDF}>Download Selected PDF's</button>
+							<button 
+								onClick={() => {
+									setSelectionArr([])
+									activeMealPacks.map((meal) => meal.selectedFav = false)
+								}} className="button is-medium clear-selection-button">Clear All Selected</button>
+						</div>
+					</div>
 				</div>
 			)}
 			<MealPackDetailsModal
