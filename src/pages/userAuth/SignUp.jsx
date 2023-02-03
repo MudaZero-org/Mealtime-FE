@@ -5,8 +5,7 @@ import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
 	const {showGuide, setShowGuide, firstLogIn, setFirstLogIn} = props;
-	console.log(firstLogIn)
-
+	console.log("👶" + firstLogIn)
 
 	const [storeName, setStoreName] = useState("");
 	const [companyName, setCompanyName] = useState("test-company");

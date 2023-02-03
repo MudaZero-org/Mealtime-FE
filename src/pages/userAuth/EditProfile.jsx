@@ -69,7 +69,7 @@ const EditProfile = (props) => {
 								<input
 									className="input"
 									type="text"
-									placeholder={storeName}
+									placeholder="Update Store Name"
 									onChange={(e) => {
 										setStoreName(e.target.value);
 									}}
@@ -82,7 +82,7 @@ const EditProfile = (props) => {
 								<input
 									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Company Name"
 									onChange={(e) => {
 										setCompanyName(e.target.value);
 									}}
@@ -95,7 +95,7 @@ const EditProfile = (props) => {
 								<input
 									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Postal Code"
 									onChange={(e) => {
 										setPostalCode(e.target.value);
 									}}
@@ -108,7 +108,7 @@ const EditProfile = (props) => {
 								<input
 									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Store Address"
 									onChange={(e) => {
 										setStoreAddress(e.target.value);
 									}}
@@ -121,7 +121,7 @@ const EditProfile = (props) => {
 								<input
 									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Phone Number"
 									onChange={(e) => {
 										setPhoneNumber(e.target.value);
 									}}
@@ -134,7 +134,7 @@ const EditProfile = (props) => {
 								<input
 									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Store Manager"
 									onChange={(e) => {
 										setStoreManager(e.target.value);
 									}}
