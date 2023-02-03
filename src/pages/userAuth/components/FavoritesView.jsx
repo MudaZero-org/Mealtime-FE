@@ -9,7 +9,7 @@ import MealPackDetailsModal from "./MealPackDetailsModal"
 import star from "../../../images/star.png";
 
 
-const ActiveView = (props) => {
+const FavoritesView = (props) => {
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [selectionArr, setSelectionArr] = useState([]);
@@ -229,4 +229,4 @@ const ActiveView = (props) => {
   )
 }
 
-export default ActiveView;
+export default FavoritesView;
