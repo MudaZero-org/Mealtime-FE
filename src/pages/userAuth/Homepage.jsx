@@ -69,7 +69,6 @@ const Homepage = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
         animation={false}
-        backdrop="static"
       >
     
         <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} controls={false} indicators={false}>
@@ -134,27 +133,27 @@ const Homepage = (props) => {
             <Carousel.Caption className="carousel-text">
               <h3>Quick Guide:</h3>
               <p>
-                Press and you are good to go.
+                Press "Save" and you are good to go.
               </p>
             </Carousel.Caption>
           </Carousel.Item>
       </Carousel>
 			
-        <div class="level carousel-buttons">
+        <div className="level carousel-buttons">
           
-          <div class="level-left">
-            <button class="button" onClick={() => {
+          <div className="level-left">
+            <button className="button" onClick={() => {
 							setIndex(0)
 							setShowGuide(false)
 							setFirstLogIn(false)
 						}}>Close</button>
           </div>
-          <div class="level-right">
+          <div className="level-right">
               {index !== 0 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
             }/> : ""}
             
             
-            {index !== 4 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button class="button" onClick={() => {
+            {index !== 4 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button className="button" onClick={() => {
 							setIndex(0)
 							setShowGuide(false)
 							setFirstLogIn(false)}}>Let's get started!</button>}
