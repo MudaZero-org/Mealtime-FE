@@ -103,8 +103,10 @@ const Homepage = (props) => {
               alt="First slide"
             />
             <Carousel.Caption className="carousel-text">
-              {firstLogIn ? <h3>Hi {user.data.storeName}, you have successfully signed up!</h3>: <h3>Hi {user.data.storeName}</h3>}
+							<div className="quick-guide-caption">
+              {firstLogIn ? <h3>Hi {user.data.storeName}, you have successfully signed up!</h3>: <h3>Hi {user.data.storeName}!</h3>}
 							{firstLogIn ? <p>Welcome! This walkthrough will help you get started with MealTime.</p>: <p>This quick guide will help you how to use with MealTime.</p>}
+							</div>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -115,8 +117,10 @@ const Homepage = (props) => {
             />
 
             <Carousel.Caption className="carousel-text">
+						<div className="quick-guide-caption">
               <h3>Quick Guide:</h3>
               <p>Put in ingredients in the "Ingredients" box.</p>
+							</div>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -127,10 +131,12 @@ const Homepage = (props) => {
             />
 
             <Carousel.Caption className="carousel-text">
+						<div className="quick-guide-caption">
               <h3>Quick Guide:</h3>
               <p>
                 Press "Generate Meal Packs".
               </p>
+							</div>
             </Carousel.Caption>
           </Carousel.Item>
 					<Carousel.Item>
@@ -141,10 +147,12 @@ const Homepage = (props) => {
             />
 
             <Carousel.Caption className="carousel-text">
+						<div className="quick-guide-caption">
               <h3>Quick Guide:</h3>
               <p>
                 Add Meal Packs you like.
               </p>
+							</div>
             </Carousel.Caption>
           </Carousel.Item>
 					<Carousel.Item>
@@ -155,10 +163,12 @@ const Homepage = (props) => {
             />
 
             <Carousel.Caption className="carousel-text">
+						<div className="quick-guide-caption">
               <h3>Quick Guide:</h3>
               <p>
                 Press "Save" and you are good to go.
               </p>
+							</div>
             </Carousel.Caption>
           </Carousel.Item>
       </Carousel>
