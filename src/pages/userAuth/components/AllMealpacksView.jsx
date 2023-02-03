@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import API_URL, { REACT_APP_URL } from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
 import { Popover, OverlayTrigger, Button } from 'react-bootstrap';
-import starIcon from "../../../images/star-fill.svg"
+import starIcon from "../../../images/star.png"
 
 const PastView = (props) => {
 	const [show, setShow] = useState(false);
@@ -162,8 +162,6 @@ const PastView = (props) => {
 					<img src={starIcon} className="star-icon" />
 				</span>
 			)
-		} else {
-			return
 		}
 	}
 
@@ -237,8 +235,7 @@ const PastView = (props) => {
 								<img className="food-small-image" src={e.recipeDetail["image"]}></img>
 								{renderInput(e)}
 
-								<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}								{favoriteIcon(e)}
-								</strong></p>
+								<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName} {favoriteIcon(e)}</strong></p>
 								<div className="tags past-mealpacks-tags">
 									{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
 									{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
