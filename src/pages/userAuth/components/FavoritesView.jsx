@@ -6,7 +6,7 @@ import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
 import API_URL, {REACT_APP_URL} from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
-import star from "../../../images/star.png";
+import starIcon from "../../../images/star.png";
 
 
 const FavoritesView = (props) => {
@@ -164,6 +164,14 @@ const FavoritesView = (props) => {
 			)
 		}
 	}
+
+	const favoriteIcon = (meal) => {
+		return (
+			<span className="icon">
+				<img src={starIcon} className="star-icon" />
+			</span>
+		)
+	}
 	
 
   return (
@@ -178,7 +186,7 @@ const FavoritesView = (props) => {
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
 								{renderInput(e)}
 
-                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
+                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong> {favoriteIcon()}</p>
                 <div className="tags active-mealpacks-tags">
                   {e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
                   {e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
