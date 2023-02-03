@@ -3,10 +3,9 @@ import "../../styles/pages/_profilePage.scss";
 import { useEffect, useState } from "react";
 import API_URL from "../../Constants";
 import { useNavigate } from "react-router-dom";
-import storage from "../../firebaseConfig";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-const EditProfile = () => {
+const EditProfile = (props) => {
+	const { image } = props;
 	const navigate = useNavigate(null);
 
 	const [storeName, setStoreName] = useState(null);
@@ -15,39 +14,8 @@ const EditProfile = () => {
 	const [storeAddress, setStoreAddress] = useState(null);
 	const [phoneNumber, setPhoneNumber] = useState(null);
 	const [storeManager, setStoreManager] = useState(null);
-	const [image, setImage] = useState(null);
+	// const [image, setImage] = useState(null);
 	const user = JSON.parse(localStorage.getItem("user"));
-
-	const [file, setFile] = useState("");
-	function handleChange(event) {
-		setFile(event.target.files[0]);
-	}
-	const [percent, setPercent] = useState(0);
-
-	const handleUpload = () => {
-		if (!file) {
-			alert("Please choose a file first!")
-		}
-		const storageRef = ref(storage, `/files/${file.name}`);
-		const uploadTask = uploadBytesResumable(storageRef, file);
-
-		uploadTask.on(
-			"state_changed",
-			(snapshot) => {
-				const percent = Math.round(
-					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-				);
-
-				setPercent(percent);
-			},
-			(err) => console.log(err),
-			() => {
-				getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-					console.log(url);
-				})
-			}
-		)
-	}
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -68,7 +36,8 @@ const EditProfile = () => {
 		//Update store name and/or email address
 		e.preventDefault();
 		console.log("Submit");
-		console.log(storeName, image);
+		// console.log(storeName, image);
+		console.log(storeName)
 		await axios.put(
 			`${API_URL}/user/${user.data.storeId}`,
 			{
@@ -172,7 +141,7 @@ const EditProfile = () => {
 								></input>
 							</div>
 						</div>
-						<div className="field">
+						{/* <div className="field">
 							<label className="label">Image</label>
 							<div className="control">
 								<input
@@ -184,14 +153,7 @@ const EditProfile = () => {
 									}}
 								></input>
 							</div>
-						</div>
-
-						<div>
-							<input type="file" accept="/image/*" onChange={handleChange}></input>
-							<button onClick={handleUpload}>Upload Picture</button>
-							<p>{percent}% done</p>
-						</div>
-
+						</div> */}
 						<div className="field is-grouped">
 							<div className="control">
 								<button

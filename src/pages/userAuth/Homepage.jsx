@@ -24,7 +24,8 @@ const Homepage = (props) => {
 		showGuide,
 		setShowGuide,
 		firstLogIn,
-		setFirstLogIn
+		setFirstLogIn,
+		setImage
 	} = props;
 	
 	
@@ -48,6 +49,18 @@ const Homepage = (props) => {
 	const [buttonStatus, setButtonStatus] = useState(true);
 
 	const user = JSON.parse(localStorage.getItem("user"));
+
+	useEffect(() => {
+		async function fetchUserData() {
+			const user = JSON.parse(localStorage.getItem("user"));
+			const userID = user.data.storeId;
+			const userData = await axios.get(`${API_URL}/user/${userID}`, {
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			});
+			setImage(userData.data.profileImg);
+		}
+		fetchUserData();
+	}, []);
 	
 	//Added onPrevNextClick
 	const onPrevClick = () => {

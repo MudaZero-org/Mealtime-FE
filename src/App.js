@@ -13,26 +13,32 @@ import Navbar from "./pages/userAuth/components/Navbar";
 import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
 import EditProfile from "./pages/userAuth/EditProfile";
 import EditPassword from "./pages/userAuth/EditPassword";
-import HowToUse from "./pages/userAuth/HowToUse"
+import HowToUse from "./pages/userAuth/HowToUse";
 import Info from "./pages/info";
 
 function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
   const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
-  const [showGuide, setShowGuide] = useState(true)
-  const [firstLogIn, setFirstLogIn] = useState(true)
+  const [showGuide, setShowGuide] = useState(true);
+  const [firstLogIn, setFirstLogIn] = useState(true);
+  const [image, setImage] = useState(null);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp 
-        showGuide={showGuide}
-        setShowGuide={setShowGuide}
-        firstLogIn={firstLogIn}
-        setFirstLogIn={setFirstLogIn}/>} 
-        
+        <Route
+          exact
+          path="/signup"
+          element={
+            <SignUp
+              showGuide={showGuide}
+              setShowGuide={setShowGuide}
+              firstLogIn={firstLogIn}
+              setFirstLogIn={setFirstLogIn}
+            />
+          }
         />
         <Route exact path="/user" element={<User />} />
         <Route
@@ -52,6 +58,7 @@ function App() {
                 setShowGuide={setShowGuide}
                 firstLogIn={firstLogIn}
                 setFirstLogIn={setFirstLogIn}
+                setImage={setImage}
               />
             </>
           }
@@ -69,14 +76,13 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/profile">
+        <Route path="/profile">
           <Route
             index
             element={
               <>
                 <Navbar />
-                <Profile />
+                <Profile image={image} setImage={setImage} />
               </>
             }
           ></Route>
@@ -85,7 +91,7 @@ function App() {
             element={
               <>
                 <Navbar />
-                <EditProfile />
+                <EditProfile image={image} />
               </>
             }
           ></Route>
