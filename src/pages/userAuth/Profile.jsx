@@ -3,15 +3,67 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "../../Constants";
 import { useNavigate } from "react-router-dom";
-import Hiroshi from "../../images/hiroshi.png";
+import placeholder from "../../images/placeholder.png";
+import { storage } from "../../firebaseConfig";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
-const Profile = () => {
+const Profile = (props) => {
+	const { image, setImage } = props;
 	const navigate = useNavigate();
 
 	const [storeName, setStoreName] = useState("");
+	const [postalCode, setPostalCode] = useState(null);
+	const [companyName, setCompanyName] = useState(null);
+	const [storeAddress, setStoreAddress] = useState(null);
+	const [phoneNumber, setPhoneNumber] = useState(null);
+	const [storeManager, setStoreManager] = useState(null);
+
 	const [email, setEmail] = useState("");
-	const [image, setImage] = useState("");
 	const [password, setPassword] = useState("");
+	const [photoUpload, setPhotoUpload] = useState(false);
+	const [progressPercent, setProgressPercent] = useState(0);
+	const [successPhoto, setSuccessPhoto] = useState(false);
+	const user = JSON.parse(localStorage.getItem("user"));
+
+	const handleSubmitPhoto = async (e) => {
+		e.preventDefault()
+		const file = e.target[0]?.files[0];
+
+		if (!file) return null;
+		const storageRef = ref(storage, `files/${file.name}`)
+		const uploadTask = uploadBytesResumable(storageRef, file)
+
+		uploadTask.on("state_changed",
+			(snapshot) => {
+				const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+				setProgressPercent(progress)
+			},
+			(error) => {
+				alert(error)
+			},
+			() => {
+				e.target[0].value = ''
+				getDownloadURL(storageRef).then((downloadURL) => {
+					let imageURL = downloadURL
+					setImage(downloadURL)
+					console.log(user.data)
+					axios.put(`${API_URL}/user/${user.data.storeId}`, 
+					{
+						storeName: storeName,
+						postalCode: postalCode,
+						companyName: companyName,
+						storeAddress: storeAddress,
+						phoneNumber: phoneNumber,
+						storeManager: storeManager,
+						profileImg: imageURL,
+					},
+					{
+						headers: { authorization: `Bearer ${user.accessToken}` }
+					})
+				})
+			}
+		)
+	}
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -22,7 +74,7 @@ const Profile = () => {
 			});
 			setStoreName(userData.data.storeName);
 			setEmail(user.data.email);
-			setImage(user.data.profileImg);
+			setImage(userData.data.profileImg);
 		}
 
 		fetchUserData();
@@ -32,16 +84,51 @@ const Profile = () => {
 		console.log("Update");
 	};
 
+	const togglePhotoUpload = () => {
+		setPhotoUpload(!photoUpload)
+	}
+
+	const photoUploadOptions = () => {
+		return (
+			<div className="photo-upload-window">
+				<form className="app__form" name="upload_file" onSubmit={handleSubmitPhoto}>
+					<input type="file"></input>
+					<button type="submit">Upload</button>
+				</form>
+				<progress value={progressPercent} max="100" />
+				{progressPercent === 100 && <p style={{color: "blue", textAlign: "center"}}><em>Image successfully uploaded!</em></p>}
+			</div>
+		)
+	}
+
+	const checkImage = () => {
+		if (!image) {
+			return (
+				<img
+					className="is-rounded"
+					style={{ objectFit: "cover", width: "256px", height: "256px" }}
+					src={placeholder}
+				></img>
+			)
+		} else {
+			return (
+				<img
+					className="is-rounded"
+					style={{ objectFit: "cover", width: "256px", height: "256px" }}
+					src={image}
+				></img>
+			)
+		}
+	}
+
 	return (
 		<div className="profile-page">
 			<div className="card" id="profile-card">
 				<figure className="image profile-image">
-					<img
-						className="is-rounded"
-						style={{ objectFit: "cover", width: "256px", height: "256px" }}
-						src={Hiroshi}
-					></img>
+					{checkImage()}
 				</figure>
+				<button className="button is-light" onClick={togglePhotoUpload} style={{marginLeft: "auto", marginRight: "auto"}}>Upload Picture</button>
+				{photoUpload && photoUploadOptions()}
 				<hr></hr>
 				<div className="card-content">
 					{/* <p className="title is-3">Profile</p> */}
@@ -55,19 +142,18 @@ const Profile = () => {
 							<p className="subtitle is-6">{email}</p>
 						</div>
 					</div>
-					<div class="field is-grouped">
-						<div class="control">
+					<div className="field is-grouped">
+						<div className="control">
 							<button
 								className="button is-light"
 								onClick={() => {
 									navigate("/profile/editProfile");
-									console.log("Hello");
 								}}
 							>
 								Edit Profile
 							</button>
 						</div>
-						<div class="control">
+						<div className="control">
 							<button
 								className="button is-light"
 								onClick={(e) => {

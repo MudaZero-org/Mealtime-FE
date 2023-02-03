@@ -2,7 +2,6 @@ import whLogo from "../../../images/white-Mealtime.svg";
 import AuthUtils from "../utils/authenticate";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Hiroshi from "../../../images/hiroshi.png";
 
 const Navbar = () => {
 	const [isActive, setIsActive] = useState(false);
