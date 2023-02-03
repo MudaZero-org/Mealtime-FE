@@ -46,7 +46,7 @@ function App() {
           path="/home"
           element={
             <>
-              <Navbar />
+              <Navbar image={image} />
               <Homepage
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
@@ -68,7 +68,7 @@ function App() {
           path="/mealpack"
           element={
             <>
-              <Navbar />
+              <Navbar image={image} />
               <MealPack
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
@@ -81,7 +81,7 @@ function App() {
             index
             element={
               <>
-                <Navbar />
+                <Navbar image={image} />
                 <Profile image={image} setImage={setImage} />
               </>
             }
@@ -90,7 +90,7 @@ function App() {
             path="editProfile"
             element={
               <>
-                <Navbar />
+                <Navbar image={image} />
                 <EditProfile image={image} />
               </>
             }
@@ -99,7 +99,7 @@ function App() {
             path="editPassword"
             element={
               <>
-                <Navbar />
+                <Navbar image={image} />
                 <EditPassword />
               </>
             }
@@ -110,8 +110,9 @@ function App() {
           path="/all-mealpacks"
           element={
             <>
-              <Navbar />
+              <Navbar image={image} />
               <AllMealpacks
+                setImage={setImage}
                 setActiveMealPacks={setActiveMealPacks}
                 setPastMealPacks={setPastMealPacks}
                 pastMealPacks={pastMealPacks}
@@ -125,8 +126,9 @@ function App() {
           path="/favorite-mealpacks"
           element={
             <>
-              <Navbar />
+              <Navbar image={image} />
               <FavoriteMealpacks
+                setImage={setImage}
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
                 activeMealPacks={activeMealPacks}
