@@ -7,6 +7,8 @@ import API_URL from "../../Constants";
 import vegetarianArr from "./utils/vegetarian.json";
 import dairyFreeArr from "./utils/dairyFree.json";
 import glutenFreeArr from "./utils/glutenFree.json";
+import { Popover, OverlayTrigger } from 'react-bootstrap';
+
 
 //Added Carousel and image
 import {Carousel, Modal} from "react-bootstrap"
@@ -49,6 +51,10 @@ const Homepage = (props) => {
 	const [buttonStatus, setButtonStatus] = useState(true);
 	const [successfulSave, setSuccessfulSave] = useState(false);
 
+	const [userFilterLists, setUserFilterLists] = useState([]);
+	const [filterListSaved, setFilterListSaved] = useState(false);
+	const [filterListName, setFilterListName] = useState("")
+
 	const user = JSON.parse(localStorage.getItem("user"));
 
 	useEffect(() => {
@@ -59,6 +65,10 @@ const Homepage = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			});
 			setImage(userData.data.profileImg);
+			let response = await axios.get(`${API_URL}/store/${user.data.storeId}/filter_list`, {
+					headers: {authorization: `Bearer ${user.accessToken}`}
+				})
+			setUserFilterLists(response.data)
 		}
 		fetchUserData();
 	}, []);
@@ -374,8 +384,58 @@ const Homepage = (props) => {
 		meal.clicked = !meal.clicked;
 	}
 
+	const toggleDropdown = () => {
+		let dropdown = document.getElementsByClassName("dropdown")[0];
+		dropdown.classList.toggle("is-active")
+	}
+
+	const makeFilterLists = () => {
+		return (
+			<div className="dropdown-content">
+				{userFilterLists.map((list) => {
+					return (
+						<a key={uuidv4()} href="#" className="dropdown-item" onClick={() => fillFilteredFields(list)}>
+							{list.filterName}
+						</a>
+					);
+				})}
+			</div>
+		)
+	}
+
+	const fillFilteredFields = (list) => {
+		setFilteredInputArr(list.filteredIngredients)
+		clearFilteredInput();
+		setFilteredInput(null)
+	}
+
+	const saveFilterList = async () => {
+		setFilterListSaved(true)
+		await axios.post(`${API_URL}/store/${user.data.storeId}/filter_list`, 
+		{
+			filterName: filterListName,
+			filteredIngredients: filteredInputArr
+		},
+		{
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		})
+		let response = await axios.get(`${API_URL}/store/${user.data.storeId}/filter_list`, {
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		})
+		setUserFilterLists(response.data)
+	}
+
+	const popover = (e) => (
+    <Popover id="popover-basic">
+      <Popover.Body id="popover-body">
+				<input className="list-name-input" type="text" placeholder="list name" onChange={(e) => setFilterListName(e.target.value)}></input>
+				{filterListSaved ? <button className="button is-small save-filter-button" disabled onClick={saveFilterList}>Saved!</button> : <button className="button is-small save-filter-button" onClick={saveFilterList}>Save</button>}
+      </Popover.Body>
+    </Popover>
+  );
+
 	return (
-		<div className="All">
+		<div className="homepage">
 			<div className="homepage-title-container level">
 				<h1 className="homepage-title">Meal Pack Generator</h1>
 				<button onClick={()=> setShowGuide(true)}  className="help-button button"><span className="question-mark">?</span>Help</button>
@@ -431,7 +491,21 @@ const Homepage = (props) => {
 								<p className="input-instructions">
 									Add ingredients you DON'T want to include in meal packs<br></br>
 								</p>
-								<div className="level-left">
+
+								<div className="filter-buttons">
+									<div className="dropdown" onClick={toggleDropdown}>
+										<div className="dropdown-trigger">
+											<button className="button is-small" id="dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
+												<span>My Lists</span>
+												<span className="icon is-small">
+													<i className="fa fa-angle-down" aria-hidden="true"></i>
+												</span>
+											</button>
+										</div>
+										<div className="dropdown-menu" id="dropdown-menu" role="menu">
+											{userFilterLists && (makeFilterLists())}
+										</div>
+									</div>
 									<button onClick={() => addFilters("veg")} className="button is-small">Vegetarian</button>
 									<button onClick={() => addFilters("glu")} className="button is-small">Gluten-Free</button>
 									<button onClick={() => addFilters("dai")} className="button is-small">Dairy-Free</button>
@@ -466,11 +540,18 @@ const Homepage = (props) => {
 										</div>
 									)
 								})}
-								{filteredInputArr.length > 0 && <p onClick={() => {
-									setFilteredInputArr([])
-									clearFilteredInput();
-									setFilteredInput(null)
-								}} className="clear-button">[x]clear all</p>}
+								{filteredInputArr.length > 0 && (
+									<div className="filter-buttons-clear-save">
+										<OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover()}>
+											<button className="button">Save List</button>
+										</OverlayTrigger>
+										<p onClick={() => {
+										setFilteredInputArr([])
+										clearFilteredInput();
+										setFilteredInput(null)
+										}} className="clear-button">[x]clear all</p>
+									</div>)
+								}
 							</div>
 						</div>
 						<button
