@@ -8,9 +8,9 @@ import SignUp from "./pages/userAuth/SignUp";
 import Homepage from "./pages/userAuth/Homepage";
 import MealPack from "./pages/userAuth/MealPack";
 import Profile from "./pages/userAuth/Profile";
-import PastMealpacks from "./pages/userAuth/PastMealpacks";
+import AllMealpacks from "./pages/userAuth/AllMealpacks";
 import Navbar from "./pages/userAuth/components/Navbar";
-import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
+import FavoriteMealpacks from "./pages/userAuth/FavoriteMealpacks";
 import EditProfile from "./pages/userAuth/EditProfile";
 import EditPassword from "./pages/userAuth/EditPassword";
 import HowToUse from "./pages/userAuth/HowToUse";
@@ -107,11 +107,11 @@ function App() {
         </Route>
         <Route
           exact
-          path="/past-mealpacks"
+          path="/all-mealpacks"
           element={
             <>
               <Navbar />
-              <PastMealpacks
+              <AllMealpacks
                 setActiveMealPacks={setActiveMealPacks}
                 setPastMealPacks={setPastMealPacks}
                 pastMealPacks={pastMealPacks}
@@ -122,11 +122,11 @@ function App() {
         ></Route>
         <Route
           exact
-          path="/active-mealpacks"
+          path="/favorite-mealpacks"
           element={
             <>
               <Navbar />
-              <ActiveMealpacks
+              <FavoriteMealpacks
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
                 activeMealPacks={activeMealPacks}

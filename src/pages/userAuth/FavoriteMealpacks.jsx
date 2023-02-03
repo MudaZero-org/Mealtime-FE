@@ -1,13 +1,13 @@
 import "../../styles/pages/_activeMealpacks.scss";
-import ActiveView from "./components/ActiveView";
+import FavoritesView from "./components/FavoritesView";
 
-const ActiveMealpacks = (props) => {
+const FavoriteMealpacks = (props) => {
   const { selectedActivePack, setSelectedActivePastPack, activeMealPacks, setActiveMealPacks, pastMealPacks, setPastMealPacks } = props;
 
   return (
     <div className="active-mealpacks-page">
       <div className="active-view">
-        <ActiveView
+        <FavoritesView
           selectedActivePack={selectedActivePack}
           setSelectedActivePastPack={setSelectedActivePastPack}
           activeMealPacks={activeMealPacks}
@@ -20,4 +20,4 @@ const ActiveMealpacks = (props) => {
   )
 }
 
-export default ActiveMealpacks;
+export default FavoriteMealpacks;

@@ -1,13 +1,13 @@
-import PastView from "./components/PastView";
+import AllMealpacksView from "./components/AllMealpacksView";
 import "../../styles/pages/_pastMealpacks.scss";
 
-const PastMealpacks = (props) => {
+const AllMealpacks = (props) => {
   const { setActiveMealPacks, setPastMealPacks, pastMealPacks, setSelectedActivePastPack } = props;
 
   return (
     <div className="past-mealpacks-page">
       <div className="past-view">
-					<PastView
+					<AllMealpacksView
 						setActiveMealPacks={setActiveMealPacks}
 						setPastMealPacks={setPastMealPacks}
 						pastMealPacks={pastMealPacks}
@@ -18,4 +18,4 @@ const PastMealpacks = (props) => {
   )
 }
 
-export default PastMealpacks;
+export default AllMealpacks;
