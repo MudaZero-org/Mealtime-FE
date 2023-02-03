@@ -20,7 +20,7 @@ function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
   const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
-  const [showGuide, setShowGuide] = useState(true);
+  const [showGuide, setShowGuide] = useState(false);
   const [firstLogIn, setFirstLogIn] = useState(true);
   const [image, setImage] = useState(null);
 
