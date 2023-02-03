@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
-import API_URL, {REACT_APP_URL} from "../../../Constants";
+import API_URL, { REACT_APP_URL } from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
-import {Popover, OverlayTrigger, Button} from 'react-bootstrap';
-import star from "../../../images/star.png";
+import { Popover, OverlayTrigger, Button } from 'react-bootstrap';
+import starIcon from "../../../images/star-fill.svg"
 
 const PastView = (props) => {
-  const [show, setShow] = useState(false);
+	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
-  const [selectionArr, setSelectionArr] = useState([]);
+	const [selectionArr, setSelectionArr] = useState([]);
 
 	const {
 		pastMealPacks,
@@ -21,32 +21,32 @@ const PastView = (props) => {
 		setSelectedActivePastPack,
 	} = props;
 
-  useEffect(() => {
-    async function fetchData() {
-      const user = JSON.parse(localStorage.getItem("user"))
-		  const storeId = user.data.storeId
-      let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`,{
-        headers: {authorization: `Bearer ${user.accessToken}`}
-      });
-      data.data.map((meal) => meal.selectedFav = false)
-      setPastMealPacks(data.data)
-    }
-    fetchData();
-  }, []) // activeMealPacks (causing infinite calls)
+	useEffect(() => {
+		async function fetchData() {
+			const user = JSON.parse(localStorage.getItem("user"))
+			const storeId = user.data.storeId
+			let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
+				headers: { authorization: `Bearer ${user.accessToken}` }
+			});
+			data.data.map((meal) => meal.selectedFav = false)
+			setPastMealPacks(data.data)
+		}
+		fetchData();
+	}, []) // activeMealPacks (causing infinite calls)
 
-  // fetchPastPacks copies above useEffect, wittout causing infinite loop
-  const fetchPastPacks = async () => {
-    const user = JSON.parse(localStorage.getItem("user"))
-    const storeId = user.data.storeId
-    let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
-			headers: {authorization: `Bearer ${user.accessToken}`}
+	// fetchPastPacks copies above useEffect, wittout causing infinite loop
+	const fetchPastPacks = async () => {
+		const user = JSON.parse(localStorage.getItem("user"))
+		const storeId = user.data.storeId
+		let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
+			headers: { authorization: `Bearer ${user.accessToken}` }
 		});
-    setPastMealPacks(data.data)
-}
+		setPastMealPacks(data.data)
+	}
 
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 	const rerouteToMealpack = (meal) => {
-    setSelectedActivePastPack(meal)
+		setSelectedActivePastPack(meal)
 		navigate("/mealpack")
 	}
 
@@ -73,7 +73,7 @@ const PastView = (props) => {
 		setActiveMealPacks(data.data);
 	};
 
-  //Handles deleting mealpack
+	//Handles deleting mealpack
 	const deleteMealPack = async (meal) => {
 		const user = JSON.parse(localStorage.getItem("user"));
 		const storeId = user.data.storeId;
@@ -155,7 +155,19 @@ const PastView = (props) => {
 		}
 	}
 
-	const downloadPDF = (meal) => {
+	const favoriteIcon = (meal) => {
+		if (meal.isFavorite) {
+			return (
+				<span className="icon">
+					<img src={starIcon} className="star-icon" />
+				</span>
+			)
+		} else {
+			return
+		}
+	}
+
+  const downloadPDF = (meal) => {
 		let qrCode = generateQRCode(meal);
 		const doc = new jsPDF("p", "mm", "a4");
 		let width = doc.internal.pageSize.getWidth();
@@ -217,51 +229,52 @@ const PastView = (props) => {
 		<div className="past-container">
 			<h2 className="past-title">All Meal Packs</h2>
 
-      <div className="tile is-parent active-mealpacks">
-        {pastMealPacks && pastMealPacks.map((e) => {
-          return (
-            <div key={uuidv4()} className="tile is-child is-4">
-              <div key={uuidv4()} className="active-mealpack-container">
-                <img className="food-small-image" src={e.recipeDetail["image"]}></img>
-                {renderInput(e)}
+			<div className="tile is-parent active-mealpacks">
+				{pastMealPacks && pastMealPacks.map((e) => {
+					return (
+						<div key={uuidv4()} className="tile is-child is-4">
+							<div key={uuidv4()} className="active-mealpack-container">
+								<img className="food-small-image" src={e.recipeDetail["image"]}></img>
+								{renderInput(e)}
 
-                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
-                <div className="tags past-mealpacks-tags">
-                  {e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
-                  {e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
-                  {e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
-                  {e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
-                </div>
-                <div className="past-mealpacks-buttons">
-									<button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
-                  <button key={uuidv4()} className="button" onClick={() => {
-                    //Old Code
-                    // rerouteToMealpack(e)
-                    setShow(true)
+								<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}								{favoriteIcon(e)}
+								</strong></p>
+								<div className="tags past-mealpacks-tags">
+									{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
+									{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
+									{e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
+									{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
+								</div>
+								<div className="past-mealpacks-buttons">
+                  <button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
+									<button key={uuidv4()} className="button" onClick={() => {
+										//Old Code
+										// rerouteToMealpack(e)
+										setShow(true)
 										setSelectedMealPack(e)
-                    }}>See Meal Pack Info</button>
-                  <button key={uuidv4()} className="button" onClick={async () => {
-                    await activateMealPack(e)
-                    fetchPastPacks()
-                  }} style={{ marginBottom: "10px" }}>Add to Favorites</button>
-                  <OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
-  									<button className="button">Delete</button>
+									}}>See Meal Pack Info</button>
+									<button key={uuidv4()} className="button" onClick={async () => {
+										await activateMealPack(e)
+										fetchPastPacks()
+									}} style={{ marginBottom: "10px" }}>Add to Favorites</button>
+									<OverlayTrigger trigger="click" rootClose placement="right" overlay={popover(e)}>
+										<button className="button">Delete</button>
 									</OverlayTrigger>
-                </div>
-              </div>
-            </div>
+								</div>
+							</div>
+						</div>
 
-          );
-        })}
-      </div>
-      <footer className="footer"></footer>
-      {selectionArr.length > 0 && (
+					);
+				})}
+			</div>
+			<footer className="footer"></footer>
+			{selectionArr.length > 0 && (
 				<div className="selection-footer">
 					<div className="selection-popup-container">
 						<h1 style={{ color: "black" }}>You have selected {selectionArr.length} meal packs to print</h1>
 						<div className="selection-popup-buttons">
 							<button key={uuidv4()} className="button is-medium print-all-button" onClick={downloadAllPDF}>Download Selected PDF's</button>
-							<button 
+							<button
 								onClick={() => {
 									setSelectionArr([])
 									pastMealPacks.map((meal) => meal.selectedFav = false)
@@ -270,14 +283,14 @@ const PastView = (props) => {
 					</div>
 				</div>
 			)}
-      <MealPackDetailsModal
+			<MealPackDetailsModal
 				selectedMealPack={selectedMealPack}
-					setSelectedMealPack={setSelectedMealPack}
-					show={show}
-					setShow={setShow}
+				setSelectedMealPack={setSelectedMealPack}
+				show={show}
+				setShow={setShow}
 			/>
-    </div>
-  )
+		</div>
+	)
 }
 
 export default PastView;
