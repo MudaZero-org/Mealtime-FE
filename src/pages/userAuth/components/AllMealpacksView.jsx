@@ -254,7 +254,7 @@ const PastView = (props) => {
 										await activateMealPack(e)
 										fetchPastPacks()
 									}} style={{ marginBottom: "10px" }}>Add to Favorites</button>
-									<OverlayTrigger trigger="click" rootClose placement="right" overlay={popover(e)}>
+									<OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
 										<button className="button">Delete</button>
 									</OverlayTrigger>
 								</div>
