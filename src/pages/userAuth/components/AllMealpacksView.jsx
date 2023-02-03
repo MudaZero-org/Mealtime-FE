@@ -28,7 +28,8 @@ const PastView = (props) => {
 			let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
 				headers: { authorization: `Bearer ${user.accessToken}` }
 			});
-			data.data.map((meal) => meal.selectedFav = false)
+			console.log(data.data)
+			data.data.map((meal) => {meal.selectedFav = false})
 			setPastMealPacks(data.data)
 		}
 		fetchData();
@@ -71,6 +72,29 @@ const PastView = (props) => {
 			}
 		);
 		setActiveMealPacks(data.data);
+	};
+
+	const deactivateMealPack = async (meal) => {
+		const user = JSON.parse(localStorage.getItem("user"));
+		const storeId = user.data.storeId;
+		await axios.put(
+			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
+			{
+				isFavorite: false,
+				mealpackName: meal.mealpackName,
+				isDelete: false,
+			},
+			{
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			}
+		);
+		let data = await axios.get(
+			`${API_URL}/store/${storeId}/mealpack/all`,
+			{
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			}
+		);
+		setPastMealPacks(data.data);
 	};
 
 	//Handles deleting mealpack
@@ -250,10 +274,18 @@ const PastView = (props) => {
 										setShow(true)
 										setSelectedMealPack(e)
 									}}>See Meal Pack Info</button>
-									<button key={uuidv4()} className="button" onClick={async () => {
-										await activateMealPack(e)
-										fetchPastPacks()
-									}} style={{ marginBottom: "10px" }}>Add to Favorites</button>
+									{!e.isFavorite 
+										? (
+											<button key={uuidv4()} className="button" onClick={async () => {
+												await activateMealPack(e)
+												fetchPastPacks()
+											}} style={{ marginBottom: "10px" }}>Add to Favorites</button>) 
+										: (
+											<button key={uuidv4()} className="button" onClick={async () => {
+												await deactivateMealPack(e)
+												fetchPastPacks()
+											}}>Remove from Favorites</button>
+										)}
 									<OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
 										<button className="button">Delete</button>
 									</OverlayTrigger>
