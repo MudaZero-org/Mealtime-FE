@@ -78,8 +78,13 @@ const PastView = (props) => {
 		const user = JSON.parse(localStorage.getItem("user"));
 		const storeId = user.data.storeId;
 		//route
-		await axios.delete(
+		await axios.put(
 			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
+      {
+				isFavorite: false,
+				mealpackName: meal.mealpackName,
+				isDelete: true,
+			},
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
@@ -101,24 +106,26 @@ const PastView = (props) => {
       <Popover.Body>
           Are you sure you want to <strong>delete</strong> this mealpack?
         </Popover.Body>
-        <Button
+        <button
+          className="button is-danger"
           variant="primary"
           onClick={async () => {
             //As of the moment to check if it is working
-            await activateMealPack(e)
+            await deleteMealPack(e)
             fetchPastPacks()
           }}
         >
-          Yes
-        </Button>{" "}
-        <Button
+          ✓ Delete
+        </button>
+        <button
+          className="button"
           variant="primary"
           onClick={() => {
             document.body.click()
           }}
         >
-          No
-        </Button>{" "}
+          X Cancel
+        </button>{" "}
     </Popover>
   );
 
@@ -237,7 +244,7 @@ const PastView = (props) => {
                     await activateMealPack(e)
                     fetchPastPacks()
                   }} style={{ marginBottom: "10px" }}>Add to Favorites</button>
-                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={popover(e)}>
+                  <OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
   									<button className="button">Delete</button>
 									</OverlayTrigger>
                 </div>
