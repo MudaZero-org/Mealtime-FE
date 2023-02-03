@@ -47,6 +47,7 @@ const Homepage = (props) => {
 	const [filteredInput, setFilteredInput] = useState(null);
 	const [filteredInputArr, setFilteredInputArr] = useState([]);
 	const [buttonStatus, setButtonStatus] = useState(true);
+	const [successfulSave, setSuccessfulSave] = useState(false);
 
 	const user = JSON.parse(localStorage.getItem("user"));
 
@@ -74,7 +75,7 @@ const Homepage = (props) => {
     setIndex(selectedIndex);
   };
 
-	function MyVerticallyCenteredModal(props) {
+	const MyVerticallyCenteredModal = (props) => {
     return (
       <Modal
         {...props}
@@ -177,6 +178,7 @@ const Homepage = (props) => {
   }
 
 	const makeArr = () => {
+		setSuccessfulSave(false)
 		let ingredientArr = [...ingredientInputArr]
 		setIngredientArr(ingredientArr)
 		let filteredArr = [...filteredInputArr]
@@ -351,6 +353,7 @@ const Homepage = (props) => {
 					key={uuidv4()}
 					className="mealpack-add-button button is-medium"
 					onClick={() => {
+						setSuccessfulSave(false);
 						addToMyMealPacks(meal);
 						toggleAddButton(meal);
 					}}
@@ -484,6 +487,11 @@ const Homepage = (props) => {
 							<div className="user-selection-container">
 								<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
 								<div className="selected-mealpacks-container">
+									{successfulSave && (
+										<div className="add-success-message-container">
+											<h5 className="add-success-message">🎉 Meal packs successfully added! 🎉</h5>
+										</div>
+									)}
 									{myMealPacks &&
 										myMealPacks.map((e, index) => {
 											return (
@@ -524,6 +532,7 @@ const Homepage = (props) => {
 										className="publish-button is-medium button is-danger"
 										onClick={() => {
 											publishMealPacks();
+											setSuccessfulSave(true);
 											setMyMealPacks([]);
 										}}
 									>Save</button>
