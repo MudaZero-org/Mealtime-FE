@@ -58,6 +58,10 @@ const Homepage = (props) => {
 	const user = JSON.parse(localStorage.getItem("user"));
 
 	useEffect(() => {
+		setFilterListSaved(false)
+	}, [filteredInputArr])
+	
+	useEffect(() => {
 		async function fetchUserData() {
 			const user = JSON.parse(localStorage.getItem("user"));
 			const userID = user.data.storeId;
@@ -618,9 +622,10 @@ const Homepage = (props) => {
 							<div className="bottom-save-button">
 								<div className="buttons-container">
 									<button
+										style={{ color: "white" }}
 										id="save-mealpacks-button"
 										disabled={buttonStatus}
-										className="publish-button is-medium button is-danger"
+										className="publish-button is-medium button has-background-primary-dark"
 										onClick={() => {
 											publishMealPacks();
 											setSuccessfulSave(true);
@@ -629,7 +634,7 @@ const Homepage = (props) => {
 									>Save</button>
 									<button 
 										id="clear-mealpacks-button"
-										className="button is-medium publish-button is-primary"
+										className="button is-medium publish-button"
 										disabled={buttonStatus}
 										onClick={() => {
 											setMyMealPacks([])

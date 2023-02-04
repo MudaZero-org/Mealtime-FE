@@ -31,7 +31,6 @@ const PastView = (props) => {
 			let all = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
 				headers: { authorization: `Bearer ${user.accessToken}` }
 			});
-			console.log(all.data)
 			all.data.map((meal) => {meal.selectedFav = false})
 			setPastMealPacks(all.data)
 
@@ -41,7 +40,6 @@ const PastView = (props) => {
 					headers: { authorization: `Bearer ${user.accessToken}` },
 				}
 			);
-			console.log(favorites.data)
 			favorites.data.map((meal) => meal.selectedFav = false)
 			setActiveMealPacks(favorites.data);
 		}
@@ -234,16 +232,33 @@ const PastView = (props) => {
 			</span>
 		)
 	}
+	
+	const filterNutritionPDF = (meal) => {
+		console.log(meal)
+		let filterArr = [];
+		console.log(meal.recipeDetail.vegan)
+		meal.recipeDetail.vegan && filterArr.push("Vegan")
+		meal.recipeDetail.vegetarian && filterArr.push("Vegetarian")
+		meal.recipeDetail.glutenFree && filterArr.push("Gluten Free")
+		meal.recipeDetail.dairyFree && filterArr.push("Dairy Free")
+		return filterArr;
+	}
 
   const downloadPDF = (meal) => {
 		let qrCode = generateQRCode(meal);
+		let nutritionArr = filterNutritionPDF(meal)
 		const doc = new jsPDF("p", "mm", "a4");
 		let width = doc.internal.pageSize.getWidth();
 		const name = meal.mealpackName;
 		const instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
+		const nutrition = nutritionArr.map((e) => " " + e);
 		const ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-		doc.setFontSize(24);
-		doc.text(10, 90, `${name}`);
+		doc.setFontSize(32);
+		doc.text(10, 85, `${name}`, {
+			maxWidth: width / 1.15,
+		});
+		doc.setFontSize(14);
+		doc.text(10, 95, [`${nutrition}`])
 		doc.setFontSize(18);
 		doc.text(10, 110, [`Ingredients: ${ingredients}`], {
 			maxWidth: width / 1.15,
@@ -251,8 +266,8 @@ const PastView = (props) => {
 		doc.text(10, 140, [`${instructions}`], {
 			maxWidth: width / 1.15,
 		});
-		doc.addImage(qrCode, "PNG", 10, 15, 50, 50);
-		doc.addImage(meal.recipeDetail.image, "JPG", 100, 15, 80, 50)
+		doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
+		doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
 		doc.autoPrint({ variant: "non-conform" });
 		doc.save("print-mealpacks.pdf");
 	};
@@ -262,11 +277,17 @@ const PastView = (props) => {
 		let width = doc.internal.pageSize.getWidth();
 		selectionArr.map((meal) => {
 			let qrCode = generateQRCode(meal);
+			let nutritionArr = filterNutritionPDF(meal)
 			let name = meal.mealpackName;
 			let instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
 			let ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-			doc.setFontSize(24);
-			doc.text(10, 90, `${name}`);
+			let nutrition = nutritionArr.map((e) => " " + e);
+			doc.setFontSize(32);
+			doc.text(10, 85, `${name}`, {
+				maxWidth: width / 1.15,
+			});
+			doc.setFontSize(14);
+			doc.text(10, 95, [`${nutrition}`])
 			doc.setFontSize(18);
 			doc.text(10, 110, [`Ingredients: ${ingredients}`], {
 				maxWidth: width / 1.15,
@@ -274,8 +295,8 @@ const PastView = (props) => {
 			doc.text(10, 140, [`${instructions}`], {
 				maxWidth: width / 1.15,
 			});
-			doc.addImage(qrCode, "PNG", 10, 15, 50, 50);
-			doc.addImage(meal.recipeDetail.image, "JPG", 100, 15, 80, 50)
+			doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
+			doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
 			doc.addPage();
 		})
 		let pageCount = doc.internal.getNumberOfPages();
@@ -296,21 +317,21 @@ const PastView = (props) => {
 	return (
 		<div className="past-container">
 			
-			<h2 className="past-title">All Meal Packs</h2>
+			<h2 className="past-title">{selectedCategory === "all" ? "All Meal Packs" : "Favorite Meal Packs"}</h2>
 
 			<div className="hello">
-			<aside className="menu sidebar">
-				<p className="menu-label">
-					Meal Packs
-				</p>
-				<ul className="menu-list">
-					<li onClick={()=>{
-						setSelectedCategory("all")}}><a>All</a></li>
-					<li onClick={()=>{
-						setSelectedCategory("favorites")
-					}}><a>Favorites</a></li>
-				</ul>
-			</aside>
+				<aside className="menu sidebar" style={{marginLeft: "6rem"}}>
+					<p className="menu-label" style={{fontSize: "15px"}}>
+						Meal Packs
+					</p>
+					<ul className="menu-list">
+						<li onClick={()=>{
+							setSelectedCategory("all")}}><a>All</a></li>
+						<li onClick={()=>{
+							setSelectedCategory("favorites")
+						}}><a>Favorites</a></li>
+					</ul>
+				</aside>
 
 				<div className="tile is-parent active-mealpacks">
 					{selectedCategory === "all" && pastMealPacks ? pastMealPacks.map((e) => {
