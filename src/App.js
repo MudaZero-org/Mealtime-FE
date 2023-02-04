@@ -117,6 +117,8 @@ function App() {
                 setPastMealPacks={setPastMealPacks}
                 pastMealPacks={pastMealPacks}
                 setSelectedActivePastPack={setSelectedActivePastPack}
+                //Added more here
+                activeMealPacks={activeMealPacks}
               />
             </>
           }

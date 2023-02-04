@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 const AllMealpacks = (props) => {
-  const { setImage, setActiveMealPacks, setPastMealPacks, pastMealPacks, setSelectedActivePastPack } = props;
+  const { setImage, setActiveMealPacks, setPastMealPacks, pastMealPacks, setSelectedActivePastPack, activeMealPacks } = props;
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -28,6 +28,7 @@ const AllMealpacks = (props) => {
 						setPastMealPacks={setPastMealPacks}
 						pastMealPacks={pastMealPacks}
 						setSelectedActivePastPack={setSelectedActivePastPack}
+						activeMealPacks={activeMealPacks}
 					/>
 				</div>
     </div>

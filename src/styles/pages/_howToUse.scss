@@ -7,14 +7,63 @@
   background-size: cover;
 }
 
-.carousel-text h3, p{
+.carousel-text{
   color:black;
+  font-size:50px
 }
 
 .carousel-buttons {
-  background-color: orange;
+  background-color: rgb(246, 198, 121);
 }
 
 .quick-guide-caption {
-  background-color: rgba(255,255,255, .7);
+  // background-color: black;
+  margin: auto;
+  font-size: 35px;
+}
+
+.help-title {
+  font-size: 50px;
+  color: black;
+}
+
+.help-text {
+  font-size: 35px;
+  color:black;
+
+}
+
+
+
+.modal {
+  width: 100px;
+}
+
+.carousel {
+  background-color: rgb(254, 250, 240);
+}
+
+// .carousel-caption {
+//   position: absolute;
+//   // bottom: 50%;
+//   transform: translateY(20%);
+
+// }
+
+// .carousel-item{
+//   max-width: 500px;
+// }
+
+// .carousel-img{
+//   max-width: 100px
+// }
+.help-image {
+  width: 400px;
+}
+
+.help-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15rem;
+  
 }

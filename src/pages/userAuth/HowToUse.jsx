@@ -35,7 +35,7 @@ function HowToUse(props) {
         backdrop="static"
       >
     
-        <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} controls={false} indicators={false}>
+        <Carousel fade={true} activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} controls={false} indicators={false}>
           <Carousel.Item>
             <img
               className="d-block w-100"
