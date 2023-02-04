@@ -13,27 +13,52 @@ const PastView = (props) => {
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [selectionArr, setSelectionArr] = useState([]);
+	const [selectedCategory, setSelectedCategory] = useState("all")
 
 	const {
 		pastMealPacks,
 		setPastMealPacks,
 		setActiveMealPacks,
 		setSelectedActivePastPack,
+		//Added
+		activeMealPacks,
 	} = props;
 
 	useEffect(() => {
 		async function fetchData() {
 			const user = JSON.parse(localStorage.getItem("user"))
 			const storeId = user.data.storeId
-			let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
+			let all = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
 				headers: { authorization: `Bearer ${user.accessToken}` }
 			});
-			console.log(data.data)
-			data.data.map((meal) => {meal.selectedFav = false})
-			setPastMealPacks(data.data)
+			console.log(all.data)
+			all.data.map((meal) => {meal.selectedFav = false})
+			setPastMealPacks(all.data)
+
+			let favorites = await axios.get(
+				`${API_URL}/store/${storeId}/mealpack/all/favorite`,
+				{
+					headers: { authorization: `Bearer ${user.accessToken}` },
+				}
+			);
+			console.log(favorites.data)
+			favorites.data.map((meal) => meal.selectedFav = false)
+			setActiveMealPacks(favorites.data);
 		}
 		fetchData();
 	}, []) // activeMealPacks (causing infinite calls)
+
+	//Added this for all favorites ------Ken
+	// useEffect(() => {
+	// 	async function fetchData() {
+	// 		const user = JSON.parse(localStorage.getItem("user"));
+	// 		const storeId = user.data.storeId;
+			
+	// 	}
+	// 	fetchData();
+	// }, []); // pastMealPacks (causing infinite calls)
+
+
 
 	// fetchPastPacks copies above useEffect, wittout causing infinite loop
 	const fetchPastPacks = async () => {
@@ -44,6 +69,19 @@ const PastView = (props) => {
 		});
 		setPastMealPacks(data.data)
 	}
+
+	//Added
+	const fetchActivePacks = async () => {
+		const user = JSON.parse(localStorage.getItem("user"));
+		const storeId = user.data.storeId;
+		let data = await axios.get(
+			`${API_URL}/store/${storeId}/mealpack/all/favorite`,
+			{
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			}
+		);
+		setActiveMealPacks(data.data);
+	};
 
 	const navigate = useNavigate();
 	const rerouteToMealpack = (meal) => {
@@ -189,6 +227,14 @@ const PastView = (props) => {
 		}
 	}
 
+	const favoriteIcon2 = (meal) => {
+		return (
+			<span className="icon">
+				<img src={starIcon} className="star-icon" />
+			</span>
+		)
+	}
+
   const downloadPDF = (meal) => {
 		let qrCode = generateQRCode(meal);
 		const doc = new jsPDF("p", "mm", "a4");
@@ -249,52 +295,98 @@ const PastView = (props) => {
 
 	return (
 		<div className="past-container">
+			
 			<h2 className="past-title">All Meal Packs</h2>
 
-			<div className="tile is-parent active-mealpacks">
-				{pastMealPacks && pastMealPacks.map((e) => {
-					return (
-						<div key={uuidv4()} className="tile is-child is-4">
-							<div key={uuidv4()} className="active-mealpack-container">
-								<img className="food-small-image" src={e.recipeDetail["image"]}></img>
-								{renderInput(e)}
+			<div className="hello">
+			<aside className="menu sidebar">
+				<p className="menu-label">
+					Meal Packs
+				</p>
+				<ul className="menu-list">
+					<li onClick={()=>{
+						setSelectedCategory("all")}}><a>All</a></li>
+					<li onClick={()=>{
+						setSelectedCategory("favorites")
+					}}><a>Favorites</a></li>
+				</ul>
+			</aside>
 
-								<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName} {favoriteIcon(e)}</strong></p>
-								<div className="tags past-mealpacks-tags">
-									{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
-									{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
-									{e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
-									{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
-								</div>
-								<div className="past-mealpacks-buttons">
-                  <button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
-									<button key={uuidv4()} className="button" onClick={() => {
-										//Old Code
-										// rerouteToMealpack(e)
-										setShow(true)
-										setSelectedMealPack(e)
-									}}>See Meal Pack Info</button>
-									{!e.isFavorite 
-										? (
-											<button key={uuidv4()} className="button" onClick={async () => {
-												await activateMealPack(e)
-												fetchPastPacks()
-											}} style={{ marginBottom: "10px" }}>Add to Favorites</button>) 
-										: (
-											<button key={uuidv4()} className="button" onClick={async () => {
-												await deactivateMealPack(e)
-												fetchPastPacks()
-											}}>Remove from Favorites</button>
-										)}
-									<OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
-										<button className="button">Delete</button>
-									</OverlayTrigger>
+				<div className="tile is-parent active-mealpacks">
+					{selectedCategory === "all" && pastMealPacks ? pastMealPacks.map((e) => {
+						return (
+							<div key={uuidv4()} className="tile is-child is-4">
+								<div key={uuidv4()} className="active-mealpack-container">
+									<img className="food-small-image" src={e.recipeDetail["image"]}></img>
+									{renderInput(e)}
+
+									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName} {favoriteIcon(e)}</strong></p>
+									<div className="tags past-mealpacks-tags">
+										{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
+										{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
+										{e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
+										{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
+									</div>
+									<div className="past-mealpacks-buttons">
+										<button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
+										<button key={uuidv4()} className="button" onClick={() => {
+											//Old Code
+											// rerouteToMealpack(e)
+											setShow(true)
+											setSelectedMealPack(e)
+										}}>See Meal Pack Info</button>
+										{!e.isFavorite 
+											? (
+												<button key={uuidv4()} className="button" onClick={async () => {
+													await activateMealPack(e)
+													fetchPastPacks()
+												}} style={{ marginBottom: "10px" }}>Add to Favorites</button>) 
+											: (
+												<button key={uuidv4()} className="button" onClick={async () => {
+													await deactivateMealPack(e)
+													fetchPastPacks()
+												}}>Remove from Favorites</button>
+											)}
+										<OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
+											<button className="button">Delete</button>
+										</OverlayTrigger>
+									</div>
 								</div>
 							</div>
-						</div>
 
-					);
-				})}
+						);
+					}) : activeMealPacks && activeMealPacks.map((e) => {
+						return (
+							<div key={uuidv4()} className="tile is-child is-4">
+								<div key={uuidv4()} className="active-mealpack-container">
+									<img className="food-small-image" src={e.recipeDetail["image"]}></img>
+									{renderInput(e)}
+	
+									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong>{favoriteIcon2()} </p>
+									<div className="tags active-mealpacks-tags">
+										{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
+										{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
+										{e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
+										{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
+									</div>
+									<div className="active-mealpacks-buttons">
+										<button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
+										<button key={uuidv4()} className="button" onClick={() => {
+											//Old code
+											// rerouteToMealpack(e)
+											setShow(true)
+											setSelectedMealPack(e)
+											}}>See Meal Pack Info</button>
+										<button key={uuidv4()} className="button" onClick={async () => {
+											await deactivateMealPack(e)
+											fetchActivePacks()
+										}}>Remove from Favorites</button>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+				</div>
 			</div>
 			<footer className="footer"></footer>
 			{selectionArr.length > 0 && (
@@ -307,6 +399,7 @@ const PastView = (props) => {
 								onClick={() => {
 									setSelectionArr([])
 									pastMealPacks.map((meal) => meal.selectedFav = false)
+									activeMealPacks.map((meal) => meal.selectedFav = false)
 								}} className="button is-medium clear-selection-button">Clear All Selected</button>
 						</div>
 					</div>
