@@ -321,6 +321,7 @@
 	flex-wrap: wrap;
   margin-left: 5%;
   margin-right: 5%;
+  flex:6
 }
 
 .active-mealpack-container,
@@ -550,4 +551,16 @@
   align-items: center;
   justify-content: center;
   display: grid;
+}
+
+
+//Additional styling -Ken for side bar
+.hello {
+  display: flex;
+}
+
+.sidebar {
+  margin-bottom: 20px;
+  margin-left: 5%;
+  flex: 1;
 }
