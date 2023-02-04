@@ -12,7 +12,8 @@ import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 //Added Carousel and image
 import {Carousel, Modal} from "react-bootstrap"
-import CarouselImg from "../../images/howToUse.jpg"
+import CarouselImg from "../../images/how.png"
+
 
 const Homepage = (props) => {
 	const {
@@ -99,77 +100,87 @@ const Homepage = (props) => {
         animation={false}
       >
     
-        <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} controls={false} indicators={false}>
+        <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} indicators={false} slide={true}>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={CarouselImg}
-              alt="First slide"
-            />
+						<div className="help-image-container">
+							<img
+								className="d-block help-image"
+								src={CarouselImg}
+								alt="First slide"
+							/>
+						</div>
             <Carousel.Caption className="carousel-text">
 							<div className="quick-guide-caption">
-              {firstLogIn ? <h3>Hi {user.data.storeName}, you have successfully signed up!</h3>: <h3>Hi {user.data.storeName}!</h3>}
-							{firstLogIn ? <p>Welcome! This walkthrough will help you get started with MealTime.</p>: <p>This quick guide will help you how to use with MealTime.</p>}
+              {firstLogIn ? <h3 className="help-title">Hi {user.data.storeName}, you have successfully signed up!</h3>: <h3 className="help-title">Hi {user.data.storeName}!</h3>}
+							{firstLogIn ? <p className="help-text">Welcome! This walkthrough will help you get started with MealTime.</p>: <p className="help-text">This quick guide will help you how to use with MealTime.</p>}
 							</div>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
+					<div className="help-image-container">
             <img
-              className="d-block w-100"
+              className="d-block help-image"
               src={CarouselImg }
               alt="Second slide"
             />
+						</div>
 
             <Carousel.Caption className="carousel-text">
 						<div className="quick-guide-caption">
-              <h3>Quick Guide:</h3>
-              <p>Put in ingredients in the "Ingredients" box.</p>
+              <h3 className="help-title">Quick Guide:</h3>
+              <p className="help-text">Put in ingredients in the "Ingredients" box.</p>
 							</div>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
+					<div className="help-image-container">
             <img
-              className="d-block w-100"
+              className="d-block help-image"
               src={CarouselImg}
               alt="Third slide"
             />
+						</div>
 
             <Carousel.Caption className="carousel-text">
 						<div className="quick-guide-caption">
-              <h3>Quick Guide:</h3>
-              <p>
+              <h3 className="help-title">Quick Guide:</h3>
+              <p className="help-text">
                 Press "Generate Meal Packs".
               </p>
 							</div>
             </Carousel.Caption>
           </Carousel.Item>
 					<Carousel.Item>
+					<div className="help-image-container">
             <img
-              className="d-block w-100"
+              className="d-block help-image"
               src={CarouselImg}
               alt="Third slide"
             />
+						</div>
 
             <Carousel.Caption className="carousel-text">
 						<div className="quick-guide-caption">
-              <h3>Quick Guide:</h3>
-              <p>
+              <h3 className="help-title">Quick Guide:</h3>
+              <p className="help-text">
                 Add Meal Packs you like.
               </p>
 							</div>
             </Carousel.Caption>
           </Carousel.Item>
 					<Carousel.Item>
+					<div className="help-image-container">
             <img
-              className="d-block w-100"
+              className="d-block help-image"
               src={CarouselImg}
               alt="Third slide"
             />
+						</div>
 
             <Carousel.Caption className="carousel-text">
 						<div className="quick-guide-caption">
-              <h3>Quick Guide:</h3>
-              <p>
+              <h3 className="help-title">Quick Guide:</h3>
+              <p className="help-text">
                 Press "Save" and you are good to go.
               </p>
 							</div>
