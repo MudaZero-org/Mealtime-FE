@@ -8,30 +8,45 @@ import SignUp from "./pages/userAuth/SignUp";
 import Homepage from "./pages/userAuth/Homepage";
 import MealPack from "./pages/userAuth/MealPack";
 import Profile from "./pages/userAuth/Profile";
-import PastMealpacks from "./pages/userAuth/PastMealpacks";
+import AllMealpacks from "./pages/userAuth/AllMealpacks";
 import Navbar from "./pages/userAuth/components/Navbar";
-import ActiveMealpacks from "./pages/userAuth/ActiveMealpacks";
+import FavoriteMealpacks from "./pages/userAuth/FavoriteMealpacks";
 import EditProfile from "./pages/userAuth/EditProfile";
 import EditPassword from "./pages/userAuth/EditPassword";
+import HowToUse from "./pages/userAuth/HowToUse";
 import Info from "./pages/info";
 
 function App() {
   const [activeMealPacks, setActiveMealPacks] = useState(null);
   const [pastMealPacks, setPastMealPacks] = useState(null);
   const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
+  const [showGuide, setShowGuide] = useState(false);
+  const [firstLogIn, setFirstLogIn] = useState(false);
+  const [image, setImage] = useState(null);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<SignIn />} />
-        <Route exact path="/signup" element={<SignUp />} />
+        <Route
+          exact
+          path="/signup"
+          element={
+            <SignUp
+              showGuide={showGuide}
+              setShowGuide={setShowGuide}
+              firstLogIn={firstLogIn}
+              setFirstLogIn={setFirstLogIn}
+            />
+          }
+        />
         <Route exact path="/user" element={<User />} />
         <Route
           exact
           path="/home"
           element={
             <>
-              <Navbar />
+              <Navbar image={image} />
               <Homepage
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
@@ -39,6 +54,11 @@ function App() {
                 setActiveMealPacks={setActiveMealPacks}
                 pastMealPacks={pastMealPacks}
                 setPastMealPacks={setPastMealPacks}
+                showGuide={showGuide}
+                setShowGuide={setShowGuide}
+                firstLogIn={firstLogIn}
+                setFirstLogIn={setFirstLogIn}
+                setImage={setImage}
               />
             </>
           }
@@ -48,7 +68,7 @@ function App() {
           path="/mealpack"
           element={
             <>
-              <Navbar />
+              <Navbar image={image} />
               <MealPack
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
@@ -56,14 +76,13 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/profile">
+        <Route path="/profile">
           <Route
             index
             element={
               <>
-                <Navbar />
-                <Profile />
+                <Navbar image={image} />
+                <Profile image={image} setImage={setImage} />
               </>
             }
           ></Route>
@@ -71,8 +90,8 @@ function App() {
             path="editProfile"
             element={
               <>
-                <Navbar />
-                <EditProfile />
+                <Navbar image={image} />
+                <EditProfile image={image} />
               </>
             }
           ></Route>
@@ -80,7 +99,7 @@ function App() {
             path="editPassword"
             element={
               <>
-                <Navbar />
+                <Navbar image={image} />
                 <EditPassword />
               </>
             }
@@ -88,11 +107,12 @@ function App() {
         </Route>
         <Route
           exact
-          path="/past-mealpacks"
+          path="/all-mealpacks"
           element={
             <>
-              <Navbar />
-              <PastMealpacks
+              <Navbar image={image} />
+              <AllMealpacks
+                setImage={setImage}
                 setActiveMealPacks={setActiveMealPacks}
                 setPastMealPacks={setPastMealPacks}
                 pastMealPacks={pastMealPacks}
@@ -103,11 +123,12 @@ function App() {
         ></Route>
         <Route
           exact
-          path="/active-mealpacks"
+          path="/favorite-mealpacks"
           element={
             <>
-              <Navbar />
-              <ActiveMealpacks
+              <Navbar image={image} />
+              <FavoriteMealpacks
+                setImage={setImage}
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
                 activeMealPacks={activeMealPacks}

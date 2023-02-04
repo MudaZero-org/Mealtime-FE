@@ -2,9 +2,10 @@ import whLogo from "../../../images/white-Mealtime.svg";
 import AuthUtils from "../utils/authenticate";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Hiroshi from "../../../images/hiroshi.png";
+import { Popover, OverlayTrigger } from 'react-bootstrap';
 
-const Navbar = () => {
+const Navbar = (props) => {
+	const { image } = props;
 	const [isActive, setIsActive] = useState(false);
 
 	const navigate = useNavigate();
@@ -13,8 +14,21 @@ const Navbar = () => {
 		navigate("/");
 	};
 
+	const goToProfile = () => {
+		navigate("/profile")
+	}
+
 	const user = JSON.parse(localStorage.getItem("user"));
 	const storeName = user.data.storeName;
+
+	const popover = (e) => (
+    <Popover id="popover-basic">
+      <Popover.Body>
+				<button id="profile-button" className="button profile-button" onClick={goToProfile}>Profile</button>
+				<button id="logout-button" className="button logout-button" onClick={logout}>Log Out</button>
+      </Popover.Body>
+    </Popover>
+  );
 
 	return (
 		<nav
@@ -45,18 +59,18 @@ const Navbar = () => {
 				id="navMenu"
 				className={`navbar-menu ${isActive ? "is-active" : ""}`}
 			>
-				<div className="navbar-start">
+				<div id="navbar-start" className="navbar-start">
 					<a href="/home" className={`navbar-item ${isActive ? "dark" : ""}`}>
 						Home
 					</a>
 					<a
-						href="/active-mealpacks"
+						href="/favorite-mealpacks"
 						className={`navbar-item ${isActive ? "dark" : ""}`}
 					>
 						Favorites
 					</a>
 					<a
-						href="/past-mealpacks"
+						href="/all-mealpacks"
 						className={`navbar-item ${isActive ? "dark" : ""}`}
 					>
 						Meal Packs
@@ -68,21 +82,25 @@ const Navbar = () => {
 						Profile
 					</a>
 				</div>
-				<div className="navbar-end">
+				<div className="navbar-end" style={{display: "flex", alignItems: "center"}}>
 					<h5
 						className="is-family-primary has-text-weight-normal"
-						style={{ color: "white", marginTop: ".5rem" }}
+						style={{ color: "white" }}
 					>
 						User: {storeName}
 					</h5>
 
-					<div className="navbar-item">
+					<OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover()}>
+						<img id="navbar-picture" className="navbar-picture" src={image}></img>
+					</OverlayTrigger>
+
+					{/* <div className="navbar-item">
 						<div className="buttons">
 							<a className="button logout-button" onClick={logout}>
 								Log Out
 							</a>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</nav>

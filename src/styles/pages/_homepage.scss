@@ -1,9 +1,13 @@
 @use "../main" as *;
 
+.homepage {
+  background-color: $my-background;
+}
+
 .app-container {
   padding-top: 4rem;
   display: grid;
-  grid-template-columns: 1fr 4fr 4fr 1fr;
+  grid-template-columns: 1fr 8fr 8fr 1fr;
   background-color: $my-background;
 }
 
@@ -11,14 +15,14 @@
   grid-column: 2/4;
   color: black;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   background-color: $my-background;
 }
 
 .footer {
   grid-column: 1 / 5;
   background-color: $my-background;
-  padding-bottom: 150px;
+  padding-bottom: 50px;
 }
 
 .homepage-header {
@@ -72,28 +76,27 @@
   width: 100%;
 }
 
-#userFilteredInput, #userIngredientInput {
-	margin-bottom: 0.5rem;
-	// border: none;
-	// box-shadow: none;
-	// border-top: 1px solid rgb(191, 191, 191);
-	// border-radius: 0px;
-	// border-bottom: 1px solid rgb(191, 191, 191);
+.filter-buttons {
+  margin-bottom: .5rem;
 }
 
-.user-selection-container {
-  grid-column: 2;
+#dropdown-button {
+  background-color: $my-green;
+  color: white;
+}
+
+.filter-buttons-clear-save {
+  display: flex;
+  margin-top: 10px;
 }
 
 .generate-button {
 	display: block;
-	color: white;
 }
 
 #generate-button {
 	margin-top: 2rem;
 	margin-left: auto;
-	margin-right: auto;
 }
 
 .wrapper {
@@ -110,16 +113,37 @@
   margin: 0;
 }
 
+.clear-button {
+  margin-bottom: 5px; 
+  margin-top: 10px;
+  cursor: pointer; 
+  text-decoration: underline;
+  color: $my-red;
+  margin-left: auto;
+  width: fit-content;
+  &:hover {
+    color: $my-orange;
+  }
+}
+
+#popover-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-name-input {
+  height: 30px;
+}
+
 .mealpack-container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 3fr;
   grid-template-rows: 1fr 1fr;
-  margin: 5px 10px;
-  background: rgb(234, 234, 234);
-  padding: 10px 30px 10px 10px;
+  margin: 20px 10px;
+  background-color: rgb(203, 203, 203);
+  padding: 10px;
   align-items: center;
-  border: 1px solid black;
-  border-radius: 5px;
 }
 
 .button {
@@ -132,43 +156,80 @@
 }
 
 .publish-button {
-  margin-top: 20px;
-  padding: 5px 100px;
+  padding: 5px 35px;
   width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  grid-column: 2;
   font-size: 38px;
-  color: white;
   border-radius: 5px;
   font-weight: bold;
 }
 
+.right-side {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.add-success-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 450px;
+  background-color: rgb(225, 225, 225);
+}
+
+.add-success-message {
+  text-align: center;
+}
+
+.selected-mealpacks {
+  grid-column: 2;
+  grid-row: 1;
+  margin-left: 1rem;
+  overflow: auto;
+}
+
+.generated-mealpacks {
+  grid-column: 1;
+  margin-right: 1rem;
+  grid-row: 1;
+  overflow: auto;
+}
+
 .selected-mealpacks-container {
   height: 30rem;
-  // margin-bottom: 3rem;
   width: 100%;
   border: solid 1px black;
-  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
+  border-bottom: solid 1px rgb(201, 201, 201);
   overflow: scroll;
 	overflow-x: hidden;
   background-color: white;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 10px;
+}
+
+.bottom-save-button {
+  grid-column: 2;
+  background-color: white;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  display: flex;
+  justify-content: center;
 }
 
 .generated-mealpacks-container {
-  height: 30rem;
+  height: 33.3rem;
   overflow: scroll;
   width: 100%;
   border: solid black 1px;
-  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
   overflow-x: hidden;
   background-color: white;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 10px;
+}
+
+.generated-image {
+  grid-column: 1;
+  grid-row: 1 / 3;
 }
 
 .active-title {
@@ -219,27 +280,25 @@
   z-index: 1;
 }
 
-.mealpack-add-button {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.mealpack-info-button {
-  grid-column: 1;
+.mealpack-container-buttons {
+  grid-column: 2;
   grid-row: 2;
+  display: flex;
+  justify-content: center;
 }
 
 .mealpack-title {
   grid-column: 2;
-  grid-row: 1 / 3;
-  font-size: 24px;
+  grid-row: 1;
+  margin-bottom: 0;
+  font-size: 22px;
   margin-left: 10px;
+  text-align: center;
 }
 
-.buttons-container {
-  display: flex;
-  grid-column: 2;
-  margin-bottom: 3rem;
+.mealpack-add-button {
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .past-view,
@@ -248,9 +307,6 @@
   align-items: flex-start;
   justify-content: center;
   border: solid 1px black;
-  // border-radius: 5px;
-  // box-shadow: 2px 2px 5px rgb(134, 134, 134);
-  // margin: 5rem 0;
   min-width: 100vw;
 }
 
@@ -358,6 +414,11 @@
   border-bottom: 1px solid black;
 }
 
+#navbar-start {
+  display: flex;
+  align-items: center;
+}
+
 .navbar-item {
   color: white;
   font-size: 20px;
@@ -365,8 +426,8 @@
   height: 35px;
 }
 
-.logout-button {
-  text-decoration: none;
+#logout-button, #profile-button {
+  width: 100px;
 }
 
 .past-mealpacks-page,
@@ -379,11 +440,7 @@
   min-height: 100vh;
 }
 
-.All {
-  background-color: $my-background;
-}
-
-.homepage-title {
+.homepage-title-container {
   font-size: 40px;
   padding-top: 50px;
   padding-right: 15px;
@@ -391,15 +448,43 @@
   padding-bottom: 20px;
   margin-top: 84px;
   margin-bottom: 0px;
-  font-weight: bold;
-  margin-left: 10%;
-  margin-right: 10%;
+  // font-weight: bold;
+  margin-left: 5%;
+  margin-right: 5%;
   background-color: $my-background;
   border-bottom: 1px solid black;
 }
 
+.homepage-title {
+  font-weight: bold;
+}
+
+.question-mark {
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: $my-red;
+  color: white;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+
+.help-button {
+  font-size: 20px;
+}
+
 .dark {
   color: black;
+}
+
+#navbar-picture {
+  height: 75px;
+  width: 75px;
+  object-fit: cover;
+  margin-left: 1rem;
+  border-radius: 50%;
+  margin-bottom: 0px;
+  cursor: pointer;
 }
 
 // Accordion settings ###################################
@@ -443,7 +528,7 @@
   padding: 0 18px 18px 36px;
   background-color: $my-background;
   display: none;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .accordion:after {

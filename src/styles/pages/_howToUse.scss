@@ -1,0 +1,20 @@
+.howToUse-page {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr minmax(min-content, 1fr) 1fr;
+  align-items: center;
+  background-image: url("../../images/background-img.jpg");
+  background-size: cover;
+}
+
+.carousel-text h3, p{
+  color:black;
+}
+
+.carousel-buttons {
+  background-color: orange;
+}
+
+.quick-guide-caption {
+  background-color: rgba(255,255,255, .7);
+}

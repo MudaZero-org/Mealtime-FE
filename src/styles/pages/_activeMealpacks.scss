@@ -12,3 +12,65 @@
   text-align: center;
   padding: 1rem 2rem;
 }
+
+#vegetarian {
+  background-color: rgb(0, 148, 126);
+  color: white;
+}
+
+#vegan {
+  background-color: rgb(246, 198, 121);
+}
+
+#gluten {
+  background-color: rgb(236, 143, 114);
+  color: white;
+}
+
+#dairy {
+  background-color: rgb(187, 90, 77);
+  color: white;
+}
+
+.active-mealpack-container {
+  position: relative;
+}
+
+.active-mealpack-container .food-small-image {
+  display: block;
+}
+
+.selection-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  background-color: rgb(246, 198, 121);
+}
+
+.print-all-button {
+  margin-left: 3rem;
+}
+
+.star-icon {
+  width: 100%;
+}
+.icon {
+  height: 22px;
+  width: 22px;
+}
+
+.checkbox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  accent-color: rgb(0, 148, 126);
+}
+
+.clear-selection-button {
+  margin-left: 3rem;
+}

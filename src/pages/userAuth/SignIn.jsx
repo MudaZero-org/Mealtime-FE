@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import "../../styles/pages/_signin-up.scss";
 
 import AuthUtils from "./utils/authenticate";
 
-const SignIn = (props) => {
+const SignIn = () => {
 	//Props for changing to homepage view
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [err, setErr] = useState("");
+	const [loginFailed, setLoginFailed] = useState(false);
 
 	const navigate = useNavigate();
 	const reroute = () => {
@@ -53,7 +53,7 @@ const SignIn = (props) => {
 							></input>
 						</div>
 						<div className="login-button">
-							<button className="button is-large"
+							<button className="button is-large" id="login-button"
 								onClick={async (e) => {
 									e.preventDefault();
 									try {
@@ -61,16 +61,12 @@ const SignIn = (props) => {
 											toTheHomepage();
 										});
 									} catch (error) {
-										// 	//Error Handling
-										// 	if (err === "") {
-										// 		//If there is no error send user to "homepage"
-										// 		// setCurrentView("home")
-										// 	}
-										// });
+										setLoginFailed(true)
 									}
 								}}
 							>Login</button>
 						</div>
+						{loginFailed && <p style={{ color: "red", textAlign: "center" }}><em>Incorrect Username and/or Password</em></p>}
 						<div className="spacer"></div>
 						<div className="input-field signup-text">
 							<p>Don't have an account?<br></br> <a className="register-link" onClick={reroute}>Sign up here!</a></p>

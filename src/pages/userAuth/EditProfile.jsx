@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import API_URL from "../../Constants";
 import { useNavigate } from "react-router-dom";
 
-const EditProfile = () => {
+const EditProfile = (props) => {
+	const { image } = props;
 	const navigate = useNavigate(null);
 
 	const [storeName, setStoreName] = useState(null);
@@ -13,7 +14,7 @@ const EditProfile = () => {
 	const [storeAddress, setStoreAddress] = useState(null);
 	const [phoneNumber, setPhoneNumber] = useState(null);
 	const [storeManager, setStoreManager] = useState(null);
-	const [image, setImage] = useState(null);
+	// const [image, setImage] = useState(null);
 	const user = JSON.parse(localStorage.getItem("user"));
 
 	useEffect(() => {
@@ -35,7 +36,8 @@ const EditProfile = () => {
 		//Update store name and/or email address
 		e.preventDefault();
 		console.log("Submit");
-		console.log(storeName, image);
+		// console.log(storeName, image);
+		console.log(storeName)
 		await axios.put(
 			`${API_URL}/user/${user.data.storeId}`,
 			{
@@ -56,94 +58,94 @@ const EditProfile = () => {
 
 	return (
 		<div className="profile-page">
-			<div class="card" id="profile-card">
+			<div className="card" id="profile-card">
 				<div className="card-content">
 					<form className="form">
 						<h1>Edit Profile</h1>
 						<hr></hr>
-						<div class="field">
-							<label class="label">Store name</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Store name</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
-									placeholder={storeName}
+									placeholder="Update Store Name"
 									onChange={(e) => {
 										setStoreName(e.target.value);
 									}}
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Company name</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Company name</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Company Name"
 									onChange={(e) => {
 										setCompanyName(e.target.value);
 									}}
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Postal code</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Postal code</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Postal Code"
 									onChange={(e) => {
 										setPostalCode(e.target.value);
 									}}
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Store address</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Store address</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Store Address"
 									onChange={(e) => {
 										setStoreAddress(e.target.value);
 									}}
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Phone number</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Phone number</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Phone Number"
 									onChange={(e) => {
 										setPhoneNumber(e.target.value);
 									}}
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Store Manager</label>
-							<div class="control">
+						<div className="field">
+							<label className="label">Store Manager</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
-									placeholder=""
+									placeholder="Update Store Manager"
 									onChange={(e) => {
 										setStoreManager(e.target.value);
 									}}
 								></input>
 							</div>
 						</div>
-						<div class="field">
-							<label class="label">Image</label>
-							<div class="control">
+						{/* <div className="field">
+							<label className="label">Image</label>
+							<div className="control">
 								<input
-									class="input"
+									className="input"
 									type="text"
 									placeholder=""
 									onChange={(e) => {
@@ -151,12 +153,11 @@ const EditProfile = () => {
 									}}
 								></input>
 							</div>
-						</div>
-
-						<div class="field is-grouped">
-							<div class="control">
+						</div> */}
+						<div className="field is-grouped">
+							<div className="control">
 								<button
-									class="button is-success"
+									className="button is-success"
 									onClick={(e) => {
 										handleSubmit(e);
 									}}
@@ -164,9 +165,9 @@ const EditProfile = () => {
 									Update
 								</button>
 							</div>
-							<div class="control">
+							<div className="control">
 								<button
-									class="button is-link is-light"
+									className="button is-link is-light"
 									onClick={(e) => {
 										navigate("/profile");
 									}}

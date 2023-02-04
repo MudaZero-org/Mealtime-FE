@@ -6,10 +6,13 @@ import "../../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
 import API_URL, {REACT_APP_URL} from "../../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
+import starIcon from "../../../images/star.png";
 
-const ActiveView = (props) => {
+
+const FavoritesView = (props) => {
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
+	const [selectionArr, setSelectionArr] = useState([]);
 
 	const {
 		activeMealPacks,
@@ -25,11 +28,12 @@ const ActiveView = (props) => {
 			const user = JSON.parse(localStorage.getItem("user"));
 			const storeId = user.data.storeId;
 			let data = await axios.get(
-				`${API_URL}/store/${storeId}/mealpack/all/status/true`,
+				`${API_URL}/store/${storeId}/mealpack/all/favorite`,
 				{
 					headers: { authorization: `Bearer ${user.accessToken}` },
 				}
 			);
+			data.data.map((meal) => meal.selectedFav = false)
 			setActiveMealPacks(data.data);
 		}
 		fetchData();
@@ -40,7 +44,7 @@ const ActiveView = (props) => {
 		const user = JSON.parse(localStorage.getItem("user"));
 		const storeId = user.data.storeId;
 		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/status/true`,
+			`${API_URL}/store/${storeId}/mealpack/all/favorite`,
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
@@ -77,7 +81,29 @@ const ActiveView = (props) => {
 	};
 
 	const downloadAllPDF = () => {
-		console.log("not yet dummy");
+		const doc = new jsPDF("p", "mm", "a4");
+		let width = doc.internal.pageSize.getWidth();
+		selectionArr.map((meal) => {
+			let qrCode = generateQRCode(meal);
+			let name = meal.mealpackName;
+			let instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
+			let ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
+			doc.setFontSize(24);
+			doc.text(10, 90, `${name}`);
+			doc.setFontSize(18);
+			doc.text(10, 110, [`Ingredients: ${ingredients}`], {
+				maxWidth: width / 1.15,
+			})
+			doc.text(10, 140, [`${instructions}`], {
+				maxWidth: width / 1.15,
+			});
+			doc.addImage(qrCode, "PNG", 10, 15, 50, 50);
+			doc.addImage(meal.recipeDetail.image, "JPG", 100, 15, 80, 50)
+			doc.addPage();
+		})
+		let pageCount = doc.internal.getNumberOfPages();
+		doc.deletePage(pageCount);
+		doc.save("print-mealpacks.pdf")
 	};
 
 	const generateQRCode = (meal) => {
@@ -96,7 +122,7 @@ const ActiveView = (props) => {
 		await axios.put(
 			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
 			{
-				isPublishing: false,
+				isFavorite: false,
 				mealpackName: meal.mealpackName,
 				isDelete: false,
 			},
@@ -105,7 +131,7 @@ const ActiveView = (props) => {
 			}
 		);
 		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/status/false`,
+			`${API_URL}/store/${storeId}/mealpack/all`,
 			{
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
@@ -113,22 +139,59 @@ const ActiveView = (props) => {
 		setPastMealPacks(data.data);
 	};
 
+	const addToSelectedArr = (meal) => {
+		if (meal.selectedFav) {
+			const arr = [...selectionArr]
+			arr.splice(arr.indexOf(meal), 1);
+			setSelectionArr(arr);
+			meal.selectedFav = false;
+		} else {
+			const arr = [...selectionArr];
+			arr.push(meal)
+			setSelectionArr(arr)
+			meal.selectedFav = true;
+		}
+	}
+
+	const renderInput = (meal) => {
+		if (meal.selectedFav) {
+			return (
+				<input checked className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+			)
+		} else {
+			return (
+				<input className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+			)
+		}
+	}
+
+	const favoriteIcon = (meal) => {
+		return (
+			<span className="icon">
+				<img src={starIcon} className="star-icon" />
+			</span>
+		)
+	}
+	
+
   return (
     <div className="active-container">
       <h2 className="active-title">Favorite Meal Packs</h2>
 
       <div className="tile is-parent active-mealpacks">
-        {activeMealPacks && activeMealPacks.map((e, index) => {
+        {activeMealPacks && activeMealPacks.map((e) => {
           return (
-            <div className="tile is-child is-4">
+            <div key={uuidv4()} className="tile is-child is-4">
               <div key={uuidv4()} className="active-mealpack-container">
                 <img className="food-small-image" src={e.recipeDetail["image"]}></img>
-                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong></p>
+								{renderInput(e)}
+
+                <p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong> {favoriteIcon()}</p>
                 <div className="tags active-mealpacks-tags">
-                  {e.recipeDetail.vegetarian && <span className="tag is-primary">vegetarian</span>}
-                  {e.recipeDetail.vegan && <span className="tag is-danger">vegan</span>}
-                  {e.recipeDetail.glutenFree && <span className="tag is-warning ">gluten free</span>}
-                  {e.recipeDetail.dairyFree && <span className="tag is-info">dairy free</span>}
+                  {e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
+                  {e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
+                  {e.recipeDetail.glutenFree && <span className="tag" id="gluten">gluten free</span>}
+                  {e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
                 </div>
                 <div className="active-mealpacks-buttons">
                   <button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
@@ -149,6 +212,21 @@ const ActiveView = (props) => {
         })}
       </div>
 			<footer className="footer"></footer>
+			{selectionArr.length > 0 && (
+				<div className="selection-footer">
+					<div className="selection-popup-container">
+						<h1 style={{ color: "black" }}>You have selected {selectionArr.length} meal packs to print</h1>
+						<div className="selection-popup-buttons">
+							<button key={uuidv4()} className="button is-medium print-all-button" onClick={downloadAllPDF}>Download Selected PDF's</button>
+							<button 
+								onClick={() => {
+									setSelectionArr([])
+									activeMealPacks.map((meal) => meal.selectedFav = false)
+								}} className="button is-medium clear-selection-button">Clear All Selected</button>
+						</div>
+					</div>
+				</div>
+			)}
 			<MealPackDetailsModal
 				selectedMealPack={selectedMealPack}
 					setSelectedMealPack={setSelectedMealPack}
@@ -159,4 +237,4 @@ const ActiveView = (props) => {
   )
 }
 
-export default ActiveView;
+export default FavoritesView;
