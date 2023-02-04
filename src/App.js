@@ -21,7 +21,7 @@ function App() {
   const [pastMealPacks, setPastMealPacks] = useState(null);
   const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
   const [showGuide, setShowGuide] = useState(false);
-  const [firstLogIn, setFirstLogIn] = useState(true);
+  const [firstLogIn, setFirstLogIn] = useState(false);
   const [image, setImage] = useState(null);
 
   return (
