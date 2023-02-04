@@ -296,21 +296,21 @@ const PastView = (props) => {
 	return (
 		<div className="past-container">
 			
-			<h2 className="past-title">All Meal Packs</h2>
+			<h2 className="past-title">{selectedCategory === "all" ? "All Meal Packs" : "Favorite Meal Packs"}</h2>
 
 			<div className="hello">
-			<aside className="menu sidebar">
-				<p className="menu-label">
-					Meal Packs
-				</p>
-				<ul className="menu-list">
-					<li onClick={()=>{
-						setSelectedCategory("all")}}><a>All</a></li>
-					<li onClick={()=>{
-						setSelectedCategory("favorites")
-					}}><a>Favorites</a></li>
-				</ul>
-			</aside>
+				<aside className="menu sidebar" style={{marginLeft: "6rem"}}>
+					<p className="menu-label" style={{fontSize: "15px"}}>
+						Meal Packs
+					</p>
+					<ul className="menu-list">
+						<li onClick={()=>{
+							setSelectedCategory("all")}}><a>All</a></li>
+						<li onClick={()=>{
+							setSelectedCategory("favorites")
+						}}><a>Favorites</a></li>
+					</ul>
+				</aside>
 
 				<div className="tile is-parent active-mealpacks">
 					{selectedCategory === "all" && pastMealPacks ? pastMealPacks.map((e) => {

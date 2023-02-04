@@ -63,12 +63,12 @@ const Navbar = (props) => {
 					<a href="/home" className={`navbar-item ${isActive ? "dark" : ""}`}>
 						Home
 					</a>
-					<a
+					{/* <a
 						href="/favorite-mealpacks"
 						className={`navbar-item ${isActive ? "dark" : ""}`}
 					>
 						Favorites
-					</a>
+					</a> */}
 					<a
 						href="/all-mealpacks"
 						className={`navbar-item ${isActive ? "dark" : ""}`}
