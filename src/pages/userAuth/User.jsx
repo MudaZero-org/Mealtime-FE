@@ -14,7 +14,7 @@ const User = (props) => {
 			return setCurrentView(<SignIn setCurrentView={setCurrentView} />);
 		}
 
-
+		console.log("HI!")
 
 		// else {
 		//   setUserView("profile")

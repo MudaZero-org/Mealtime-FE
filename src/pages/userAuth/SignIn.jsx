@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 import "../../styles/pages/_signin-up.scss";
 
@@ -7,11 +7,27 @@ import AuthUtils from "./utils/authenticate";
 const SignIn = () => {
 	//Props for changing to homepage view
 
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (localStorage.getItem("user")) {
+			navigate("/home")
+		}
+
+		console.log("HI!")
+
+		// else {
+		//   setUserView("profile")
+		// }
+	}, []);
+
+
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loginFailed, setLoginFailed] = useState(false);
 
-	const navigate = useNavigate();
+	
 	const reroute = () => {
 		navigate("/signup");
 	};
