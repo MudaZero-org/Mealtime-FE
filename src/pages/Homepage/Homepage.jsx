@@ -152,10 +152,10 @@ const Homepage = (props) => {
 	// 	// setActiveMealPacks(info.data);
 	// };	
 
-	const clearIngredientInput = () => {
-		let input = document.getElementById("userIngredientInput");
-		input.value = "";
-	}
+	// const clearIngredientInput = () => {
+	// 	let input = document.getElementById("userIngredientInput");
+	// 	input.value = "";
+	// }
 
 	const clearFilteredInput = () => {
 		let input = document.getElementById("userFilteredInput");
@@ -180,7 +180,9 @@ const Homepage = (props) => {
 			arr.unshift(ingredientInput)
 			if (ingredientInput) {
 				setIngredientInputArr(arr)
-				clearIngredientInput();
+				//Refactored this
+				// clearIngredientInput();
+				HomepageUtils.clearIngredientInput();
 				setIngredientInput(null)
 			}
 		}
@@ -364,7 +366,9 @@ const Homepage = (props) => {
 											arr.unshift(ingredientInput)
 											if (ingredientInput) {
 												setIngredientInputArr(arr);
-												clearIngredientInput();
+												//Refactored this
+												// clearIngredientInput();
+												HomepageUtils.clearIngredientInput();
 												setIngredientInput(null);
 											}
 										}}
@@ -380,7 +384,9 @@ const Homepage = (props) => {
 								})}
 								{ingredientInputArr.length > 0 && <p onClick={() => {
 									setIngredientInputArr([]);
-									clearIngredientInput();
+									//Refactored this
+									// clearIngredientInput();
+									HomepageUtils.clearIngredientInput();
 									setIngredientInput(null);
 								}} className="clear-button">[x]clear all</p>}
 							</div>

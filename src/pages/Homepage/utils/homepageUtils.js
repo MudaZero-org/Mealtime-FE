@@ -70,8 +70,12 @@ const homepageUtils = {
 		{
 			headers: {authorization: `Bearer ${user.accessToken}`}
 		});
-
-  }
+  },
+  clearIngredientInput: () => {
+    let input = document.getElementById("userIngredientInput");
+		input.value = "";
+  },
+  
 
 
 
