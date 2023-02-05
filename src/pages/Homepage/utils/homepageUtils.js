@@ -44,7 +44,11 @@ const homepageUtils = {
 		setIngredientArr(ingredientArr)
 		let filteredArr = [...filteredInputArr]
 		setFilteredArr(filteredArr)
-
+  },
+  addToMyMealPacks: (meal, myMealPacks, setMyMealPacks) => {
+    let array = [...myMealPacks];
+		array.push(meal);
+		setMyMealPacks(array);
   }
 
 

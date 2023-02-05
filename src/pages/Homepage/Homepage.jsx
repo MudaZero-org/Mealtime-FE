@@ -81,13 +81,14 @@ const Homepage = (props) => {
 	}, []);
 
 
-	const makeArr = () => {
-		setSuccessfulSave(false)
-		let ingredientArr = [...ingredientInputArr]
-		setIngredientArr(ingredientArr)
-		let filteredArr = [...filteredInputArr]
-		setFilteredArr(filteredArr)
-	};
+	//Refactored this
+	// const makeArr = () => {
+	// 	setSuccessfulSave(false)
+	// 	let ingredientArr = [...ingredientInputArr]
+	// 	setIngredientArr(ingredientArr)
+	// 	let filteredArr = [...filteredInputArr]
+	// 	setFilteredArr(filteredArr)
+	// };
 
 	useEffect(() => {
 		//Refactored this
@@ -260,7 +261,9 @@ const Homepage = (props) => {
 					className="mealpack-add-button button is-medium"
 					onClick={() => {
 						setSuccessfulSave(false);
-						addToMyMealPacks(meal);
+						//Refactored this
+						// addToMyMealPacks(meal);
+						HomepageUtils.addToMyMealPacks(meal, myMealPacks, setMyMealPacks)
 						toggleAddButton(meal);
 					}}
 				>Add</button>
