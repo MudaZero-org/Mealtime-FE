@@ -13,15 +13,7 @@ const SignIn = () => {
 		if (localStorage.getItem("user")) {
 			navigate("/home")
 		}
-
-		console.log("HI!")
-
-		// else {
-		//   setUserView("profile")
-		// }
 	}, []);
-
-
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");

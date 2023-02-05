@@ -2,9 +2,9 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import User from "./pages/userAuth/User";
-import SignIn from "./pages/userAuth/SignIn";
-import SignUp from "./pages/userAuth/SignUp";
+// import User from "./pages/User/User";
+import SignIn from "./pages/User/SignIn";
+import SignUp from "./pages/User/SignUp";
 import Homepage from "./pages/userAuth/Homepage";
 import MealPack from "./pages/userAuth/MealPack";
 import Profile from "./pages/userAuth/Profile";
@@ -40,7 +40,6 @@ function App() {
             />
           }
         />
-        <Route exact path="/user" element={<User />} />
         <Route
           exact
           path="/home"
