@@ -84,6 +84,21 @@ const homepageUtils = {
 		arr.splice(arr.indexOf(ingredient), 1)
 		setIngredientInputArr(arr)
   },
+  removeFiltered: (ingredient, filteredInputArr, setFilteredInputArr) => {
+    const arr = [...filteredInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setFilteredInputArr(arr)
+  },
+  ingredientKeyHandler: (ingredientInputArr, ingredientInput, setIngredientInputArr, setIngredientInput) => {
+			let arr = [...ingredientInputArr]
+			arr.unshift(ingredientInput)
+			if (ingredientInput) {
+				setIngredientInputArr(arr)
+				homepageUtils.clearIngredientInput();
+				setIngredientInput(null)
+		}
+
+  }
 
 
 

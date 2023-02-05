@@ -172,25 +172,26 @@ const Homepage = (props) => {
 	// 	setIngredientInputArr(arr)
 	// }
 
-	const removeFiltered = (ingredient) => {
-		const arr = [...filteredInputArr];
-		arr.splice(arr.indexOf(ingredient), 1)
-		setFilteredInputArr(arr)
-	}
+	//Refactored this
+	// const removeFiltered = (ingredient) => {
+	// 	const arr = [...filteredInputArr];
+	// 	arr.splice(arr.indexOf(ingredient), 1)
+	// 	setFilteredInputArr(arr)
+	// }
 
-	const ingredientKeyHandler = (e) => {
-		if (e.which === 13) {
-			let arr = [...ingredientInputArr]
-			arr.unshift(ingredientInput)
-			if (ingredientInput) {
-				setIngredientInputArr(arr)
-				//Refactored this
-				// clearIngredientInput();
-				HomepageUtils.clearIngredientInput();
-				setIngredientInput(null)
-			}
-		}
-	};
+	// const ingredientKeyHandler = (e) => {
+	// 	if (e.which === 13) {
+	// 		let arr = [...ingredientInputArr]
+	// 		arr.unshift(ingredientInput)
+	// 		if (ingredientInput) {
+	// 			setIngredientInputArr(arr)
+	// 			//Refactored this
+	// 			// clearIngredientInput();
+	// 			HomepageUtils.clearIngredientInput();
+	// 			setIngredientInput(null)
+	// 		}
+	// 	}
+	// };
 
 	const filteredKeyHandler = (e) => {
 		if (e.which === 13) {
@@ -366,7 +367,13 @@ const Homepage = (props) => {
 								<p className="input-instructions">Add ingredients you want to search with below<br></br></p>
 								<div className="level-left">
 									<input
-										onKeyDown={ingredientKeyHandler}
+										//Refactored this
+										// onKeyDown={ingredientKeyHandler}
+										onKeyDown={(e) => {
+											if(e.which === 13) {
+												HomepageUtils.ingredientKeyHandler( ingredientInputArr, ingredientInput,setIngredientInputArr, setIngredientInput)
+											}}
+										}
 										id="userIngredientInput"
 										className="input" 
 										type="text"
@@ -461,7 +468,11 @@ const Homepage = (props) => {
 								{filteredInputArr.length > 0 && filteredInputArr.map((e) => {
 									return (
 										<div key={uuidv4()} className="ingredient-name">
-											<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeFiltered(e)}>X</button>
+											<button key={uuidv4()} className="button ingredient-button is-small" 
+											//Refactored this
+											// onClick={() => removeFiltered(e)}
+											onClick={() => HomepageUtils.removeFiltered(e, filteredInputArr, setFilteredInputArr)}
+											>X</button>
 											<p key={uuidv4()} className="ingredient-title">{e}</p>
 										</div>
 									)
