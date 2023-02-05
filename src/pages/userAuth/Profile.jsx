@@ -153,7 +153,7 @@ const Profile = (props) => {
 								Edit Profile
 							</button>
 						</div>
-						<div className="control">
+						{/* <div className="control">
 							<button
 								className="button is-light"
 								onClick={(e) => {
@@ -162,7 +162,7 @@ const Profile = (props) => {
 							>
 								Change Password
 							</button>
-						</div>
+						</div> */}
 					</div>
 					{/* <div>
 						<button
