@@ -133,23 +133,24 @@ const Homepage = (props) => {
 		}
 	}, [myMealPacks])
 
-	const publishMealPacks = async () => {
-		const storeId = user.data.storeId;
-		const idArray = [];
-		for (let e of myMealPacks) {
-			idArray.push({ id: e.id });
-		}
-		await axios.post(`${API_URL}/store/${storeId}/mealpack`, {
-			data: idArray,
-		}, 
-		{
-			headers: {authorization: `Bearer ${user.accessToken}`}
-		});
-		// let info = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
-		// 	headers: {authorization: `Bearer ${user.accessToken}`}
-		// });
-		// setActiveMealPacks(info.data);
-	};	
+	//Refactored this
+	// const publishMealPacks = async () => {
+	// 	const storeId = user.data.storeId;
+	// 	const idArray = [];
+	// 	for (let e of myMealPacks) {
+	// 		idArray.push({ id: e.id });
+	// 	}
+	// 	await axios.post(`${API_URL}/store/${storeId}/mealpack`, {
+	// 		data: idArray,
+	// 	}, 
+	// 	{
+	// 		headers: {authorization: `Bearer ${user.accessToken}`}
+	// 	});
+	// 	// let info = await axios.get(`${API_URL}/store/${storeId}/mealpack/all/status/true`, {
+	// 	// 	headers: {authorization: `Bearer ${user.accessToken}`}
+	// 	// });
+	// 	// setActiveMealPacks(info.data);
+	// };	
 
 	const clearIngredientInput = () => {
 		let input = document.getElementById("userIngredientInput");
@@ -516,7 +517,9 @@ const Homepage = (props) => {
 										disabled={buttonStatus}
 										className="publish-button is-medium button has-background-primary-dark"
 										onClick={() => {
-											publishMealPacks();
+											//Refactored this
+											// publishMealPacks();
+											HomepageUtils.publishMealPack(user, myMealPacks)
 											setSuccessfulSave(true);
 											setMyMealPacks([]);
 										}}

@@ -21,6 +21,9 @@ const homepageUtils = {
 				})
 			setUserFilterLists(response.data)
   },
+
+  //For Meal Packs
+
   generateMealPacks: async(isMounted, user, ingredientArr, filteredArr, setMealPacks) => {
     if (isMounted.current) {
       const data = await axios.post(`${API_URL}/mealpack/recipe`, {
@@ -54,6 +57,20 @@ const homepageUtils = {
     let array = [...myMealPacks];
 		array.splice(array.indexOf(meal), 1);
 		setMyMealPacks(array);
+  },
+  publishMealPack: async (user, myMealPacks) => {
+    const storeId = user.data.storeId;
+		const idArray = [];
+		for (let e of myMealPacks) {
+			idArray.push({ id: e.id });
+		}
+		await axios.post(`${API_URL}/store/${storeId}/mealpack`, {
+			data: idArray,
+		}, 
+		{
+			headers: {authorization: `Bearer ${user.accessToken}`}
+		});
+
   }
 
 
