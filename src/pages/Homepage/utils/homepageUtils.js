@@ -49,6 +49,11 @@ const homepageUtils = {
     let array = [...myMealPacks];
 		array.push(meal);
 		setMyMealPacks(array);
+  },
+  removeFromMyMealPacks: (meal, myMealPacks, setMyMealPacks) => {
+    let array = [...myMealPacks];
+		array.splice(array.indexOf(meal), 1);
+		setMyMealPacks(array);
   }
 
 

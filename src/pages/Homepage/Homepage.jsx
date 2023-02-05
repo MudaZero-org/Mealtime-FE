@@ -113,17 +113,17 @@ const Homepage = (props) => {
 		HomepageUtils.generateMealPacks(isMounted, user, ingredientArr, filteredArr, setMealPacks)
 	}, [ingredientArr]);
 
-	const addToMyMealPacks = (meal) => {
-		let array = [...myMealPacks];
-		array.push(meal);
-		setMyMealPacks(array);
-	};
+	// const addToMyMealPacks = (meal) => {
+	// 	let array = [...myMealPacks];
+	// 	array.push(meal);
+	// 	setMyMealPacks(array);
+	// };
 
-	const removeFromMyMealPacks = (meal) => {
-		let array = [...myMealPacks];
-		array.splice(array.indexOf(meal), 1);
-		setMyMealPacks(array);
-	};
+	// const removeFromMyMealPacks = (meal) => {
+	// 	let array = [...myMealPacks];
+	// 	array.splice(array.indexOf(meal), 1);
+	// 	setMyMealPacks(array);
+	// };
 
 	useEffect(() => {
 		if (myMealPacks.length > 0) {
@@ -482,7 +482,9 @@ const Homepage = (props) => {
 														<button
 															key={uuidv4()}
 															onClick={() => {
-																removeFromMyMealPacks(e)
+																//Refactored this
+																// removeFromMyMealPacks(e)
+																HomepageUtils.removeFromMyMealPacks(e, myMealPacks, setMyMealPacks)
 																toggleAddButton(e)
 															}}
 															className="button is-medium mealpack-add-button"
