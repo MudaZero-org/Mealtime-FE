@@ -152,21 +152,25 @@ const Homepage = (props) => {
 	// 	// setActiveMealPacks(info.data);
 	// };	
 
+	//Refactored this
 	// const clearIngredientInput = () => {
 	// 	let input = document.getElementById("userIngredientInput");
 	// 	input.value = "";
 	// }
 
-	const clearFilteredInput = () => {
-		let input = document.getElementById("userFilteredInput");
-		input.value = "";
-	}
 
-	const removeIngredient = (ingredient) => {
-		const arr = [...ingredientInputArr];
-		arr.splice(arr.indexOf(ingredient), 1)
-		setIngredientInputArr(arr)
-	}
+	//Refactored this
+	// const clearFilteredInput = () => {
+	// 	let input = document.getElementById("userFilteredInput");
+	// 	input.value = "";
+	// }
+
+	//Refactored this
+	// const removeIngredient = (ingredient) => {
+	// 	const arr = [...ingredientInputArr];
+	// 	arr.splice(arr.indexOf(ingredient), 1)
+	// 	setIngredientInputArr(arr)
+	// }
 
 	const removeFiltered = (ingredient) => {
 		const arr = [...filteredInputArr];
@@ -194,7 +198,9 @@ const Homepage = (props) => {
 			arr.unshift(filteredInput)
 			if (filteredInput) {
 				setFilteredInputArr(arr)
-				clearFilteredInput();
+				//Refactored this
+				// clearFilteredInput();
+				HomepageUtils.clearFilteredInput();
 				setFilteredInput(null)
 			}
 		}
@@ -232,7 +238,9 @@ const Homepage = (props) => {
 					arr.unshift(x)
 				}
 				setFilteredInputArr(arr)
-				clearFilteredInput();
+				//Refactored this
+				// clearFilteredInput();
+				HomepageUtils.clearFilteredInput();
 				setFilteredInput(null)
 				break;
 			
@@ -241,7 +249,9 @@ const Homepage = (props) => {
 					arr.unshift(x)
 				}
 				setFilteredInputArr(arr)
-				clearFilteredInput();
+				//Refactored this
+				// clearFilteredInput();
+				HomepageUtils.clearFilteredInput();
 				setFilteredInput(null)
 				break;
 			
@@ -250,7 +260,9 @@ const Homepage = (props) => {
 					arr.unshift(x)
 				}
 				setFilteredInputArr(arr)
-				clearFilteredInput();
+				//Refactored this
+				// clearFilteredInput();
+				HomepageUtils.clearFilteredInput();
 				setFilteredInput(null)
 				break;
 		}
@@ -307,7 +319,9 @@ const Homepage = (props) => {
 
 	const fillFilteredFields = (list) => {
 		setFilteredInputArr(list.filteredIngredients)
-		clearFilteredInput();
+		//Refactored this
+		// clearFilteredInput();
+		HomepageUtils.clearFilteredInput();
 		setFilteredInput(null)
 	}
 
@@ -377,7 +391,11 @@ const Homepage = (props) => {
 								{ingredientInputArr.length > 0 && ingredientInputArr.map((e) => {
 									return (
 										<div key={uuidv4()} className="ingredient-name">
-											<button key={uuidv4()} className="button ingredient-button is-small" onClick={() => removeIngredient(e)}>X</button>
+											<button key={uuidv4()} className="button ingredient-button is-small" 
+											//Refactored this
+											// onClick={() => removeIngredient(e)}
+											onClick={() => HomepageUtils.removeIngredient(e, ingredientInputArr, setIngredientInputArr)}
+											>X</button>
 											<p key={uuidv4()} className="ingredient-title">{e}</p>
 										</div>
 									)
@@ -432,7 +450,9 @@ const Homepage = (props) => {
 											arr.unshift(filteredInput)
 											if (filteredInput) {
 												setFilteredInputArr(arr);
-												clearFilteredInput();
+												//Refactored this
+												// clearFilteredInput();
+												HomepageUtils.clearFilteredInput();
 												setFilteredInput(null);
 											}
 										}}
@@ -453,7 +473,9 @@ const Homepage = (props) => {
 										</OverlayTrigger>
 										<p onClick={() => {
 										setFilteredInputArr([])
-										clearFilteredInput();
+										//Refactored this
+										// clearFilteredInput();
+										HomepageUtils.clearFilteredInput();
 										setFilteredInput(null)
 										}} className="clear-button">[x]clear all</p>
 									</div>)

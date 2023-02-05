@@ -75,7 +75,16 @@ const homepageUtils = {
     let input = document.getElementById("userIngredientInput");
 		input.value = "";
   },
-  
+  clearFilteredInput: () => {
+    let input = document.getElementById("userFilteredInput");
+		input.value = "";
+  },
+  removeIngredient: (ingredient, ingredientInputArr, setIngredientInputArr) => {
+    const arr = [...ingredientInputArr];
+		arr.splice(arr.indexOf(ingredient), 1)
+		setIngredientInputArr(arr)
+  },
+
 
 
 
