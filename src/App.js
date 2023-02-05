@@ -2,17 +2,23 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-// import User from "./pages/User/User";
+//User
 import SignIn from "./pages/User/SignIn";
 import SignUp from "./pages/User/SignUp";
-import Homepage from "./pages/userAuth/Homepage";
+
+//Profile
+import Profile from "./pages/Profile/Profile";
+import EditProfile from "./pages/Profile/EditProfile";
+import EditPassword from "./pages/Profile/EditPassword";
+
+//Homepage
+import Homepage from "./pages/Homepage/Homepage";
 import MealPack from "./pages/userAuth/MealPack";
-import Profile from "./pages/userAuth/Profile";
+
 import AllMealpacks from "./pages/userAuth/AllMealpacks";
 import Navbar from "./pages/userAuth/components/Navbar";
 import FavoriteMealpacks from "./pages/userAuth/FavoriteMealpacks";
-import EditProfile from "./pages/userAuth/EditProfile";
-import EditPassword from "./pages/userAuth/EditPassword";
+
 import HowToUse from "./pages/userAuth/HowToUse";
 import Info from "./pages/info";
 

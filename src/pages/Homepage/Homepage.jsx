@@ -1,5 +1,5 @@
 import axios from "axios";
-import MealPackModal from "./components/MealPackModal";
+import MealPackModal from "./MealPackModal";
 import { useState, useEffect, useRef } from "react";
 import "../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from 'uuid';
@@ -91,6 +91,7 @@ const Homepage = (props) => {
   };
 
 	const MyVerticallyCenteredModal = (props) => {
+		console.log("This is the props", props)
     return (
       <Modal
         {...props}
