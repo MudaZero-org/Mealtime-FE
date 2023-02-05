@@ -37,6 +37,14 @@ const homepageUtils = {
     } else {
       isMounted.current = true;
     }
+  },
+  makeArr: (setSuccessfulSave, ingredientInputArr, setIngredientArr, filteredInputArr, setFilteredArr) => {
+    setSuccessfulSave(false)
+		let ingredientArr = [...ingredientInputArr]
+		setIngredientArr(ingredientArr)
+		let filteredArr = [...filteredInputArr]
+		setFilteredArr(filteredArr)
+
   }
 
 

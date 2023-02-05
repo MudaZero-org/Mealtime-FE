@@ -451,7 +451,9 @@ const Homepage = (props) => {
 							</div>
 						</div>
 						<button
-							onClick={makeArr}
+							//Refactored this
+							// onClick={makeArr}
+							onClick={() => HomepageUtils.makeArr(setSuccessfulSave, ingredientInputArr, setIngredientArr, filteredInputArr, setFilteredArr)}
 							className="generate-button button is-medium"
 							id="generate-button"
 						>Generate Meal Packs</button>
