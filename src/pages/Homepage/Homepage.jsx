@@ -9,6 +9,9 @@ import dairyFreeArr from "./utils/dairyFree.json";
 import glutenFreeArr from "./utils/glutenFree.json";
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
+//Utils for homepage
+import HomepageUtils from "./utils/homepageUtils"
+
 //Quick Guide Modal
 import QuickGuide from "./QuickGuide"
 
@@ -60,19 +63,21 @@ const Homepage = (props) => {
 	}, [filteredInputArr])
 	
 	useEffect(() => {
-		async function fetchUserData() {
-			const user = JSON.parse(localStorage.getItem("user"));
-			const userID = user.data.storeId;
-			const userData = await axios.get(`${API_URL}/user/${userID}`, {
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			});
-			setImage(userData.data.profileImg);
-			let response = await axios.get(`${API_URL}/store/${user.data.storeId}/filter_list`, {
-					headers: {authorization: `Bearer ${user.accessToken}`}
-				})
-			setUserFilterLists(response.data)
-		}
-		fetchUserData();
+		//Refactored this
+		// async function fetchUserData() {
+		// 	const user = JSON.parse(localStorage.getItem("user"));
+		// 	const userID = user.data.storeId;
+		// 	const userData = await axios.get(`${API_URL}/user/${userID}`, {
+		// 		headers: { authorization: `Bearer ${user.accessToken}` },
+		// 	});
+		// 	setImage(userData.data.profileImg);
+		// 	let response = await axios.get(`${API_URL}/store/${user.data.storeId}/filter_list`, {
+		// 			headers: {authorization: `Bearer ${user.accessToken}`}
+		// 		})
+		// 	setUserFilterLists(response.data)
+		// }
+		// fetchUserData();
+		HomepageUtils.fetchUserFilterData(setUserFilterLists, setImage)
 	}, []);
 
 
@@ -85,24 +90,26 @@ const Homepage = (props) => {
 	};
 
 	useEffect(() => {
-		async function fetchData() {
-			if (isMounted.current) {
-				const data = await axios.post(`${API_URL}/mealpack/recipe`, {
-					ingredients: ingredientArr,
-					filteredWords: filteredArr,
-				},
-				{
-					headers: {authorization: `Bearer ${user.accessToken}`}
-				});
-				data.data.map((meal) => meal.clicked = false)
-				setMealPacks(data.data);
-				const idArray = [];
-				data.data.forEach((e) => idArray.push(e.id));
-			} else {
-				isMounted.current = true;
-			}
-		}
-		fetchData();
+		//Refactored this
+		// async function fetchData() {
+		// 	if (isMounted.current) {
+		// 		const data = await axios.post(`${API_URL}/mealpack/recipe`, {
+		// 			ingredients: ingredientArr,
+		// 			filteredWords: filteredArr,
+		// 		},
+		// 		{
+		// 			headers: {authorization: `Bearer ${user.accessToken}`}
+		// 		});
+		// 		data.data.map((meal) => meal.clicked = false)
+		// 		setMealPacks(data.data);
+		// 		const idArray = [];
+		// 		data.data.forEach((e) => idArray.push(e.id));
+		// 	} else {
+		// 		isMounted.current = true;
+		// 	}
+		// }
+		// fetchData();
+		HomepageUtils.generateMealPacks(isMounted, user, ingredientArr, filteredArr, setMealPacks)
 	}, [ingredientArr]);
 
 	const addToMyMealPacks = (meal) => {
@@ -519,7 +526,6 @@ const Homepage = (props) => {
 							</div>
 						</div>
 
-
 						<div className="generated-mealpacks">
 							<div className="user-selection-container">
 								<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
@@ -550,6 +556,7 @@ const Homepage = (props) => {
 								</div>
 							</div>
 						</div>
+						
 					</div>
 					<MealPackModal
 						selectedMealPack={selectedMealPack}
@@ -557,21 +564,17 @@ const Homepage = (props) => {
 						show={show}
 						setShow={setShow}
 					/>
-					{/* <MyVerticallyCenteredModal
-        	show={showGuide}
-        	onHide={() => setShowGuide(false)}
-      	/> */}
-				<QuickGuide
-				show={showGuide}
-				setShowGuide={setShowGuide}
-				onHide={() => {setShowGuide(false)
-				setIndex(0)}}
-				firstLogIn={firstLogIn}
-				setFirstLogIn={setFirstLogIn}
-				user={user}
-				index={index}
-				setIndex={setIndex}
-				/>
+					<QuickGuide
+					show={showGuide}
+					setShowGuide={setShowGuide}
+					onHide={() => {setShowGuide(false)
+					setIndex(0)}}
+					firstLogIn={firstLogIn}
+					setFirstLogIn={setFirstLogIn}
+					user={user}
+					index={index}
+					setIndex={setIndex}
+					/>
 				</div>
 			</div>
 		</div>

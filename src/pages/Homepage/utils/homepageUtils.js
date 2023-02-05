@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "../../../Constants";
 
 const homepageUtils = {
   //For Quick Guide
@@ -8,10 +9,37 @@ const homepageUtils = {
   onNextClick: (ref) => {
     ref.current.next();
   },
-  handleSelect: (selectedIndex, setIndex) => {
-    console.log(selectedIndex)
-    console.log(setIndex)
+  fetchUserFilterData: async(setUserFilterLists, setImage) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+			const userID = user.data.storeId;
+			const userData = await axios.get(`${API_URL}/user/${userID}`, {
+				headers: { authorization: `Bearer ${user.accessToken}` },
+			});
+			setImage(userData.data.profileImg);
+			let response = await axios.get(`${API_URL}/store/${user.data.storeId}/filter_list`, {
+					headers: {authorization: `Bearer ${user.accessToken}`}
+				})
+			setUserFilterLists(response.data)
+  },
+  generateMealPacks: async(isMounted, user, ingredientArr, filteredArr, setMealPacks) => {
+    if (isMounted.current) {
+      const data = await axios.post(`${API_URL}/mealpack/recipe`, {
+        ingredients: ingredientArr,
+        filteredWords: filteredArr,
+      },
+      {
+        headers: {authorization: `Bearer ${user.accessToken}`}
+      });
+      data.data.map((meal) => meal.clicked = false)
+      setMealPacks(data.data);
+      const idArray = [];
+      data.data.forEach((e) => idArray.push(e.id));
+    } else {
+      isMounted.current = true;
+    }
   }
+
+
 
 
 
