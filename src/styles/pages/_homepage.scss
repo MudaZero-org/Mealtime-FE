@@ -564,3 +564,14 @@
   margin-left: 5%;
   flex: 1;
 }
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-color: rgba(169, 29, 42, 0.4);
+  width: 2rem !important;
+  height: 6rem !important;
+  border-radius: 10px;
+}
+
+.carousel-control-prev {
+  visibility: hidden;
+}

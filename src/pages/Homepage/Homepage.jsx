@@ -9,10 +9,8 @@ import dairyFreeArr from "./utils/dairyFree.json";
 import glutenFreeArr from "./utils/glutenFree.json";
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
-
-//Added Carousel and image
-import {Carousel, Modal} from "react-bootstrap"
-import CarouselImg from "../../images/how.png"
+//Quick Guide Modal
+import QuickGuide from "./QuickGuide"
 
 
 const Homepage = (props) => {
@@ -33,7 +31,6 @@ const Homepage = (props) => {
 	
 	
 	//Added ref and index
-	const ref = useRef(null);
 	const [index, setIndex] = useState(0);
 	const [text, setText] = useState(null);
 	const [filteredText, setFilteredText] = useState(null);
@@ -77,141 +74,7 @@ const Homepage = (props) => {
 		}
 		fetchUserData();
 	}, []);
-	
-	//Added onPrevNextClick
-	const onPrevClick = () => {
-    ref.current.prev();
-  };
-  const onNextClick = () => {
-    ref.current.next();
-  };
 
-	const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
-
-	const MyVerticallyCenteredModal = (props) => {
-		console.log("This is the props", props)
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        animation={false}
-      >
-    
-        <Carousel activeIndex={index} onSelect={handleSelect} interval={null} ref={ref} indicators={false} slide={true}>
-          <Carousel.Item>
-						<div className="help-image-container">
-							<img
-								className="d-block help-image"
-								src={CarouselImg}
-								alt="First slide"
-							/>
-						</div>
-            <Carousel.Caption className="carousel-text">
-							<div className="quick-guide-caption">
-              {firstLogIn ? <h3 className="help-title">Hi {user.data.storeName}, you have successfully signed up!</h3>: <h3 className="help-title">Hi {user.data.storeName}!</h3>}
-							{firstLogIn ? <p className="help-text">Welcome! This walkthrough will help you get started with MealTime.</p>: <p className="help-text">This quick guide will help you how to use with MealTime.</p>}
-							</div>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-					<div className="help-image-container">
-            <img
-              className="d-block help-image"
-              src={CarouselImg }
-              alt="Second slide"
-            />
-						</div>
-
-            <Carousel.Caption className="carousel-text">
-						<div className="quick-guide-caption">
-              <h3 className="help-title">Quick Guide:</h3>
-              <p className="help-text">Put in ingredients in the "Ingredients" box.</p>
-							</div>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-					<div className="help-image-container">
-            <img
-              className="d-block help-image"
-              src={CarouselImg}
-              alt="Third slide"
-            />
-						</div>
-
-            <Carousel.Caption className="carousel-text">
-						<div className="quick-guide-caption">
-              <h3 className="help-title">Quick Guide:</h3>
-              <p className="help-text">
-                Press "Generate Meal Packs".
-              </p>
-							</div>
-            </Carousel.Caption>
-          </Carousel.Item>
-					<Carousel.Item>
-					<div className="help-image-container">
-            <img
-              className="d-block help-image"
-              src={CarouselImg}
-              alt="Third slide"
-            />
-						</div>
-
-            <Carousel.Caption className="carousel-text">
-						<div className="quick-guide-caption">
-              <h3 className="help-title">Quick Guide:</h3>
-              <p className="help-text">
-                Add Meal Packs you like.
-              </p>
-							</div>
-            </Carousel.Caption>
-          </Carousel.Item>
-					<Carousel.Item>
-					<div className="help-image-container">
-            <img
-              className="d-block help-image"
-              src={CarouselImg}
-              alt="Third slide"
-            />
-						</div>
-
-            <Carousel.Caption className="carousel-text">
-						<div className="quick-guide-caption">
-              <h3 className="help-title">Quick Guide:</h3>
-              <p className="help-text">
-                Press "Save" and you are good to go.
-              </p>
-							</div>
-            </Carousel.Caption>
-          </Carousel.Item>
-      </Carousel>
-			
-        <div className="level carousel-buttons">
-          
-          <div className="level-left">
-            <button className="button" onClick={() => {
-							setIndex(0)
-							setShowGuide(false)
-							setFirstLogIn(false)
-						}}>Close</button>
-          </div>
-          <div className="level-right">
-              {index !== 0 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-prev-icon" onClick={() => onPrevClick()
-            }/> : ""}
-            
-            
-            {index !== 4 ? <span style={{ cursor: "pointer" }} aria-hidden="true" className="carousel-control-next-icon" onClick={() => onNextClick()}/> : <button className="button" onClick={() => {
-							setIndex(0)
-							setShowGuide(false)
-							setFirstLogIn(false)}}>Let's get started!</button>}
-          </div>
-        </div>
-      </Modal>
-    );
-  }
 
 	const makeArr = () => {
 		setSuccessfulSave(false)
@@ -694,10 +557,21 @@ const Homepage = (props) => {
 						show={show}
 						setShow={setShow}
 					/>
-					<MyVerticallyCenteredModal
+					{/* <MyVerticallyCenteredModal
         	show={showGuide}
         	onHide={() => setShowGuide(false)}
-      	/>
+      	/> */}
+				<QuickGuide
+				show={showGuide}
+				setShowGuide={setShowGuide}
+				onHide={() => {setShowGuide(false)
+				setIndex(0)}}
+				firstLogIn={firstLogIn}
+				setFirstLogIn={setFirstLogIn}
+				user={user}
+				index={index}
+				setIndex={setIndex}
+				/>
 				</div>
 			</div>
 		</div>
