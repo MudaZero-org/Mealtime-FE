@@ -21,9 +21,6 @@ const MealPack = (props) => {
     <>
     {mealPack !== undefined ? <Modal size="lg"
     centered show={show} onHide={handleClose}>
-      {/* <Modal.Header closeButton>
-        <Modal.Title>{selectedMealPack && <h1>{selectedMealPack.mealpackName}</h1>}</Modal.Title>
-      </Modal.Header> */}
       <Modal.Body>
         <div className="mealpack-modal">
           <img className="food-image" style={{ display: "block", marginLeft: "auto", marginRight: "auto", marginBottom: "20px" }} src={mealPack.image}></img>
@@ -43,8 +40,6 @@ const MealPack = (props) => {
         <button className="button" onClick={handleClose}>Close</button>
       </Modal.Footer>
     </Modal>: ""}
-
-    
     </>
   )
 }

@@ -12,12 +12,7 @@ function DeletePopOver(e, setMealpacks) {
           className="button is-danger"
           variant="primary"
           onClick={async () => {
-            //As of the moment to check if it is working
-						//Removed this
-            // await deleteMealPack(e)
 						await MealpackUtils.deleteMealpack(e, setMealpacks)
-						//Removed this
-            // fetchPastPacks()
 						MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
           }}
         >

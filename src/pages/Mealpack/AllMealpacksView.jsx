@@ -1,25 +1,21 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jsPDF } from "jspdf";
+import { v4 as uuidv4 } from "uuid";
 
 //Styling
 import "../../styles/pages/_homepage.scss";
 import "../../styles/pages/_activeMealpacks.scss"
 
-import { v4 as uuidv4 } from "uuid";
-import API_URL, { REACT_APP_URL } from "../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
-import { Popover, OverlayTrigger, Button } from 'react-bootstrap';
-import starIcon from "../../images/star.png"
-
 import DeletePopOver from "./DeletePopOver"
-
+import { OverlayTrigger } from 'react-bootstrap';
 
 //Utils for Mealpacks
 import MealpackUtils from "./utils/mealpackUtils"
 
 const AllMealPacksView = (props) => {
+	const navigate = useNavigate();
+
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [selectionArr, setSelectionArr] = useState([]);
@@ -35,318 +31,13 @@ const AllMealPacksView = (props) => {
 	} = props;
 
 	useEffect(() => {
-		//Removed this
-		// async function fetchData() {
-		// 	const user = JSON.parse(localStorage.getItem("user"))
-		// 	const storeId = user.data.storeId
-		// 	let all = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
-		// 		headers: { authorization: `Bearer ${user.accessToken}` }
-		// 	});
-		// 	all.data.map((meal) => {meal.selectedFav = false})
-		// 	setMealpacks(all.data)
-
-		// 	let favorites = await axios.get(
-		// 		`${API_URL}/store/${storeId}/mealpack/all/favorite`,
-		// 		{
-		// 			headers: { authorization: `Bearer ${user.accessToken}` },
-		// 		}
-		// 	);
-		// 	favorites.data.map((meal) => meal.selectedFav = false)
-		// 	setFavoriteMealpacks(favorites.data);
-		// }
-		// fetchData();
-		// MealpackUtils.fetchAllMealPacks(setMealpacks, setFavoriteMealpacks)
 		MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks);
 		MealpackUtils.fetchFavoriteMealpacks(setFavoriteMealpacks)
 	}, []) // activeMealPacks (causing infinite calls)
 
-	//Added this for all favorites ------Ken
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		const user = JSON.parse(localStorage.getItem("user"));
-	// 		const storeId = user.data.storeId;
-			
-	// 	}
-	// 	fetchData();
-	// }, []); // mealpacks (causing infinite calls)
-
-
-
-	// fetchPastPacks copies above useEffect, wittout causing infinite loop
-	// const fetchPastPacks = async () => {
-	// 	const user = JSON.parse(localStorage.getItem("user"))
-	// 	const storeId = user.data.storeId
-	// 	let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
-	// 		headers: { authorization: `Bearer ${user.accessToken}` }
-	// 	});
-	// 	setMealpacks(data.data)
-	// }
-
-	//Added
-	//Removed this
-	// const fetchActivePacks = async () => {
-	// 	const user = JSON.parse(localStorage.getItem("user"));
-	// 	const storeId = user.data.storeId;
-	// 	let data = await axios.get(
-	// 		`${API_URL}/store/${storeId}/mealpack/all/favorite`,
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	setFavoriteMealpacks(data.data);
-	// };
-
-	const navigate = useNavigate();
-	
-	//Removed this
-	// const rerouteToMealpack = (meal) => {
-	// 	setSelectedActivePastPack(meal)
-	// 	navigate("/mealpack")
-	// }
-
-	//Removed this
-	// const activateMealPack = async (meal) => {
-	// 	const user = JSON.parse(localStorage.getItem("user"));
-	// 	const storeId = user.data.storeId;
-	// 	await axios.put(
-	// 		`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
-	// 		{
-	// 			isFavorite: true,
-	// 			mealpackName: meal.mealpackName,
-	// 			isDelete: false,
-	// 		},
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	let data = await axios.get(
-	// 		`${API_URL}/store/${storeId}/mealpack/all/favorite`,
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	setFavoriteMealpacks(data.data);
-	// };
-
-
-	//Removed this
-	// const deactivateMealPack = async (meal) => {
-	// 	const user = JSON.parse(localStorage.getItem("user"));
-	// 	const storeId = user.data.storeId;
-	// 	await axios.put(
-	// 		`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
-	// 		{
-	// 			isFavorite: false,
-	// 			mealpackName: meal.mealpackName,
-	// 			isDelete: false,
-	// 		},
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	let data = await axios.get(
-	// 		`${API_URL}/store/${storeId}/mealpack/all`,
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	setMealpacks(data.data);
-	// };
-
-	//Removed this
-	//Handles deleting mealpack
-	// const deleteMealPack = async (meal) => {
-	// 	const user = JSON.parse(localStorage.getItem("user"));
-	// 	const storeId = user.data.storeId;
-	// 	//route
-	// 	await axios.put(
-	// 		`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
-  //     {
-	// 			isFavorite: false,
-	// 			mealpackName: meal.mealpackName,
-	// 			isDelete: true,
-	// 		},
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	let data = await axios.get(
-	// 		`${API_URL}/store/${storeId}/mealpack/all`,
-	// 		{
-	// 			headers: { authorization: `Bearer ${user.accessToken}` },
-	// 		}
-	// 	);
-	// 	setMealpacks(data.data);
-	// }
-
-
-	//Removed this
-  //Popover
-  // const popover = (e) => (
-  //   <Popover id="popover-basic">
-  //     <Popover.Header as="h3">Delete mealpack?</Popover.Header>
-  //     <Popover.Body>
-  //         Are you sure you want to <strong>delete</strong> this mealpack?
-  //       </Popover.Body>
-  //       <button
-  //         className="button is-danger"
-  //         variant="primary"
-  //         onClick={async () => {
-  //           //As of the moment to check if it is working
-	// 					//Removed this
-  //           // await deleteMealPack(e)
-	// 					await MealpackUtils.deleteMealpack(e, setMealpacks)
-	// 					//Removed this
-  //           // fetchPastPacks()
-	// 					MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
-  //         }}
-  //       >
-  //         ✓ Delete
-  //       </button>
-  //       <button
-  //         className="button"
-  //         variant="primary"
-  //         onClick={() => {
-  //           document.body.click()
-  //         }}
-  //       >
-  //         X Cancel
-  //       </button>{" "}
-  //   </Popover>
-  // );
-
-  // const addToSelectedArr = (meal) => {
-	// 	if (meal.selectedFav) {
-	// 		const arr = [...selectionArr]
-	// 		arr.splice(arr.indexOf(meal), 1);
-	// 		setSelectionArr(arr);
-	// 		meal.selectedFav = false;
-	// 	} else {
-	// 		const arr = [...selectionArr];
-	// 		arr.push(meal)
-	// 		setSelectionArr(arr)
-	// 		meal.selectedFav = true;
-	// 	}
-	// }
-
-	// const renderInput = (meal) => {
-	// 	if (meal.selectedFav) {
-	// 		return (
-	// 			<input checked className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
-	// 		)
-	// 	} else {
-	// 		return (
-	// 			<input className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
-	// 		)
-	// 	}
-	// }
-
-	//Removed this
-	// const favoriteIcon = (meal) => {
-	// 	if (meal.isFavorite) {
-	// 		return (
-	// 			<span className="icon">
-	// 				<img src={starIcon} className="star-icon" />
-	// 			</span>
-	// 		)
-	// 	}
-	// }
-
-	// const favoriteIcon2 = (meal) => {
-	// 	return (
-	// 		<span className="icon">
-	// 			<img src={starIcon} className="star-icon" />
-	// 		</span>
-	// 	)
-	// }
-	
-
-	// const filterNutritionPDF = (meal) => {
-	// 	console.log(meal)
-	// 	let filterArr = [];
-	// 	console.log(meal.recipeDetail.vegan)
-	// 	meal.recipeDetail.vegan && filterArr.push("Vegan")
-	// 	meal.recipeDetail.vegetarian && filterArr.push("Vegetarian")
-	// 	meal.recipeDetail.glutenFree && filterArr.push("Gluten Free")
-	// 	meal.recipeDetail.dairyFree && filterArr.push("Dairy Free")
-	// 	return filterArr;
-	// }
-
-  // const downloadPDF = (meal) => {
-	// 	let qrCode = generateQRCode(meal);
-	// 	let nutritionArr = filterNutritionPDF(meal)
-	// 	const doc = new jsPDF("p", "mm", "a4");
-	// 	let width = doc.internal.pageSize.getWidth();
-	// 	const name = meal.mealpackName;
-	// 	const instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
-	// 	const nutrition = nutritionArr.map((e) => " " + e);
-	// 	const ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-	// 	doc.setFontSize(32);
-	// 	doc.text(10, 85, `${name}`, {
-	// 		maxWidth: width / 1.15,
-	// 	});
-	// 	doc.setFontSize(14);
-	// 	doc.text(10, 95, [`${nutrition}`])
-	// 	doc.setFontSize(18);
-	// 	doc.text(10, 110, [`Ingredients: ${ingredients}`], {
-	// 		maxWidth: width / 1.15,
-	// 	})
-	// 	doc.text(10, 140, [`${instructions}`], {
-	// 		maxWidth: width / 1.15,
-	// 	});
-	// 	doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
-	// 	doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
-	// 	doc.autoPrint({ variant: "non-conform" });
-	// 	doc.save("print-mealpacks.pdf");
-	// };
-
-	// const downloadAllPDF = () => {
-	// 	const doc = new jsPDF("p", "mm", "a4");
-	// 	let width = doc.internal.pageSize.getWidth();
-	// 	selectionArr.map((meal) => {
-	// 		let qrCode = generateQRCode(meal);
-	// 		let nutritionArr = filterNutritionPDF(meal)
-	// 		let name = meal.mealpackName;
-	// 		let instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
-	// 		let ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-	// 		let nutrition = nutritionArr.map((e) => " " + e);
-	// 		doc.setFontSize(32);
-	// 		doc.text(10, 85, `${name}`, {
-	// 			maxWidth: width / 1.15,
-	// 		});
-	// 		doc.setFontSize(14);
-	// 		doc.text(10, 95, [`${nutrition}`])
-	// 		doc.setFontSize(18);
-	// 		doc.text(10, 110, [`Ingredients: ${ingredients}`], {
-	// 			maxWidth: width / 1.15,
-	// 		})
-	// 		doc.text(10, 140, [`${instructions}`], {
-	// 			maxWidth: width / 1.15,
-	// 		});
-	// 		doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
-	// 		doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
-	// 		doc.addPage();
-	// 	})
-	// 	let pageCount = doc.internal.getNumberOfPages();
-	// 	doc.deletePage(pageCount);
-	// 	doc.save("print-mealpacks.pdf")
-	// };
-
-	// const generateQRCode = (meal) => {
-	// 	const QRCode = require("qrcode");
-	// 	let qrCodeDataUrl;
-	// 	let recipeId = meal.recipeId
-	// 	QRCode.toDataURL(`${REACT_APP_URL}/info/${recipeId}`, function (err, url) {
-	// 		qrCodeDataUrl = url;
-	// 	});
-	// 	return qrCodeDataUrl;
-	// };
-
 	return (
 		<div className="past-container">
-			
 			<h2 className="past-title">{selectedCategory === "all" ? "All Meal Packs" : "Favorite Meal Packs"}</h2>
-
 			<div className="hello">
 				<aside className="menu sidebar" style={{marginLeft: "6rem"}}>
 					<p className="menu-label" style={{fontSize: "15px"}}>
@@ -367,13 +58,9 @@ const AllMealPacksView = (props) => {
 							<div key={uuidv4()} className="tile is-child is-4">
 								<div key={uuidv4()} className="active-mealpack-container">
 									<img className="food-small-image" src={e.recipeDetail["image"]}></img>
-									{/* Removed this */}
-									{/* {renderInput(e)} */}
 									{MealpackUtils.renderInput(e, selectionArr, setSelectionArr)}
 
 									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName} 
-									{/* Removed this */}
-									{/* {favoriteIcon(e)} */}
 									{MealpackUtils.favoriteIcon(e)}
 									</strong></p>
 									<div className="tags past-mealpacks-tags">
@@ -384,34 +71,22 @@ const AllMealPacksView = (props) => {
 									</div>
 									<div className="past-mealpacks-buttons">
 										<button key={uuidv4()} className="button" onClick={() => 
-											//Removed this
-											// downloadPDF(e)
 											MealpackUtils.downloadPDF(e)
 
 											} style={{ marginBottom: "10px" }}>Download PDF</button>
 										<button key={uuidv4()} className="button" onClick={() => {
-											//Old Code
-											// rerouteToMealpack(e)
 											setShow(true)
 											setSelectedMealPack(e)
 										}}>See Meal Pack Info</button>
 										{!e.isFavorite 
 											? (
 												<button key={uuidv4()} className="button" onClick={async () => {
-													//Removed this
-													// await activateMealPack(e)
 													await MealpackUtils.addMealpackToFavorites(e, setFavoriteMealpacks)
-													//Removed this
-													// fetchPastPacks()
 													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
 												}} style={{ marginBottom: "10px" }}>Add to Favorites</button>) 
 											: (
 												<button key={uuidv4()} className="button" onClick={async () => {
-													//Removed this
-													// await deactivateMealPack(e)
 													await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
-													//Removed this
-													// fetchPastPacks()
 													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
 												}}>Remove from Favorites</button>
 											)}
@@ -428,13 +103,9 @@ const AllMealPacksView = (props) => {
 							<div key={uuidv4()} className="tile is-child is-4">
 								<div key={uuidv4()} className="active-mealpack-container">
 									<img className="food-small-image" src={e.recipeDetail["image"]}></img>
-									{/* Removed this */}
-									{/* {renderInput(e)} */}
 									{MealpackUtils.renderInput(e, selectionArr, setSelectionArr)}
-	
+
 									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong>
-									{/* Removed this */}
-									{/* {favoriteIcon2()}  */}
 									{MealpackUtils.favoriteIcon2(e)}
 									</p>
 									<div className="tags active-mealpacks-tags">
@@ -445,22 +116,14 @@ const AllMealPacksView = (props) => {
 									</div>
 									<div className="active-mealpacks-buttons">
 										<button key={uuidv4()} className="button" onClick={() =>
-											//Removed this 
-											// downloadPDF(e)
 											MealpackUtils.downloadPDF(e)
 											} style={{ marginBottom: "10px" }}>Download PDF</button>
 										<button key={uuidv4()} className="button" onClick={() => {
-											//Old code
-											// rerouteToMealpack(e)
 											setShow(true)
 											setSelectedMealPack(e)
 											}}>See Meal Pack Info</button>
 										<button key={uuidv4()} className="button" onClick={async () => {
-											//Removed this
-											// await deactivateMealPack(e)
 											await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
-											//Removed this
-											// fetchActivePacks()
 											MealpackUtils.fetchFavoriteMealpacks(setMealpacks)
 										}}>Remove from Favorites</button>
 									</div>
@@ -477,8 +140,6 @@ const AllMealPacksView = (props) => {
 						<h1 style={{ color: "black" }}>You have selected {selectionArr.length} meal packs to print</h1>
 						<div className="selection-popup-buttons">
 							<button key={uuidv4()} className="button is-medium print-all-button" onClick={() =>
-								//Removed this
-								// downloadAllPDF
 								MealpackUtils.downloadAllPDF(selectionArr)
 								}>Download Selected PDF's</button>
 							<button
