@@ -3,6 +3,8 @@ import {Modal, Carousel} from "react-bootstrap"
 import CarouselImg from "../../images/how.png"
 import HomePageUtils from "./utils/homepageUtils"
 
+//Styles
+import "../../styles/pages/_howToUse.scss";
 
 function QuickGuide(props) {
   const {showGuide, setShowGuide, firstLogIn, setFirstLogIn, user, index, setIndex} = props;
