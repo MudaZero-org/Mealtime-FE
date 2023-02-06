@@ -1,7 +1,7 @@
 import {Popover} from "react-bootstrap"
 import HomepageUtils from "./utils/homepageUtils"
 
-function SaveFilteredPopOver(user, filterListName, setFilterListName, filterListSaved, setFilterListSaved, filteredInputArr, setFilteredInputArr, setUserFilterLists) { 
+function SaveFilterPopOver(user, filterListName, setFilterListName, filterListSaved, setFilterListSaved, filteredInputArr, setFilteredInputArr, setUserFilterLists) { 
   
   return (
     <Popover id="popover-basic">
@@ -12,4 +12,4 @@ function SaveFilteredPopOver(user, filterListName, setFilterListName, filterList
     </Popover>
   );
 }
-export default SaveFilteredPopOver;
+export default SaveFilterPopOver;

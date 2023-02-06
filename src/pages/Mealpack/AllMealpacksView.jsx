@@ -9,6 +9,9 @@ import MealPackDetailsModal from "./MealPackDetailsModal"
 import { Popover, OverlayTrigger, Button } from 'react-bootstrap';
 import starIcon from "../../images/star.png"
 
+import DeletePopOver from "./DeletePopOver"
+
+
 //Utils for Mealpacks
 import MealpackUtils from "./utils/mealpackUtils"
 
@@ -28,25 +31,29 @@ const AllMealPacksView = (props) => {
 	} = props;
 
 	useEffect(() => {
-		async function fetchData() {
-			const user = JSON.parse(localStorage.getItem("user"))
-			const storeId = user.data.storeId
-			let all = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
-				headers: { authorization: `Bearer ${user.accessToken}` }
-			});
-			all.data.map((meal) => {meal.selectedFav = false})
-			setMealpacks(all.data)
+		//Removed this
+		// async function fetchData() {
+		// 	const user = JSON.parse(localStorage.getItem("user"))
+		// 	const storeId = user.data.storeId
+		// 	let all = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
+		// 		headers: { authorization: `Bearer ${user.accessToken}` }
+		// 	});
+		// 	all.data.map((meal) => {meal.selectedFav = false})
+		// 	setMealpacks(all.data)
 
-			let favorites = await axios.get(
-				`${API_URL}/store/${storeId}/mealpack/all/favorite`,
-				{
-					headers: { authorization: `Bearer ${user.accessToken}` },
-				}
-			);
-			favorites.data.map((meal) => meal.selectedFav = false)
-			setFavoriteMealpacks(favorites.data);
-		}
-		fetchData();
+		// 	let favorites = await axios.get(
+		// 		`${API_URL}/store/${storeId}/mealpack/all/favorite`,
+		// 		{
+		// 			headers: { authorization: `Bearer ${user.accessToken}` },
+		// 		}
+		// 	);
+		// 	favorites.data.map((meal) => meal.selectedFav = false)
+		// 	setFavoriteMealpacks(favorites.data);
+		// }
+		// fetchData();
+		// MealpackUtils.fetchAllMealPacks(setMealpacks, setFavoriteMealpacks)
+		MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks);
+		MealpackUtils.fetchFavoriteMealpacks(setFavoriteMealpacks)
 	}, []) // activeMealPacks (causing infinite calls)
 
 	//Added this for all favorites ------Ken
@@ -62,135 +69,147 @@ const AllMealPacksView = (props) => {
 
 
 	// fetchPastPacks copies above useEffect, wittout causing infinite loop
-	const fetchPastPacks = async () => {
-		const user = JSON.parse(localStorage.getItem("user"))
-		const storeId = user.data.storeId
-		let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
-			headers: { authorization: `Bearer ${user.accessToken}` }
-		});
-		setMealpacks(data.data)
-	}
+	// const fetchPastPacks = async () => {
+	// 	const user = JSON.parse(localStorage.getItem("user"))
+	// 	const storeId = user.data.storeId
+	// 	let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
+	// 		headers: { authorization: `Bearer ${user.accessToken}` }
+	// 	});
+	// 	setMealpacks(data.data)
+	// }
 
 	//Added
-	const fetchActivePacks = async () => {
-		const user = JSON.parse(localStorage.getItem("user"));
-		const storeId = user.data.storeId;
-		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/favorite`,
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		setFavoriteMealpacks(data.data);
-	};
+	//Removed this
+	// const fetchActivePacks = async () => {
+	// 	const user = JSON.parse(localStorage.getItem("user"));
+	// 	const storeId = user.data.storeId;
+	// 	let data = await axios.get(
+	// 		`${API_URL}/store/${storeId}/mealpack/all/favorite`,
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	setFavoriteMealpacks(data.data);
+	// };
 
 	const navigate = useNavigate();
-	const rerouteToMealpack = (meal) => {
-		setSelectedActivePastPack(meal)
-		navigate("/mealpack")
-	}
+	
+	//Removed this
+	// const rerouteToMealpack = (meal) => {
+	// 	setSelectedActivePastPack(meal)
+	// 	navigate("/mealpack")
+	// }
 
-	const activateMealPack = async (meal) => {
-		const user = JSON.parse(localStorage.getItem("user"));
-		const storeId = user.data.storeId;
-		await axios.put(
-			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
-			{
-				isFavorite: true,
-				mealpackName: meal.mealpackName,
-				isDelete: false,
-			},
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all/favorite`,
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		setFavoriteMealpacks(data.data);
-	};
+	//Removed this
+	// const activateMealPack = async (meal) => {
+	// 	const user = JSON.parse(localStorage.getItem("user"));
+	// 	const storeId = user.data.storeId;
+	// 	await axios.put(
+	// 		`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
+	// 		{
+	// 			isFavorite: true,
+	// 			mealpackName: meal.mealpackName,
+	// 			isDelete: false,
+	// 		},
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	let data = await axios.get(
+	// 		`${API_URL}/store/${storeId}/mealpack/all/favorite`,
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	setFavoriteMealpacks(data.data);
+	// };
 
-	const deactivateMealPack = async (meal) => {
-		const user = JSON.parse(localStorage.getItem("user"));
-		const storeId = user.data.storeId;
-		await axios.put(
-			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
-			{
-				isFavorite: false,
-				mealpackName: meal.mealpackName,
-				isDelete: false,
-			},
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all`,
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		setMealpacks(data.data);
-	};
 
+	//Removed this
+	// const deactivateMealPack = async (meal) => {
+	// 	const user = JSON.parse(localStorage.getItem("user"));
+	// 	const storeId = user.data.storeId;
+	// 	await axios.put(
+	// 		`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
+	// 		{
+	// 			isFavorite: false,
+	// 			mealpackName: meal.mealpackName,
+	// 			isDelete: false,
+	// 		},
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	let data = await axios.get(
+	// 		`${API_URL}/store/${storeId}/mealpack/all`,
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	setMealpacks(data.data);
+	// };
+
+	//Removed this
 	//Handles deleting mealpack
-	const deleteMealPack = async (meal) => {
-		const user = JSON.parse(localStorage.getItem("user"));
-		const storeId = user.data.storeId;
-		//route
-		await axios.put(
-			`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
-      {
-				isFavorite: false,
-				mealpackName: meal.mealpackName,
-				isDelete: true,
-			},
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		let data = await axios.get(
-			`${API_URL}/store/${storeId}/mealpack/all`,
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		setMealpacks(data.data);
-	}
+	// const deleteMealPack = async (meal) => {
+	// 	const user = JSON.parse(localStorage.getItem("user"));
+	// 	const storeId = user.data.storeId;
+	// 	//route
+	// 	await axios.put(
+	// 		`${API_URL}/store/${storeId}/mealpack/${meal.id}`,
+  //     {
+	// 			isFavorite: false,
+	// 			mealpackName: meal.mealpackName,
+	// 			isDelete: true,
+	// 		},
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	let data = await axios.get(
+	// 		`${API_URL}/store/${storeId}/mealpack/all`,
+	// 		{
+	// 			headers: { authorization: `Bearer ${user.accessToken}` },
+	// 		}
+	// 	);
+	// 	setMealpacks(data.data);
+	// }
 
 
+	//Removed this
   //Popover
-  const popover = (e) => (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Delete mealpack?</Popover.Header>
-      <Popover.Body>
-          Are you sure you want to <strong>delete</strong> this mealpack?
-        </Popover.Body>
-        <button
-          className="button is-danger"
-          variant="primary"
-          onClick={async () => {
-            //As of the moment to check if it is working
-            await deleteMealPack(e)
-            fetchPastPacks()
-          }}
-        >
-          ✓ Delete
-        </button>
-        <button
-          className="button"
-          variant="primary"
-          onClick={() => {
-            document.body.click()
-          }}
-        >
-          X Cancel
-        </button>{" "}
-    </Popover>
-  );
+  // const popover = (e) => (
+  //   <Popover id="popover-basic">
+  //     <Popover.Header as="h3">Delete mealpack?</Popover.Header>
+  //     <Popover.Body>
+  //         Are you sure you want to <strong>delete</strong> this mealpack?
+  //       </Popover.Body>
+  //       <button
+  //         className="button is-danger"
+  //         variant="primary"
+  //         onClick={async () => {
+  //           //As of the moment to check if it is working
+	// 					//Removed this
+  //           // await deleteMealPack(e)
+	// 					await MealpackUtils.deleteMealpack(e, setMealpacks)
+	// 					//Removed this
+  //           // fetchPastPacks()
+	// 					MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
+  //         }}
+  //       >
+  //         ✓ Delete
+  //       </button>
+  //       <button
+  //         className="button"
+  //         variant="primary"
+  //         onClick={() => {
+  //           document.body.click()
+  //         }}
+  //       >
+  //         X Cancel
+  //       </button>{" "}
+  //   </Popover>
+  // );
 
   const addToSelectedArr = (meal) => {
 		if (meal.selectedFav) {
@@ -362,16 +381,24 @@ const AllMealPacksView = (props) => {
 										{!e.isFavorite 
 											? (
 												<button key={uuidv4()} className="button" onClick={async () => {
-													await activateMealPack(e)
-													fetchPastPacks()
+													//Removed this
+													// await activateMealPack(e)
+													await MealpackUtils.addMealpackToFavorites(e, setFavoriteMealpacks)
+													//Removed this
+													// fetchPastPacks()
+													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
 												}} style={{ marginBottom: "10px" }}>Add to Favorites</button>) 
 											: (
 												<button key={uuidv4()} className="button" onClick={async () => {
-													await deactivateMealPack(e)
-													fetchPastPacks()
+													//Removed this
+													// await deactivateMealPack(e)
+													await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
+													//Removed this
+													// fetchPastPacks()
+													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
 												}}>Remove from Favorites</button>
 											)}
-										<OverlayTrigger trigger="click" rootClose placement="top" overlay={popover(e)}>
+										<OverlayTrigger trigger="click" rootClose placement="top" overlay={DeletePopOver(e, setMealpacks)}>
 											<button className="button">Delete</button>
 										</OverlayTrigger>
 									</div>
@@ -402,8 +429,12 @@ const AllMealPacksView = (props) => {
 											setSelectedMealPack(e)
 											}}>See Meal Pack Info</button>
 										<button key={uuidv4()} className="button" onClick={async () => {
-											await deactivateMealPack(e)
-											fetchActivePacks()
+											//Removed this
+											// await deactivateMealPack(e)
+											await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
+											//Removed this
+											// fetchActivePacks()
+											MealpackUtils.fetchFavoriteMealpacks(setMealpacks)
 										}}>Remove from Favorites</button>
 									</div>
 								</div>

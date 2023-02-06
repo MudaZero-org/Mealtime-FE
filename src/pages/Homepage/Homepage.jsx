@@ -23,7 +23,7 @@ import QuickGuide from "./QuickGuide"
 import MealPackModal from "./MealPackModal";
 
 //PopOver for saved filtered list
-import SaveFilteredPopOver from "./SaveFilteredPopOver"
+import SaveFilterPopOver from "./SaveFilterPopOver"
 
 
 const Homepage = (props) => {
@@ -519,7 +519,7 @@ const Homepage = (props) => {
 								})}
 								{filteredInputArr.length > 0 && (
 									<div className="filter-buttons-clear-save">
-										<OverlayTrigger trigger="click" rootClose placement="bottom" overlay={SaveFilteredPopOver(user, filterListName, setFilterListName, filterListSaved, setFilterListSaved, filteredInputArr, setFilteredInputArr, setUserFilterLists)}>
+										<OverlayTrigger trigger="click" rootClose placement="bottom" overlay={SaveFilterPopOver(user, filterListName, setFilterListName, filterListSaved, setFilterListSaved, filteredInputArr, setFilteredInputArr, setUserFilterLists)}>
 											<button className="button">Save List</button>
 										</OverlayTrigger>
 										<p onClick={() => {
