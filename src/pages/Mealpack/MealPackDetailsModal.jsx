@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect, useRef } from "react";
-import "../../../styles/pages/_homepage.scss"
+import "../../styles/pages/_homepage.scss"
 
 const MealPack = (props) => {
   const { show, setShow, selectedMealPack, setSelectedMealPack } = props;

@@ -2,26 +2,29 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
-import "../../../styles/pages/_homepage.scss";
+import "../../styles/pages/_homepage.scss";
 import { v4 as uuidv4 } from "uuid";
-import API_URL, { REACT_APP_URL } from "../../../Constants";
+import API_URL, { REACT_APP_URL } from "../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
 import { Popover, OverlayTrigger, Button } from 'react-bootstrap';
-import starIcon from "../../../images/star.png"
+import starIcon from "../../images/star.png"
 
-const PastView = (props) => {
+//Utils for Mealpacks
+import MealpackUtils from "./utils/mealpackUtils"
+
+const AllMealPacksView = (props) => {
 	const [show, setShow] = useState(false);
 	const [selectedMealPack, setSelectedMealPack] = useState(null);
 	const [selectionArr, setSelectionArr] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("all")
 
 	const {
-		pastMealPacks,
-		setPastMealPacks,
-		setActiveMealPacks,
+		mealpacks,
+		setMealpacks,
+		setFavoriteMealpacks,
 		setSelectedActivePastPack,
 		//Added
-		activeMealPacks,
+		favoriteMealpacks,
 	} = props;
 
 	useEffect(() => {
@@ -32,7 +35,7 @@ const PastView = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` }
 			});
 			all.data.map((meal) => {meal.selectedFav = false})
-			setPastMealPacks(all.data)
+			setMealpacks(all.data)
 
 			let favorites = await axios.get(
 				`${API_URL}/store/${storeId}/mealpack/all/favorite`,
@@ -41,7 +44,7 @@ const PastView = (props) => {
 				}
 			);
 			favorites.data.map((meal) => meal.selectedFav = false)
-			setActiveMealPacks(favorites.data);
+			setFavoriteMealpacks(favorites.data);
 		}
 		fetchData();
 	}, []) // activeMealPacks (causing infinite calls)
@@ -54,7 +57,7 @@ const PastView = (props) => {
 			
 	// 	}
 	// 	fetchData();
-	// }, []); // pastMealPacks (causing infinite calls)
+	// }, []); // mealpacks (causing infinite calls)
 
 
 
@@ -65,7 +68,7 @@ const PastView = (props) => {
 		let data = await axios.get(`${API_URL}/store/${storeId}/mealpack/all`, {
 			headers: { authorization: `Bearer ${user.accessToken}` }
 		});
-		setPastMealPacks(data.data)
+		setMealpacks(data.data)
 	}
 
 	//Added
@@ -78,7 +81,7 @@ const PastView = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
 		);
-		setActiveMealPacks(data.data);
+		setFavoriteMealpacks(data.data);
 	};
 
 	const navigate = useNavigate();
@@ -107,7 +110,7 @@ const PastView = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
 		);
-		setActiveMealPacks(data.data);
+		setFavoriteMealpacks(data.data);
 	};
 
 	const deactivateMealPack = async (meal) => {
@@ -130,7 +133,7 @@ const PastView = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
 		);
-		setPastMealPacks(data.data);
+		setMealpacks(data.data);
 	};
 
 	//Handles deleting mealpack
@@ -155,7 +158,7 @@ const PastView = (props) => {
 				headers: { authorization: `Bearer ${user.accessToken}` },
 			}
 		);
-		setPastMealPacks(data.data);
+		setMealpacks(data.data);
 	}
 
 
@@ -334,7 +337,7 @@ const PastView = (props) => {
 				</aside>
 
 				<div className="tile is-parent active-mealpacks">
-					{selectedCategory === "all" && pastMealPacks ? pastMealPacks.map((e) => {
+					{selectedCategory === "all" && mealpacks ? mealpacks.map((e) => {
 						return (
 							<div key={uuidv4()} className="tile is-child is-4">
 								<div key={uuidv4()} className="active-mealpack-container">
@@ -376,7 +379,7 @@ const PastView = (props) => {
 							</div>
 
 						);
-					}) : activeMealPacks && activeMealPacks.map((e) => {
+					}) : favoriteMealpacks && favoriteMealpacks.map((e) => {
 						return (
 							<div key={uuidv4()} className="tile is-child is-4">
 								<div key={uuidv4()} className="active-mealpack-container">
@@ -419,8 +422,8 @@ const PastView = (props) => {
 							<button
 								onClick={() => {
 									setSelectionArr([])
-									pastMealPacks.map((meal) => meal.selectedFav = false)
-									activeMealPacks.map((meal) => meal.selectedFav = false)
+									mealpacks.map((meal) => meal.selectedFav = false)
+									favoriteMealpacks.map((meal) => meal.selectedFav = false)
 								}} className="button is-medium clear-selection-button">Clear All Selected</button>
 						</div>
 					</div>
@@ -436,4 +439,4 @@ const PastView = (props) => {
 	)
 }
 
-export default PastView;
+export default AllMealPacksView;
