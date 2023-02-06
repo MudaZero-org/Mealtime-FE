@@ -21,10 +21,6 @@ import AllMealpacks from "./pages/Mealpack/AllMealpacks";
 //NavBar
 import Navbar from "./pages//Navbar";
 
-// import FavoriteMealpacks from "./pages/userAuth/FavoriteMealpacks";
-// import MealPack from "./pages/userAuth/MealPack";
-
-
 import Info from "./pages/info";
 
 function App() {
@@ -73,19 +69,6 @@ function App() {
             </>
           }
         />
-        {/* <Route
-          exact
-          path="/mealpack"
-          element={
-            <>
-              <Navbar image={image} />
-              <MealPack
-                selectedActivePack={selectedActivePack}
-                setSelectedActivePastPack={setSelectedActivePastPack}
-              />
-            </>
-          }
-        /> */}
         <Route path="/profile">
           <Route
             index
@@ -133,24 +116,6 @@ function App() {
             </>
           }
         ></Route>
-        {/* <Route
-          exact
-          path="/favorite-mealpacks"
-          element={
-            <>
-              <Navbar image={image} />
-              <FavoriteMealpacks
-                setImage={setImage}
-                selectedActivePack={selectedActivePack}
-                setSelectedActivePastPack={setSelectedActivePastPack}
-                activeMealPacks={activeMealPacks}
-                setActiveMealPacks={setActiveMealPacks}
-                pastMealPacks={pastMealPacks}
-                setPastMealPacks={setPastMealPacks}
-              />
-            </>
-          }
-        ></Route> */}
         <Route exact path="/info/:recipeId" element={<Info />}></Route>
       </Routes>
     </BrowserRouter>
