@@ -2,7 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
+
+//Styling
 import "../../styles/pages/_homepage.scss";
+import "../../styles/pages/_activeMealpacks.scss"
+
 import { v4 as uuidv4 } from "uuid";
 import API_URL, { REACT_APP_URL } from "../../Constants";
 import MealPackDetailsModal from "./MealPackDetailsModal"
@@ -211,130 +215,132 @@ const AllMealPacksView = (props) => {
   //   </Popover>
   // );
 
-  const addToSelectedArr = (meal) => {
-		if (meal.selectedFav) {
-			const arr = [...selectionArr]
-			arr.splice(arr.indexOf(meal), 1);
-			setSelectionArr(arr);
-			meal.selectedFav = false;
-		} else {
-			const arr = [...selectionArr];
-			arr.push(meal)
-			setSelectionArr(arr)
-			meal.selectedFav = true;
-		}
-	}
+  // const addToSelectedArr = (meal) => {
+	// 	if (meal.selectedFav) {
+	// 		const arr = [...selectionArr]
+	// 		arr.splice(arr.indexOf(meal), 1);
+	// 		setSelectionArr(arr);
+	// 		meal.selectedFav = false;
+	// 	} else {
+	// 		const arr = [...selectionArr];
+	// 		arr.push(meal)
+	// 		setSelectionArr(arr)
+	// 		meal.selectedFav = true;
+	// 	}
+	// }
 
-	const renderInput = (meal) => {
-		if (meal.selectedFav) {
-			return (
-				<input checked className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
-			)
-		} else {
-			return (
-				<input className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
-			)
-		}
-	}
+	// const renderInput = (meal) => {
+	// 	if (meal.selectedFav) {
+	// 		return (
+	// 			<input checked className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+	// 		)
+	// 	} else {
+	// 		return (
+	// 			<input className="checkbox" type="checkbox" onChange={() => addToSelectedArr(meal)}></input>
+	// 		)
+	// 	}
+	// }
 
-	const favoriteIcon = (meal) => {
-		if (meal.isFavorite) {
-			return (
-				<span className="icon">
-					<img src={starIcon} className="star-icon" />
-				</span>
-			)
-		}
-	}
+	//Removed this
+	// const favoriteIcon = (meal) => {
+	// 	if (meal.isFavorite) {
+	// 		return (
+	// 			<span className="icon">
+	// 				<img src={starIcon} className="star-icon" />
+	// 			</span>
+	// 		)
+	// 	}
+	// }
 
-	const favoriteIcon2 = (meal) => {
-		return (
-			<span className="icon">
-				<img src={starIcon} className="star-icon" />
-			</span>
-		)
-	}
+	// const favoriteIcon2 = (meal) => {
+	// 	return (
+	// 		<span className="icon">
+	// 			<img src={starIcon} className="star-icon" />
+	// 		</span>
+	// 	)
+	// }
 	
-	const filterNutritionPDF = (meal) => {
-		console.log(meal)
-		let filterArr = [];
-		console.log(meal.recipeDetail.vegan)
-		meal.recipeDetail.vegan && filterArr.push("Vegan")
-		meal.recipeDetail.vegetarian && filterArr.push("Vegetarian")
-		meal.recipeDetail.glutenFree && filterArr.push("Gluten Free")
-		meal.recipeDetail.dairyFree && filterArr.push("Dairy Free")
-		return filterArr;
-	}
 
-  const downloadPDF = (meal) => {
-		let qrCode = generateQRCode(meal);
-		let nutritionArr = filterNutritionPDF(meal)
-		const doc = new jsPDF("p", "mm", "a4");
-		let width = doc.internal.pageSize.getWidth();
-		const name = meal.mealpackName;
-		const instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
-		const nutrition = nutritionArr.map((e) => " " + e);
-		const ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-		doc.setFontSize(32);
-		doc.text(10, 85, `${name}`, {
-			maxWidth: width / 1.15,
-		});
-		doc.setFontSize(14);
-		doc.text(10, 95, [`${nutrition}`])
-		doc.setFontSize(18);
-		doc.text(10, 110, [`Ingredients: ${ingredients}`], {
-			maxWidth: width / 1.15,
-		})
-		doc.text(10, 140, [`${instructions}`], {
-			maxWidth: width / 1.15,
-		});
-		doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
-		doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
-		doc.autoPrint({ variant: "non-conform" });
-		doc.save("print-mealpacks.pdf");
-	};
+	// const filterNutritionPDF = (meal) => {
+	// 	console.log(meal)
+	// 	let filterArr = [];
+	// 	console.log(meal.recipeDetail.vegan)
+	// 	meal.recipeDetail.vegan && filterArr.push("Vegan")
+	// 	meal.recipeDetail.vegetarian && filterArr.push("Vegetarian")
+	// 	meal.recipeDetail.glutenFree && filterArr.push("Gluten Free")
+	// 	meal.recipeDetail.dairyFree && filterArr.push("Dairy Free")
+	// 	return filterArr;
+	// }
 
-	const downloadAllPDF = () => {
-		const doc = new jsPDF("p", "mm", "a4");
-		let width = doc.internal.pageSize.getWidth();
-		selectionArr.map((meal) => {
-			let qrCode = generateQRCode(meal);
-			let nutritionArr = filterNutritionPDF(meal)
-			let name = meal.mealpackName;
-			let instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
-			let ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
-			let nutrition = nutritionArr.map((e) => " " + e);
-			doc.setFontSize(32);
-			doc.text(10, 85, `${name}`, {
-				maxWidth: width / 1.15,
-			});
-			doc.setFontSize(14);
-			doc.text(10, 95, [`${nutrition}`])
-			doc.setFontSize(18);
-			doc.text(10, 110, [`Ingredients: ${ingredients}`], {
-				maxWidth: width / 1.15,
-			})
-			doc.text(10, 140, [`${instructions}`], {
-				maxWidth: width / 1.15,
-			});
-			doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
-			doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
-			doc.addPage();
-		})
-		let pageCount = doc.internal.getNumberOfPages();
-		doc.deletePage(pageCount);
-		doc.save("print-mealpacks.pdf")
-	};
+  // const downloadPDF = (meal) => {
+	// 	let qrCode = generateQRCode(meal);
+	// 	let nutritionArr = filterNutritionPDF(meal)
+	// 	const doc = new jsPDF("p", "mm", "a4");
+	// 	let width = doc.internal.pageSize.getWidth();
+	// 	const name = meal.mealpackName;
+	// 	const instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
+	// 	const nutrition = nutritionArr.map((e) => " " + e);
+	// 	const ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
+	// 	doc.setFontSize(32);
+	// 	doc.text(10, 85, `${name}`, {
+	// 		maxWidth: width / 1.15,
+	// 	});
+	// 	doc.setFontSize(14);
+	// 	doc.text(10, 95, [`${nutrition}`])
+	// 	doc.setFontSize(18);
+	// 	doc.text(10, 110, [`Ingredients: ${ingredients}`], {
+	// 		maxWidth: width / 1.15,
+	// 	})
+	// 	doc.text(10, 140, [`${instructions}`], {
+	// 		maxWidth: width / 1.15,
+	// 	});
+	// 	doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
+	// 	doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
+	// 	doc.autoPrint({ variant: "non-conform" });
+	// 	doc.save("print-mealpacks.pdf");
+	// };
 
-	const generateQRCode = (meal) => {
-		const QRCode = require("qrcode");
-		let qrCodeDataUrl;
-		let recipeId = meal.recipeId
-		QRCode.toDataURL(`${REACT_APP_URL}/info/${recipeId}`, function (err, url) {
-			qrCodeDataUrl = url;
-		});
-		return qrCodeDataUrl;
-	};
+	// const downloadAllPDF = () => {
+	// 	const doc = new jsPDF("p", "mm", "a4");
+	// 	let width = doc.internal.pageSize.getWidth();
+	// 	selectionArr.map((meal) => {
+	// 		let qrCode = generateQRCode(meal);
+	// 		let nutritionArr = filterNutritionPDF(meal)
+	// 		let name = meal.mealpackName;
+	// 		let instructions = meal.recipeDetail.analyzedInstructions[0].steps.map((e) => " " + e.number + "." + " " + e.step)
+	// 		let ingredients = meal.recipeDetail.extendedIngredients.map((e) => " " + e.name)
+	// 		let nutrition = nutritionArr.map((e) => " " + e);
+	// 		doc.setFontSize(32);
+	// 		doc.text(10, 85, `${name}`, {
+	// 			maxWidth: width / 1.15,
+	// 		});
+	// 		doc.setFontSize(14);
+	// 		doc.text(10, 95, [`${nutrition}`])
+	// 		doc.setFontSize(18);
+	// 		doc.text(10, 110, [`Ingredients: ${ingredients}`], {
+	// 			maxWidth: width / 1.15,
+	// 		})
+	// 		doc.text(10, 140, [`${instructions}`], {
+	// 			maxWidth: width / 1.15,
+	// 		});
+	// 		doc.addImage(meal.recipeDetail.image, "JPG", 20, 15, 80, 50)
+	// 		doc.addImage(qrCode, "PNG", 130, 15, 50, 50);
+	// 		doc.addPage();
+	// 	})
+	// 	let pageCount = doc.internal.getNumberOfPages();
+	// 	doc.deletePage(pageCount);
+	// 	doc.save("print-mealpacks.pdf")
+	// };
+
+	// const generateQRCode = (meal) => {
+	// 	const QRCode = require("qrcode");
+	// 	let qrCodeDataUrl;
+	// 	let recipeId = meal.recipeId
+	// 	QRCode.toDataURL(`${REACT_APP_URL}/info/${recipeId}`, function (err, url) {
+	// 		qrCodeDataUrl = url;
+	// 	});
+	// 	return qrCodeDataUrl;
+	// };
 
 	return (
 		<div className="past-container">
@@ -361,9 +367,15 @@ const AllMealPacksView = (props) => {
 							<div key={uuidv4()} className="tile is-child is-4">
 								<div key={uuidv4()} className="active-mealpack-container">
 									<img className="food-small-image" src={e.recipeDetail["image"]}></img>
-									{renderInput(e)}
+									{/* Removed this */}
+									{/* {renderInput(e)} */}
+									{MealpackUtils.renderInput(e, selectionArr, setSelectionArr)}
 
-									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName} {favoriteIcon(e)}</strong></p>
+									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName} 
+									{/* Removed this */}
+									{/* {favoriteIcon(e)} */}
+									{MealpackUtils.favoriteIcon(e)}
+									</strong></p>
 									<div className="tags past-mealpacks-tags">
 										{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
 										{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
@@ -371,7 +383,12 @@ const AllMealPacksView = (props) => {
 										{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
 									</div>
 									<div className="past-mealpacks-buttons">
-										<button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
+										<button key={uuidv4()} className="button" onClick={() => 
+											//Removed this
+											// downloadPDF(e)
+											MealpackUtils.downloadPDF(e)
+
+											} style={{ marginBottom: "10px" }}>Download PDF</button>
 										<button key={uuidv4()} className="button" onClick={() => {
 											//Old Code
 											// rerouteToMealpack(e)
@@ -411,9 +428,15 @@ const AllMealPacksView = (props) => {
 							<div key={uuidv4()} className="tile is-child is-4">
 								<div key={uuidv4()} className="active-mealpack-container">
 									<img className="food-small-image" src={e.recipeDetail["image"]}></img>
-									{renderInput(e)}
+									{/* Removed this */}
+									{/* {renderInput(e)} */}
+									{MealpackUtils.renderInput(e, selectionArr, setSelectionArr)}
 	
-									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong>{favoriteIcon2()} </p>
+									<p key={uuidv4()} className="mealpack-title"><strong>{e.mealpackName}</strong>
+									{/* Removed this */}
+									{/* {favoriteIcon2()}  */}
+									{MealpackUtils.favoriteIcon2(e)}
+									</p>
 									<div className="tags active-mealpacks-tags">
 										{e.recipeDetail.vegetarian && <span className="tag" id="vegetarian">vegetarian</span>}
 										{e.recipeDetail.vegan && <span className="tag" id="vegan">vegan</span>}
@@ -421,7 +444,11 @@ const AllMealPacksView = (props) => {
 										{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
 									</div>
 									<div className="active-mealpacks-buttons">
-										<button key={uuidv4()} className="button" onClick={() => downloadPDF(e)} style={{ marginBottom: "10px" }}>Download PDF</button>
+										<button key={uuidv4()} className="button" onClick={() =>
+											//Removed this 
+											// downloadPDF(e)
+											MealpackUtils.downloadPDF(e)
+											} style={{ marginBottom: "10px" }}>Download PDF</button>
 										<button key={uuidv4()} className="button" onClick={() => {
 											//Old code
 											// rerouteToMealpack(e)
@@ -449,7 +476,11 @@ const AllMealPacksView = (props) => {
 					<div className="selection-popup-container">
 						<h1 style={{ color: "black" }}>You have selected {selectionArr.length} meal packs to print</h1>
 						<div className="selection-popup-buttons">
-							<button key={uuidv4()} className="button is-medium print-all-button" onClick={downloadAllPDF}>Download Selected PDF's</button>
+							<button key={uuidv4()} className="button is-medium print-all-button" onClick={() =>
+								//Removed this
+								// downloadAllPDF
+								MealpackUtils.downloadAllPDF(selectionArr)
+								}>Download Selected PDF's</button>
 							<button
 								onClick={() => {
 									setSelectionArr([])
