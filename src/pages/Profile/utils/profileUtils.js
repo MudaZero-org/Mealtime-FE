@@ -64,8 +64,6 @@ const profileUtils = {
     return (
 			<div className="photo-upload-window">
 				<form className="app__form" name="upload_file"
-				//Refactor this 
-				// onSubmit={handleSubmitPhoto}
 				onSubmit={(e) => {profileUtils.handleSubmitPhoto(e, user, setProgressPercent, setImage, storeName, postalCode, companyName, storeAddress, phoneNumber, storeManager)}}
 				>
 					<input type="file"></input>
@@ -107,9 +105,6 @@ const profileUtils = {
   },
   submitEditProfile: async (e, user, storeName, postalCode, companyName, storeAddress, phoneNumber, storeManager, image) => {
     e.preventDefault();
-		console.log("Submit");
-		// console.log(storeName, image);
-		console.log(storeName)
 		await axios.put(
 			`${API_URL}/user/${user.data.storeId}`,
 			{
