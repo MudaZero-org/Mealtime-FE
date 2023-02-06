@@ -97,7 +97,6 @@ const homepageUtils = {
 				homepageUtils.clearIngredientInput();
 				setIngredientInput(null)
 		}
-
   }
 
 

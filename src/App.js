@@ -19,7 +19,7 @@ import AllMealpacks from "./pages/userAuth/AllMealpacks";
 import Navbar from "./pages/userAuth/components/Navbar";
 import FavoriteMealpacks from "./pages/userAuth/FavoriteMealpacks";
 
-import HowToUse from "./pages/userAuth/HowToUse";
+
 import Info from "./pages/info";
 
 function App() {
