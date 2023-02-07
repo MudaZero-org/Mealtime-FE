@@ -1,5 +1,5 @@
-import whLogo from "../../../images/white-Mealtime.svg";
-import AuthUtils from "../utils/authenticate";
+import whLogo from "../images/white-Mealtime.svg";
+import AuthUtils from "./User/utils/authenticate";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Popover, OverlayTrigger } from 'react-bootstrap';

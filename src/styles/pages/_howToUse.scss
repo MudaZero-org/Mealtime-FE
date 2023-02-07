@@ -30,10 +30,7 @@
 .help-text {
   font-size: 35px;
   color:black;
-
 }
-
-
 
 .modal {
   width: 100px;
@@ -43,20 +40,6 @@
   background-color: rgb(254, 250, 240);
 }
 
-// .carousel-caption {
-//   position: absolute;
-//   // bottom: 50%;
-//   transform: translateY(20%);
-
-// }
-
-// .carousel-item{
-//   max-width: 500px;
-// }
-
-// .carousel-img{
-//   max-width: 100px
-// }
 .help-image {
   width: 400px;
 }
@@ -66,4 +49,15 @@
   justify-content: center;
   margin-bottom: 15rem;
   
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-color: rgba(169,169,169, 0.4);
+  width: 2rem !important;
+  height: 6rem !important;
+  border-radius: 10px;
+}
+
+.carousel-control-prev {
+  visibility: hidden;
 }
