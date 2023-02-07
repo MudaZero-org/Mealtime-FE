@@ -94,9 +94,9 @@ const Homepage = (props) => {
 				<button onClick={()=> setShowGuide(true)}  className="help-button button"><span className="question-mark">?</span>Help</button>
 			</div>
 			<div className="app-container">
-				<div className="app">
+				<div className="app columns is-desktop">
 					
-					<div className="input-section">
+					<div className="input-section column">
 						<div className="input-container">
 							<button className="accordion open-default"><strong>Ingredients</strong></button>
 							<div className="ribs">
@@ -232,104 +232,104 @@ const Homepage = (props) => {
 
 
 
-					<div className="right-side">
-						<div className="selected-mealpacks">
-							<div className="user-selection-container">
-								<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
-								<div className="selected-mealpacks-container">
-									{successfulSave && (
-										<div className="add-success-message-container">
-											<h5 className="add-success-message">🎉 Meal packs successfully added! 🎉</h5>
-										</div>
-									)}
-									{myMealPacks &&
-										myMealPacks.map((e, index) => {
-											return (
-												<div key={uuidv4()} className="mealpack-container">
-													<div className="mealpack-container-buttons">
-														<button
-															key={uuidv4()}
-															onClick={() => {
-																HomepageUtils.removeFromMyMealPacks(e, myMealPacks, setMyMealPacks)
-																HomepageUtils.toggleAddButton(e)
-															}}
-															className="button is-medium mealpack-add-button"
-														>Remove</button>
-														<button
-															key={uuidv4()}
-															className="mealpack-info-button button is-medium"
-															onClick={() => {
-																setSelectedMealPack(e);
-																setShow(true);
-															}}
-														>See Info</button>
-													</div>
-													<p key={uuidv4()} className="mealpack-title" id="mealpack-title">
-														<strong>{e.title}</strong>
-													</p>
-													<img className="generated-image" src={e.image}></img>
+					<div className="generated-mealpacks column">
+						<div className="user-selection-container">
+							<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
+							<div className="generated-mealpacks-container">
+								{mealPacks &&
+									mealPacks.map((e, index) => {
+										return (
+											<div key={uuidv4()} className="mealpack-container">
+												<div className="mealpack-container-buttons">
+												{HomepageUtils.renderAddButton(e, setSuccessfulSave, myMealPacks, setMyMealPacks)}
+												<button
+													key={uuidv4()}
+													className="mealpack-info-button is-medium button"
+													onClick={() => {
+														setSelectedMealPack(e);
+														setShow(true);
+													}}
+												>See Info</button>
 												</div>
-											);
-										})
-									}
-								</div>
-							</div>
-							<div className="bottom-save-button">
-								<div className="buttons-container">
-									<button
-										style={{ color: "white" }}
-										id="save-mealpacks-button"
-										disabled={buttonStatus}
-										className="publish-button is-medium button has-background-primary-dark"
-										onClick={() => {
-											HomepageUtils.publishMealPack(user, myMealPacks)
-											setSuccessfulSave(true);
-											setMyMealPacks([]);
-										}}
-									>Save</button>
-									<button 
-										id="clear-mealpacks-button"
-										className="button is-medium publish-button"
-										disabled={buttonStatus}
-										onClick={() => {
-											setMyMealPacks([])
-										}}
-									>Clear</button>
-								</div>
+												<p key={uuidv4()} className="mealpack-title" id="mealpack-title">
+													<strong>{e.title}</strong>
+												</p>
+												<img className="generated-image" src={e.image}></img>
+											</div>
+										);
+									})
+								}
 							</div>
 						</div>
+					</div>	
 
-						<div className="generated-mealpacks">
-							<div className="user-selection-container">
-								<h3 className="generated-mealpacks-title">Generated Meal Packs</h3>
-								<div className="generated-mealpacks-container">
-									{mealPacks &&
-										mealPacks.map((e, index) => {
-											return (
-												<div key={uuidv4()} className="mealpack-container">
-													<div className="mealpack-container-buttons">
-													{HomepageUtils.renderAddButton(e, setSuccessfulSave, myMealPacks, setMyMealPacks)}
+					<div className="selected-mealpacks column">
+						<div className="user-selection-container">
+							<h3 className="my-mealpacks-title">Selected Meal Packs</h3>
+							<div className="selected-mealpacks-container">
+								{successfulSave && (
+									<div className="add-success-message-container">
+										<h5 className="add-success-message">🎉 Meal packs successfully added! 🎉</h5>
+									</div>
+								)}
+								{myMealPacks &&
+									myMealPacks.map((e, index) => {
+										return (
+											<div key={uuidv4()} className="mealpack-container">
+												<div className="mealpack-container-buttons">
 													<button
 														key={uuidv4()}
-														className="mealpack-info-button is-medium button"
+														onClick={() => {
+															HomepageUtils.removeFromMyMealPacks(e, myMealPacks, setMyMealPacks)
+															HomepageUtils.toggleAddButton(e)
+														}}
+														className="button is-medium mealpack-add-button"
+													>Remove</button>
+													<button
+														key={uuidv4()}
+														className="mealpack-info-button button is-medium"
 														onClick={() => {
 															setSelectedMealPack(e);
 															setShow(true);
 														}}
 													>See Info</button>
-													</div>
-													<p key={uuidv4()} className="mealpack-title" id="mealpack-title">
-														<strong>{e.title}</strong>
-													</p>
-													<img className="generated-image" src={e.image}></img>
 												</div>
-											);
-										})
-									}
-								</div>
+												<p key={uuidv4()} className="mealpack-title" id="mealpack-title">
+													<strong>{e.title}</strong>
+												</p>
+												<img className="generated-image" src={e.image}></img>
+											</div>
+										);
+									})
+								}
 							</div>
-						</div>	
+						</div>
+						<div className="bottom-save-button">
+							<div className="buttons-container">
+								<button
+									style={{ color: "white" }}
+									id="save-mealpacks-button"
+									disabled={buttonStatus}
+									className="publish-button is-medium button has-background-primary-dark"
+									onClick={() => {
+										HomepageUtils.publishMealPack(user, myMealPacks)
+										setSuccessfulSave(true);
+										setMyMealPacks([]);
+									}}
+								>Save</button>
+								<button 
+									id="clear-mealpacks-button"
+									className="button is-medium publish-button"
+									disabled={buttonStatus}
+									onClick={() => {
+										setMyMealPacks([])
+									}}
+								>Clear</button>
+							</div>
+						</div>
 					</div>
+
+						
 					<MealPackModal
 						selectedMealPack={selectedMealPack}
 						setSelectedMealPack={setSelectedMealPack}
