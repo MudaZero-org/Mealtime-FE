@@ -20,7 +20,7 @@ const Info = () => {
 
   return (
     <>
-      {page && <div dangerouslySetInnerHTML={{__html: page}} />}
+      {page && <div className="info-page" dangerouslySetInnerHTML={{__html: page}} />}
     </>
   )
 }

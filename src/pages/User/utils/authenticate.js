@@ -14,7 +14,7 @@ const signUp = async (
   password
 ) => {
   return await axios
-    .post(`${API_URL}/user/signUp`, {
+    .post(`${API_URL}/user/signup`, {
       storeName: storename,
       companyName: companyname,
       postalCode: postalcode,
@@ -36,7 +36,7 @@ const signUp = async (
 
 const logIn = async (email, password) => {
   return await axios
-    .post(`${API_URL}/user/logIn`, {
+    .post(`${API_URL}/user/login`, {
       userEmail: email,
       userPassword: password,
     })

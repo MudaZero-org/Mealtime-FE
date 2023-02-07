@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import AuthUtils from "./utils/authenticate";
 
 const SignUp = (props) => {
+	const {showGuide, setShowGuide, firstLogIn, setFirstLogIn} = props;
+
 	const [storeName, setStoreName] = useState("");
 	const [companyName, setCompanyName] = useState("test-company");
 	const [postalCode, setPostalCode] = useState(12345);
@@ -16,13 +18,6 @@ const SignUp = (props) => {
 	const [passwordsMatch, setPasswordsMatch] = useState(true)
 
 	const navigate = useNavigate();
-	const reroute = () => {
-		navigate("/");
-	};
-
-	const toTheHomepage = () => {
-		navigate("/home");
-	};
 
 	return (
 		<div className="signup-signin-app">
@@ -89,7 +84,7 @@ const SignUp = (props) => {
 											return;
 										}
 
-										AuthUtils.signUp(
+										await AuthUtils.signUp(
 											storeName,
 											companyName,
 											postalCode,
@@ -98,9 +93,10 @@ const SignUp = (props) => {
 											email,
 											storeManager,
 											password
-										).then((res) => {
-											toTheHomepage();
-										});
+										)
+										setShowGuide(true)
+										setFirstLogIn(true)
+										navigate("/home")
 									} catch (error) {
 										console.log(error);
 									}
@@ -109,7 +105,7 @@ const SignUp = (props) => {
 						</div>
 						<div className="spacer"></div>
 						<div className="input-field login-text">
-							<p>Already have an account?<br></br> <a onClick={reroute} className="register-link">Login here!</a></p>
+							<p>Already have an account?<br></br> <a onClick={() => navigate("/")} className="register-link">Login here!</a></p>
 						</div>
 					</form>
 				</div>
