@@ -124,8 +124,8 @@ const EditProfile = (props) => {
 								></input>
 							</div>
 						</div> */}
-						<div className="field is-grouped">
-							<div className="control">
+						<div className="field edit-profile-button-container">
+							<div className="control-edit-profile">
 								<button
 									className="button is-success"
 									onClick={async (e) => {
@@ -136,7 +136,7 @@ const EditProfile = (props) => {
 									Update
 								</button>
 							</div>
-							<div className="control">
+							<div className="control-edit-profile">
 								<button
 									className="button is-link is-light"
 									onClick={(e) => {
