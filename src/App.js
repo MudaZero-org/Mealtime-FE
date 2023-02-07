@@ -2,23 +2,30 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import User from "./pages/userAuth/User";
-import SignIn from "./pages/userAuth/SignIn";
-import SignUp from "./pages/userAuth/SignUp";
-import Homepage from "./pages/userAuth/Homepage";
-import MealPack from "./pages/userAuth/MealPack";
-import Profile from "./pages/userAuth/Profile";
-import AllMealpacks from "./pages/userAuth/AllMealpacks";
-import Navbar from "./pages/userAuth/components/Navbar";
-import FavoriteMealpacks from "./pages/userAuth/FavoriteMealpacks";
-import EditProfile from "./pages/userAuth/EditProfile";
-import EditPassword from "./pages/userAuth/EditPassword";
-import HowToUse from "./pages/userAuth/HowToUse";
+//User
+import SignIn from "./pages/User/SignIn";
+import SignUp from "./pages/User/SignUp";
+
+//Profile
+import Profile from "./pages/Profile/Profile";
+import EditProfile from "./pages/Profile/EditProfile";
+import EditPassword from "./pages/Profile/EditPassword";
+
+//Homepage
+import Homepage from "./pages/Homepage/Homepage";
+
+
+//Mealpacks
+import AllMealpacks from "./pages/Mealpack/AllMealpacks";
+
+//NavBar
+import Navbar from "./pages//Navbar";
+
 import Info from "./pages/info";
 
 function App() {
-  const [activeMealPacks, setActiveMealPacks] = useState(null);
-  const [pastMealPacks, setPastMealPacks] = useState(null);
+  const [favoriteMealpacks, setFavoriteMealpacks] = useState(null);
+  const [mealpacks, setMealpacks] = useState(null);
   const [selectedActivePack, setSelectedActivePastPack] = useState("hello");
   const [showGuide, setShowGuide] = useState(false);
   const [firstLogIn, setFirstLogIn] = useState(false);
@@ -40,7 +47,6 @@ function App() {
             />
           }
         />
-        <Route exact path="/user" element={<User />} />
         <Route
           exact
           path="/home"
@@ -50,28 +56,15 @@ function App() {
               <Homepage
                 selectedActivePack={selectedActivePack}
                 setSelectedActivePastPack={setSelectedActivePastPack}
-                activeMealPacks={activeMealPacks}
-                setActiveMealPacks={setActiveMealPacks}
-                pastMealPacks={pastMealPacks}
-                setPastMealPacks={setPastMealPacks}
+                favoriteMealpacks={favoriteMealpacks}
+                setfavoriteMealpacks={setFavoriteMealpacks}
+                mealpacks={mealpacks}
+                setMealpacks={setMealpacks}
                 showGuide={showGuide}
                 setShowGuide={setShowGuide}
                 firstLogIn={firstLogIn}
                 setFirstLogIn={setFirstLogIn}
                 setImage={setImage}
-              />
-            </>
-          }
-        />
-        <Route
-          exact
-          path="/mealpack"
-          element={
-            <>
-              <Navbar image={image} />
-              <MealPack
-                selectedActivePack={selectedActivePack}
-                setSelectedActivePastPack={setSelectedActivePastPack}
               />
             </>
           }
@@ -113,30 +106,12 @@ function App() {
               <Navbar image={image} />
               <AllMealpacks
                 setImage={setImage}
-                setActiveMealPacks={setActiveMealPacks}
-                setPastMealPacks={setPastMealPacks}
-                pastMealPacks={pastMealPacks}
+                setFavoriteMealpacks={setFavoriteMealpacks}
+                setMealpacks={setMealpacks}
+                mealpacks={mealpacks}
                 setSelectedActivePastPack={setSelectedActivePastPack}
                 //Added more here
-                activeMealPacks={activeMealPacks}
-              />
-            </>
-          }
-        ></Route>
-        <Route
-          exact
-          path="/favorite-mealpacks"
-          element={
-            <>
-              <Navbar image={image} />
-              <FavoriteMealpacks
-                setImage={setImage}
-                selectedActivePack={selectedActivePack}
-                setSelectedActivePastPack={setSelectedActivePastPack}
-                activeMealPacks={activeMealPacks}
-                setActiveMealPacks={setActiveMealPacks}
-                pastMealPacks={pastMealPacks}
-                setPastMealPacks={setPastMealPacks}
+                favoriteMealpacks={favoriteMealpacks}
               />
             </>
           }

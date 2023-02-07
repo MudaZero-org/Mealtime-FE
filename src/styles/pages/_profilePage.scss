@@ -53,3 +53,9 @@ progress::-webkit-progress-value {
 progress::-webkit-progress-bar {
   background: rgb(198, 198, 198);
 }
+
+.control {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}

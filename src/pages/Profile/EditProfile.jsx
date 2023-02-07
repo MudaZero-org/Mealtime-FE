@@ -1,8 +1,13 @@
-import axios from "axios";
-import "../../styles/pages/_profilePage.scss";
 import { useEffect, useState } from "react";
-import API_URL from "../../Constants";
 import { useNavigate } from "react-router-dom";
+
+//Styling
+import "../../styles/pages/_profilePage.scss";
+
+//Profile Utils
+import ProfileUtils from "./utils/profileUtils"
+
+
 
 const EditProfile = (props) => {
 	const { image } = props;
@@ -18,43 +23,8 @@ const EditProfile = (props) => {
 	const user = JSON.parse(localStorage.getItem("user"));
 
 	useEffect(() => {
-		async function fetchUserData() {
-			const userID = user.data.storeId;
-			const userData = await axios.get(`${API_URL}/user/${userID}`, {
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			});
-
-			setStoreName(userData.data.storeName);
-			// setEmail(user.data.email);
-			// setImage(user.data.profileImg);
-		}
-
-		fetchUserData();
+		ProfileUtils.fetchEditProfileData(user, setStoreName)
 	}, []);
-
-	const handleSubmit = async (e) => {
-		//Update store name and/or email address
-		e.preventDefault();
-		console.log("Submit");
-		// console.log(storeName, image);
-		console.log(storeName)
-		await axios.put(
-			`${API_URL}/user/${user.data.storeId}`,
-			{
-				storeName: storeName,
-				postalCode: postalCode,
-				companyName: companyName,
-				storeAddress: storeAddress,
-				phoneNumber: phoneNumber,
-				storeManager: storeManager,
-				profileImg: image,
-			},
-			{
-				headers: { authorization: `Bearer ${user.accessToken}` },
-			}
-		);
-		navigate("/profile");
-	};
 
 	return (
 		<div className="profile-page">
@@ -158,8 +128,9 @@ const EditProfile = (props) => {
 							<div className="control">
 								<button
 									className="button is-success"
-									onClick={(e) => {
-										handleSubmit(e);
+									onClick={async (e) => {
+										await ProfileUtils.submitEditProfile(e, user, storeName, postalCode, companyName, storeAddress, phoneNumber, storeManager, image)
+										navigate("/profile");
 									}}
 								>
 									Update
