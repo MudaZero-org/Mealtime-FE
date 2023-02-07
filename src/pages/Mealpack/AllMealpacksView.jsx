@@ -150,6 +150,18 @@ const AllMealPacksView = (props) => {
 								}} className="button is-medium clear-selection-button">Clear All Selected</button>
 						</div>
 					</div>
+					<aside className="menu sidebar" style={{marginLeft: "6rem"}}>
+						<p className="menu-label" style={{fontSize: "15px"}}>
+							Meal Packs
+						</p>
+						<ul className="menu-list">
+							<li onClick={()=>{
+								setSelectedCategory("all")}}><a>All</a></li>
+							<li onClick={()=>{
+								setSelectedCategory("favorites")
+							}}><a>Favorites</a></li>
+						</ul>
+					</aside>
 				</div>
 			)}
 			<MealPackDetailsModal

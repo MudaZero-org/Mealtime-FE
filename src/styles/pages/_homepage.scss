@@ -565,10 +565,41 @@
   display: flex;
 }
 
+// .sidebar {
+//   margin-bottom: 20px;
+//   margin-left: 5%;
+//   flex: 1;
+// }
+
 .sidebar {
+  float: right;
   margin-bottom: 20px;
   margin-left: 5%;
   flex: 1;
-}
+}   
 
+@media screen and (max-width: 1023px){
+  .hello {
+    flex-direction:column;
+  }
+  .menu-list {
+    display: flex;
+  }
+  li {
+    width: fit-content;
+    text-decoration: underline;
+    font-size: 30px;
+    margin-right: 10px;
+    text-align: center;
+  }
+  .menu-label {
+    display: none;
+  }
+  .sidebar {
+    margin-left: 0px!important;
+    margin-bottom: -1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+}
 
