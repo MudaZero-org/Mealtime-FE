@@ -57,7 +57,7 @@ const Profile = (props) => {
 					<div className="field is-grouped">
 						<div className="control">
 							<button
-								className="button is-light"
+								className="button edit-button is-light"
 								onClick={() => {
 									navigate("/profile/editProfile");
 								}}
