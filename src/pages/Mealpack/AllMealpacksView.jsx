@@ -70,28 +70,28 @@ const AllMealPacksView = (props) => {
 										{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
 									</div>
 									<div className="past-mealpacks-buttons">
-										<button key={uuidv4()} className="button" onClick={() => 
+										<button key={uuidv4()} className="button tile-button is-small" onClick={() => 
 											MealpackUtils.downloadPDF(e)
 
-											} style={{ marginBottom: "10px" }}>Download PDF</button>
-										<button key={uuidv4()} className="button" onClick={() => {
+											}>Download PDF</button>
+										<button key={uuidv4()} className="button tile-button is-small" onClick={() => {
 											setShow(true)
 											setSelectedMealPack(e)
 										}}>See Meal Pack Info</button>
 										{!e.isFavorite 
 											? (
-												<button key={uuidv4()} className="button" onClick={async () => {
+												<button key={uuidv4()} className="button tile-button is-small" onClick={async () => {
 													await MealpackUtils.addMealpackToFavorites(e, setFavoriteMealpacks)
 													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
-												}} style={{ marginBottom: "10px" }}>Add to Favorites</button>) 
+												}}>Add to Favorites</button>) 
 											: (
-												<button key={uuidv4()} className="button" onClick={async () => {
+												<button key={uuidv4()} className="button tile-button is-small" onClick={async () => {
 													await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
 													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
 												}}>Remove from Favorites</button>
 											)}
 										<OverlayTrigger trigger="click" rootClose placement="top" overlay={DeletePopOver(e, setMealpacks)}>
-											<button className="button">Delete</button>
+											<button className="button tile-button is-small">Delete</button>
 										</OverlayTrigger>
 									</div>
 								</div>
@@ -115,14 +115,14 @@ const AllMealPacksView = (props) => {
 										{e.recipeDetail.dairyFree && <span className="tag" id="dairy">dairy free</span>}
 									</div>
 									<div className="active-mealpacks-buttons">
-										<button key={uuidv4()} className="button" onClick={() =>
+										<button key={uuidv4()} className="button is-small tile-button" onClick={() =>
 											MealpackUtils.downloadPDF(e)
-											} style={{ marginBottom: "10px" }}>Download PDF</button>
-										<button key={uuidv4()} className="button" onClick={() => {
+											}>Download PDF</button>
+										<button key={uuidv4()} className="button is-small tile-button" onClick={() => {
 											setShow(true)
 											setSelectedMealPack(e)
 											}}>See Meal Pack Info</button>
-										<button key={uuidv4()} className="button" onClick={async () => {
+										<button key={uuidv4()} className="button is-small tile-button" onClick={async () => {
 											await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
 											MealpackUtils.fetchFavoriteMealpacks(setMealpacks)
 										}}>Remove from Favorites</button>

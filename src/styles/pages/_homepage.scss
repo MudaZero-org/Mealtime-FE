@@ -215,6 +215,8 @@
   border-right: 1px solid black;
   display: flex;
   justify-content: center;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .generated-mealpacks-container {
@@ -222,9 +224,10 @@
   overflow: scroll;
   width: 100%;
   border: solid black 1px;
-  overflow-x: hidden;
   background-color: white;
   padding: 10px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .generated-image {
@@ -251,6 +254,8 @@
   border-right: 1px black solid;
   border-left: 1px black solid;
 	font-weight: bold;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 	// margin-bottom: 20px;
 	z-index: 1;
 	padding: 16px;
@@ -339,13 +344,28 @@
   border-top-left-radius: 3.5px;
 }
 
+
+// MEAL PACK PAGE
+
 .active-mealpacks-tags,
 .past-mealpacks-tags {
   margin: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 
+.active-mealpacks-buttons,
+.past-mealpacks-buttons {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
 
-// MEAL PACK PAGE
+.tile-button {
+  min-width: 160px;
+}
 
 .info-page-container {
   display: flex;
