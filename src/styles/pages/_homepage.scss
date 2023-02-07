@@ -561,15 +561,9 @@
 
 
 //Additional styling -Ken for side bar
-.hello {
+.sidebar-container {
   display: flex;
 }
-
-// .sidebar {
-//   margin-bottom: 20px;
-//   margin-left: 5%;
-//   flex: 1;
-// }
 
 .sidebar {
   float: right;
@@ -579,7 +573,7 @@
 }   
 
 @media screen and (max-width: 1023px){
-  .hello {
+  .sidebar-container {
     flex-direction:column;
   }
   .menu-list {

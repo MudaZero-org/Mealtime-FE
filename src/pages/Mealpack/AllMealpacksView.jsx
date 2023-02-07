@@ -38,7 +38,7 @@ const AllMealPacksView = (props) => {
 	return (
 		<div className="past-container">
 			<h2 className="past-title">{selectedCategory === "all" ? "All Meal Packs" : "Favorite Meal Packs"}</h2>
-			<div className="hello">
+			<div className="sidebar-container">
 				<aside className="menu sidebar" style={{marginLeft: "6rem"}}>
 					<p className="menu-label" style={{fontSize: "15px"}}>
 						Meal Packs
