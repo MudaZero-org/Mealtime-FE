@@ -124,7 +124,7 @@ const AllMealPacksView = (props) => {
 											}}>See Meal Pack Info</button>
 										<button key={uuidv4()} className="button is-small tile-button" onClick={async () => {
 											await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
-											MealpackUtils.fetchFavoriteMealpacks(setMealpacks)
+											MealpackUtils.fetchFavoriteMealpacks(setFavoriteMealpacks)
 										}}>Remove from Favorites</button>
 									</div>
 								</div>
