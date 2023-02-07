@@ -87,7 +87,7 @@ const AllMealPacksView = (props) => {
 											: (
 												<button key={uuidv4()} className="button tile-button is-small" onClick={async () => {
 													await MealpackUtils.removeMealpackFromFavorites(e, setMealpacks)
-													MealpackUtils.fetchNonFavoriteMealpacks(setMealpacks)
+													MealpackUtils.fetchFavoriteMealpacks(setFavoriteMealpacks)
 												}}>Remove from Favorites</button>
 											)}
 										<OverlayTrigger trigger="click" rootClose placement="top" overlay={DeletePopOver(e, setMealpacks)}>
