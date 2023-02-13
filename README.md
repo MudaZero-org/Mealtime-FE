@@ -4,8 +4,6 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Getting Started](#getting-started)
-    - [Setup](#setup)
-    - [How to set up environment](#how-to-set-up-environment)
 - [Contributors](#contributors)
 
 # Introduction  
@@ -15,13 +13,26 @@
 <a href="https://mealtime-web.com">Mealtime</a> uses JavaScript and React for the structure of the frontend, and Sass, Bulma, and Bootstrap for the styling. For the backend, we used Node.js, Express.js, JWT, and PostgreSQL. We also used <a href="https://spoonacular.com/food-api">Spoonacular</a> as an external api to get our meal pack data from. Finally, our backend is containerized with Docker and is deployed using AWS (ECS, Cloudfront, and S3).
 
 # Features
-* 
+* Uses Spoonacular API for access to thousands of delicious meal packs
+* Accepts user-generated ingredient input and generates relevant meal packs
+* Favoriting system to easily find popular meal packs
+* Users can save their meal packs to their profile for easier access
+* Downloadable PDF of meal packs for users to attach to products to sell with QR code, ingredients, and instructions
+* Profile customizability
 
 # Getting Started
+### ‼️ Things you will need:
+* Clone the <a href="https://github.com/MudaZero-org/Mealtime-BE">Mealtime-BE</a> repo and follow setup instructions
 
 # Setup
-
-# How to set up environment
+Just start by running the following command in the root folder to install dependencies  
+```
+npm install
+```  
+You can then run the frontend in it's development mode by using:
+```
+npm start
+```
 
 # Contributors
 Feel free to check out our github pages and see what other projects we have worked on! 😎
