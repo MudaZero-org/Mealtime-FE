@@ -5,10 +5,23 @@
 - [Features](#features)
 - [Getting Started](#getting-started)
     - [Setup](#setup)
-    - [How to set up knexfile](#how-to-set-up-knexfile)
-- [Explanation of application (with images)](#explanation-of-application-with-images)
+    - [How to set up environment](#how-to-set-up-environment)
 - [Contributors](#contributors)
 
+# Introduction  
+[Mealtime](https://mealtime-web.com) gives businesses the ability to generate ready-to-cook meal packs to sell to their customers. Meal packs are a collection of the ingredients and instructions required to make a meal. The businesses can add the ingredients they have available in their stores, and then choose from our list of generated meal pack options. Businesses can use our app to increase the amount of appealing products in their store and provide convenience for their customers.
+
+<br>
+<a href="https://mealtime-web.com">Mealtime</a> uses JavaScript and React for the structure of the frontend, and Sass, Bulma, and Bootstrap for the styling. For the backend, we used Node.js, Express.js, JWT, and PostgreSQL. We also used <a href="https://spoonacular.com/food-api">Spoonacular</a> as an external api to get our meal pack data from. Finally, our backend is containerized with Docker and is deployed using AWS (ECS, Cloudfront, and S3).
+
+# Features
+* 
+
+# Getting Started
+
+# Setup
+
+# How to set up environment
 
 # Contributors
 Feel free to check out our github pages and see what other projects we have worked on! 😎
